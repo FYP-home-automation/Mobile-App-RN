@@ -1,10 +1,10 @@
 # FYP_Home_Automation
 
-Set up the project
-
-Make sure you have these dependencies installed:
+## Make sure you have these dependencies installed:
 1. Node.js
 2. expo-cli
+
+## Set up the project and run the project: 
 
 1. Clone the app
 ```
