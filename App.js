@@ -1,18 +1,19 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import * as React from "react";
+import { HomeScreen } from "HomeAutomation/src/screens";
 import { StyleSheet, Text, View, Button } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
+const Stack = createStackNavigator();
 
 export default function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app! ytjg</Text>
-      <Text>Open up App.js to start working on your app! ytjg</Text>
-      <Text>{count}</Text>
-      <Button title="testing" onPress={() => setCount(count + 1)} />
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
