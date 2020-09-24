@@ -15,8 +15,8 @@ const CircleIcon = ({ icon }) => {
 const styles = StyleSheet.create({
   container: {},
   circle: {
-    height: 80,
-    width: 80,
+    height: 75,
+    width: 75,
     backgroundColor: "#05FFD2",
     borderRadius: 50,
     justifyContent: "center",
