@@ -33,7 +33,7 @@ const LivingSpaces = () => {
         style={{
           backgroundColor: "floralwhite",
           borderRadius: 5,
-          height: 200,
+          height: 215,
           padding: 50,
           marginLeft: 25,
           marginRight: 25,
@@ -58,8 +58,8 @@ const LivingSpaces = () => {
         <Carousel
           layout={"default"}
           data={dummyState}
-          sliderWidth={250}
-          itemWidth={250}
+          sliderWidth={260}
+          itemWidth={260}
           renderItem={renderItem}
         />
       </View>

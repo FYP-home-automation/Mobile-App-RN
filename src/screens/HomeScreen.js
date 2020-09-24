@@ -1,10 +1,12 @@
 import React from "react";
+import { StyleSheet, View } from "react-native";
+
+import { Container, Content, Button, Text } from "native-base";
 
 import { CircleStats } from "HomeAutomation/src/components";
 import { Header, LivingSpaces } from "HomeAutomation/src/containers";
 import electricity from "HomeAutomation/src/assets/electricity.png";
 import bill from "HomeAutomation/src/assets/bill.png";
-import { StyleSheet, Text, View, Button } from "react-native";
 
 const HomeScreen = ({ navigation }) => {
   return (
@@ -23,15 +25,30 @@ const HomeScreen = ({ navigation }) => {
         />
       </View>
       <LivingSpaces />
-      <Button
-        onPress={() => navigation.navigate("Room")}
-        title="See Usage Graph"
-      />
+      <View style={styles.usageGraphContainer}>
+        <Button style={styles.usageGraphButton} title="See Usage Graph">
+          <Text style={styles.usageGraphText}>See Usage Graph</Text>
+        </Button>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  usageGraphText: {
+    fontWeight: "600",
+  },
+  usageGraphButton: {
+    backgroundColor: "#05FFD2",
+    width: "80%",
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  usageGraphContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    padding: 25,
+  },
   stats: {
     paddingTop: 20,
     paddingLeft: 35,
