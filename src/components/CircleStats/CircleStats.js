@@ -1,22 +1,32 @@
 import React from "react";
 
-import testing from "../../assets/flash_on_24px.png";
-import SvgUri from "react-native-svg-uri";
-
+import { CircleIcon } from "HomeAutomation/src/components";
 import { StyleSheet, Image, Text, View, Button } from "react-native";
 
-const CircleStats = () => {
+const CircleStats = ({ icon, stats, category }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.circle}>
-        <Image style={styles.image} source={testing}></Image>
+      <CircleIcon icon={icon} />
+      <View style={styles.categoryContainer}>
+        <Text style={styles.stats}>{stats}</Text>
+        <Text style={styles.stats}>{category}</Text>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  stats: {
+    margin: 0,
+  },
+  categoryContainer: {
+    justifyContent: "center",
+    marginLeft: 20,
+  },
+  container: {
+    flexDirection: "row",
+    marginBottom: 20,
+  },
   circle: {
     height: 80,
     width: 80,
