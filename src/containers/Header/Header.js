@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     height: "22%",
     backgroundColor: "#05FFD2",
     justifyContent: "center",
-    fontFamily: "FontAwesome",
+    // fontFamily: "FontAwesome",
   },
   welcome: {
     fontWeight: "600",
