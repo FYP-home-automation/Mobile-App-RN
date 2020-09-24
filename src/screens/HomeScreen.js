@@ -6,6 +6,7 @@ import { Container, Content, Button, Text } from "native-base";
 import { CircleStats } from "HomeAutomation/src/components";
 import { Header, LivingSpaces } from "HomeAutomation/src/containers";
 import electricity from "HomeAutomation/src/assets/electricity.png";
+import livingRoom from "HomeAutomation/src/assets/livingRoom.png";
 import bill from "HomeAutomation/src/assets/bill.png";
 
 const HomeScreen = ({ navigation }) => {
@@ -24,7 +25,7 @@ const HomeScreen = ({ navigation }) => {
           category={"This Month Potential Bill"}
         />
       </View>
-      <LivingSpaces />
+      <LivingSpaces navigation={navigation} />
       <View style={styles.usageGraphContainer}>
         <Button style={styles.usageGraphButton} title="See Usage Graph">
           <Text style={styles.usageGraphText}>See Usage Graph</Text>

@@ -1,60 +1,66 @@
 import React from "react";
 
-import { StyleSheet, Text, View, Button } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
+
 import Carousel from "react-native-snap-carousel";
+import livingRoom from "HomeAutomation/src/assets/livingRoom.png";
+import kitchen from "HomeAutomation/src/assets/kitchen.png";
 
 const dummyState = [
   {
-    title: "Item 1",
-    text: "Text 1",
+    room: "Living Room",
+    devices: 4,
+    source: livingRoom,
   },
   {
-    title: "Item 2",
-    text: "Text 2",
+    room: "Kitchen",
+    devices: 5,
+    source: kitchen,
   },
   {
-    title: "Item 3",
-    text: "Text 3",
+    room: "Living Room",
+    devices: 3,
+    source: livingRoom,
   },
   {
-    title: "Item 4",
-    text: "Text 4",
+    room: "Kitchen",
+    devices: 5,
+    source: kitchen,
   },
   {
-    title: "Item 5",
-    text: "Text 5",
+    room: "Living Room",
+    devices: 2,
+    source: livingRoom,
   },
 ];
 
-const LivingSpaces = () => {
+const LivingSpaces = ({ navigation }) => {
   const renderItem = ({ item, index }) => {
     return (
-      <View
-        style={{
-          backgroundColor: "floralwhite",
-          borderRadius: 5,
-          height: 215,
-          padding: 50,
-          marginLeft: 25,
-          marginRight: 25,
-        }}
-      >
-        <Text style={{ fontSize: 30 }}>{item.title}</Text>
-        <Text>{item.text}</Text>
-      </View>
+      <TouchableOpacity onPress={() => navigation.navigate("Room")}>
+        <ImageBackground
+          source={item.source}
+          style={styles.imageBackground}
+          imageStyle={{ borderRadius: 15 }}
+        >
+          <Text style={styles.roomName}>{item.room}</Text>
+          <Text style={styles.devices}>{item.devices} Devices Present</Text>
+        </ImageBackground>
+      </TouchableOpacity>
     );
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Your Living Spaces</Text>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          marginTop: 20,
-        }}
-      >
+      <View style={styles.carousel}>
         <Carousel
           layout={"default"}
           data={dummyState}
@@ -68,6 +74,26 @@ const LivingSpaces = () => {
 };
 
 const styles = StyleSheet.create({
+  devices: {
+    color: "white",
+    fontWeight: "500",
+  },
+  roomName: {
+    color: "white",
+    fontWeight: "600",
+  },
+  carousel: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 20,
+  },
+  imageBackground: {
+    height: 215,
+    marginLeft: 25,
+    marginRight: 25,
+    justifyContent: "flex-end",
+    padding: 10,
+  },
   container: {},
   title: {
     fontWeight: "700",
