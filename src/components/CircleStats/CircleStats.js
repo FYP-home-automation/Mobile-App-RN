@@ -9,15 +9,19 @@ const CircleStats = ({ icon, stats, category }) => {
       <CircleIcon icon={icon} />
       <View style={styles.categoryContainer}>
         <Text style={styles.stats}>{stats}</Text>
-        <Text style={styles.stats}>{category}</Text>
+        <Text style={styles.category}>{category}</Text>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  category: {
+    fontWeight: "600",
+    opacity: 0.5,
+  },
   stats: {
-    margin: 0,
+    fontWeight: "800",
   },
   categoryContainer: {
     justifyContent: "center",
