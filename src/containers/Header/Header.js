@@ -16,9 +16,10 @@ const Header = () => {
 
 const styles = StyleSheet.create({
   container: {
-    height: "35%",
+    height: "22%",
     backgroundColor: "#05FFD2",
     justifyContent: "center",
+    fontFamily: "FontAwesome",
   },
   welcome: {
     fontWeight: "600",

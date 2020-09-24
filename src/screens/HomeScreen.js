@@ -1,7 +1,7 @@
 import React from "react";
 
 import { CircleStats } from "HomeAutomation/src/components";
-import { Header } from "HomeAutomation/src/containers";
+import { Header, LivingSpaces } from "HomeAutomation/src/containers";
 import electricity from "HomeAutomation/src/assets/electricity.png";
 import bill from "HomeAutomation/src/assets/bill.png";
 import { StyleSheet, Text, View, Button } from "react-native";
@@ -22,11 +22,10 @@ const HomeScreen = ({ navigation }) => {
           category={"This Month Potential Bill"}
         />
       </View>
+      <LivingSpaces />
       <Button
         onPress={() => navigation.navigate("Room")}
-        title="Learn More"
-        color="#841584"
-        accessibilityLabel="Learn more about this purple button"
+        title="See Usage Graph"
       />
     </View>
   );
