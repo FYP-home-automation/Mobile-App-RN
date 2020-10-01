@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, SafeAreaView, StatusBar } from "react-native";
 
 import { Container, Content, Button, Text } from "native-base";
 
@@ -7,7 +7,6 @@ import { UsageGraph } from "../constants";
 import { CircleStats } from "HomeAutomation/src/components";
 import { Header, LivingSpaces } from "HomeAutomation/src/containers";
 import electricity from "HomeAutomation/src/assets/electricity.png";
-import livingRoom from "HomeAutomation/src/assets/livingRoom.png";
 import bill from "HomeAutomation/src/assets/bill.png";
 
 const HomeScreen = ({ navigation }) => {
@@ -15,6 +14,10 @@ const HomeScreen = ({ navigation }) => {
     <View>
       <Header />
       <View style={styles.stats}>
+        <Text style={styles.electricityTitle}>
+          Electricty and Bill Breakdown
+        </Text>
+
         <CircleStats
           icon={electricity}
           stats="75.3 kwh"
@@ -41,6 +44,11 @@ const HomeScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  electricityTitle: {
+    fontWeight: "700",
+    fontSize: 16,
+    marginBottom: 18,
+  },
   usageGraphText: {
     fontWeight: "600",
   },
