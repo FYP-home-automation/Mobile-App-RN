@@ -1,6 +1,6 @@
 import React from "react";
 
-import { CircleIcon } from "HomeAutomation/src/components";
+import CircleIcon from "../CircleIcon/CircleIcon";
 import { StyleSheet, Image, Text, View, Button } from "react-native";
 
 const CircleStats = ({ icon, stats, category }) => {
