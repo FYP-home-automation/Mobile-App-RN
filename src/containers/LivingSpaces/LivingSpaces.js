@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+import { Room } from "HomeAutomation/src/constants";
 import Carousel from "react-native-snap-carousel";
 import livingRoom from "HomeAutomation/src/assets/livingRoom.png";
 import kitchen from "HomeAutomation/src/assets/kitchen.png";
@@ -44,7 +45,7 @@ const dummyState = [
 const LivingSpaces = ({ navigation }) => {
   const renderItem = ({ item, index }) => {
     return (
-      <TouchableOpacity onPress={() => navigation.navigate("Room")}>
+      <TouchableOpacity onPress={() => navigation.navigate(Room)}>
         <ImageBackground
           source={item.source}
           style={styles.imageBackground}

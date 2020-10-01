@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 
 import { Container, Content, Button, Text } from "native-base";
 
+import { UsageGraph } from "../constants";
 import { CircleStats } from "HomeAutomation/src/components";
 import { Header, LivingSpaces } from "HomeAutomation/src/containers";
 import electricity from "HomeAutomation/src/assets/electricity.png";
@@ -27,7 +28,11 @@ const HomeScreen = ({ navigation }) => {
       </View>
       <LivingSpaces navigation={navigation} />
       <View style={styles.usageGraphContainer}>
-        <Button style={styles.usageGraphButton} title="See Usage Graph">
+        <Button
+          onPress={() => navigation.navigate(UsageGraph)}
+          style={styles.usageGraphButton}
+          title="See Usage Graph"
+        >
           <Text style={styles.usageGraphText}>See Usage Graph</Text>
         </Button>
       </View>
