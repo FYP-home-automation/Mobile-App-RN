@@ -1,22 +1,24 @@
 import React from "react";
 
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View, Button, SafeAreaView } from "react-native";
 
 const Header = () => {
   return (
     <View style={styles.container}>
-      <Text style={{ ...styles.welcome, ...styles.welcomeName }}>
-        Hello Karuna,
-      </Text>
-      <Text style={styles.welcome}>I am Home Max</Text>
-      <Text style={styles.welcome}>your Smart Home System</Text>
+      <SafeAreaView>
+        <Text style={{ ...styles.welcome, ...styles.welcomeName }}>
+          Hello Karuna,
+        </Text>
+        <Text style={styles.welcome}>I am Home Max</Text>
+        <Text style={styles.welcome}>your Smart Home System</Text>
+      </SafeAreaView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: "20%",
+    height: "24%",
     backgroundColor: "#05FFD2",
     justifyContent: "center",
   },
