@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   imageBackground: {
-    height: 215,
+    height: 230,
     marginLeft: 25,
     marginRight: 25,
     justifyContent: "flex-end",
