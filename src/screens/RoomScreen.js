@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import livingRoom from "HomeAutomation/src/assets/livingRoom.png";
-import { RoomStatsBar, RoomActiveDevices } from "HomeAutomation/src/containers";
-import { Button, Icon } from "native-base";
+import livingRoom from 'HomeAutomation/src/assets/livingRoom.png';
+import { RoomStatsBar, RoomActiveDevices } from 'HomeAutomation/src/containers';
+import { Button, Icon } from 'native-base';
 
 import {
   StyleSheet,
@@ -10,8 +10,8 @@ import {
   View,
   ImageBackground,
   SafeAreaView,
-} from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const RoomScreen = ({ icon, navigation }) => {
   return (
@@ -41,26 +41,26 @@ const RoomScreen = ({ icon, navigation }) => {
 
 const styles = StyleSheet.create({
   roomName: {
-    color: "#ffff",
-    fontWeight: "600",
+    color: '#ffff',
+    fontWeight: '600',
     fontSize: 17,
     opacity: 0.9,
-    textAlign: "center",
+    textAlign: 'center',
   },
   backButtonIcon: {
-    color: "#ffff",
+    color: '#ffff',
   },
   button: {
     paddingLeft: 20,
   },
   image: {
-    width: "100%",
+    width: '100%',
     height: 210,
-    resizeMode: "cover",
+    resizeMode: 'cover',
   },
   child: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
 });
 

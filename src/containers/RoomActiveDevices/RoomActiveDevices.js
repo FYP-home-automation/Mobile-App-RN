@@ -1,37 +1,37 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { DeviceBox } from "HomeAutomation/src/components";
-import { Icon } from "native-base";
-import { StyleSheet, Image, Text, View } from "react-native";
+import { DeviceBox } from 'HomeAutomation/src/components';
+import { Icon } from 'native-base';
+import { StyleSheet, Image, Text, View } from 'react-native';
 
 const initialDummyData = [
   {
-    type: "ios-trash",
-    name: "light 1",
+    type: 'ios-trash',
+    name: 'light 1',
     on: false,
     id: 1,
   },
   {
-    type: "paper-plane",
-    name: "trashbin",
+    type: 'paper-plane',
+    name: 'trashbin',
     on: true,
     id: 2,
   },
   {
-    type: "ios-bulb",
-    name: "printer",
+    type: 'ios-bulb',
+    name: 'printer',
     on: true,
     id: 3,
   },
   {
-    type: "tv",
-    name: "tv",
+    type: 'tv',
+    name: 'tv',
     on: true,
     id: 4,
   },
   {
-    type: "ios-bulb",
-    name: "light 2",
+    type: 'ios-bulb',
+    name: 'light 2',
     on: true,
     id: 5,
   },
@@ -67,7 +67,7 @@ const RoomActiveDevices = ({ icon, stats, category }) => {
 
 const styles = StyleSheet.create({
   title: {
-    fontWeight: "700",
+    fontWeight: '700',
     fontSize: 16,
     marginBottom: 10,
   },
@@ -75,8 +75,8 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   deviceBoxContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
 });
 

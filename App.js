@@ -1,20 +1,21 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useState, useEffect } from "react";
+import { StatusBar } from 'expo-status-bar';
+import React, { useState, useEffect } from 'react';
 
 import {
   HomeScreen,
   RoomScreen,
   UsageGraphScreen,
-} from "HomeAutomation/src/screens";
-import { Home, Room, UsageGraph } from "HomeAutomation/src/constants";
-import { StyleSheet } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import rootReducer from "./src/redux/reducers";
-import { Provider } from "react-redux";
-import { createStore } from "redux";
+} from 'HomeAutomation/src/screens';
+import { Home, Room, UsageGraph } from 'HomeAutomation/src/constants';
+import { StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import rootReducer from './src/redux/reducers';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const Stack = createStackNavigator();
 
