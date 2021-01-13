@@ -1,7 +1,7 @@
-import { SAMPLE } from "../types";
+import { SAMPLE } from '../types';
 
 const initialState = {
-  count: 1,
+  count: 1023,
 };
 
 const increment = (state = initialState, action) => {
