@@ -1,15 +1,21 @@
-import React from "react";
-import { StyleSheet, View, SafeAreaView, StatusBar } from "react-native";
+import React, { useEffect } from 'react';
+import { StyleSheet, View, SafeAreaView, StatusBar } from 'react-native';
 
-import { Container, Content, Button, Text } from "native-base";
+import { Container, Content, Button, Text } from 'native-base';
+import { fetchAllRooms } from 'HomeAutomation/src/redux/actions/roomAction';
 
-import { UsageGraph } from "../constants";
-import { CircleStats } from "HomeAutomation/src/components";
-import { Header, LivingSpaces } from "HomeAutomation/src/containers";
-import electricity from "HomeAutomation/src/assets/electricity.png";
-import bill from "HomeAutomation/src/assets/bill.png";
+import { UsageGraph } from '../constants';
+import { CircleStats } from 'HomeAutomation/src/components';
+import { Header, LivingSpaces } from 'HomeAutomation/src/containers';
+import electricity from 'HomeAutomation/src/assets/electricity.png';
+import bill from 'HomeAutomation/src/assets/bill.png';
+import { connect } from 'react-redux';
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation, fetchAllRooms }) => {
+  useEffect(() => {
+    fetchAllRooms();
+  }, []);
+
   return (
     <View>
       <Header />
@@ -21,12 +27,12 @@ const HomeScreen = ({ navigation }) => {
         <CircleStats
           icon={electricity}
           stats="75.3 kwh"
-          category={"Today - Power Usage"}
+          category="Today - Power Usage"
         />
         <CircleStats
           icon={bill}
           stats="$ 202.13"
-          category={"This Month Potential Bill"}
+          category="This Month Potential Bill"
         />
       </View>
       <LivingSpaces navigation={navigation} />
@@ -43,24 +49,32 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
+const mapStateToProps = state => {
+  return { lists: state.lists };
+};
+
+const mapDispatchToProps = {
+  fetchAllRooms,
+};
+
 const styles = StyleSheet.create({
   electricityTitle: {
-    fontWeight: "700",
+    fontWeight: '700',
     fontSize: 16,
     marginBottom: 18,
   },
   usageGraphText: {
-    fontWeight: "600",
+    fontWeight: '600',
   },
   usageGraphButton: {
-    backgroundColor: "#05FFD2",
-    width: "80%",
-    flexDirection: "row",
-    justifyContent: "center",
+    backgroundColor: '#05FFD2',
+    width: '80%',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   usageGraphContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
     padding: 25,
   },
   stats: {
@@ -69,4 +83,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
