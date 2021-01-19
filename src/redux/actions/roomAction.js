@@ -13,12 +13,10 @@ export const setNumber = num => ({
 export const fetchAllRooms = () => {
   return async function (dispatch, getState) {
     try {
-      // const result = await axiosInstance.get('/room');
-      // console.log('result testing ', result);
+      const result = await axiosInstance.get('/room');
       dispatch({
         type: GET_ALL_ROOM_SUCCESSFULLY,
-        // payload: result.data,
-        paylod: [{ testing: 'kevin' }, { testing: 'kevin 2' }],
+        payload: result.data,
       });
     } catch (e) {
       dispatch({
