@@ -1,6 +1,6 @@
-import React from "react";
-import { StyleSheet, Image, Text, View, TouchableOpacity } from "react-native";
-import { Icon } from "native-base";
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Icon } from 'native-base';
 
 const DeviceBox = ({ name, type, on, onPress }) => {
   const renderIcon = () => (
@@ -9,7 +9,7 @@ const DeviceBox = ({ name, type, on, onPress }) => {
     </View>
   );
   const colorStyles = {
-    backgroundColor: on ? "#05FFD2" : "#A9A9A9",
+    backgroundColor: on ? '#05FFD2' : '#A9A9A9',
   };
 
   const renderStatus = () => {
@@ -30,8 +30,8 @@ const DeviceBox = ({ name, type, on, onPress }) => {
 
 const styles = StyleSheet.create({
   inline: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   icon: {
     marginRight: 10,

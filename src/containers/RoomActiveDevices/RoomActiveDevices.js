@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
 import { DeviceBox } from 'HomeAutomation/src/components';
-import { Icon } from 'native-base';
-import { StyleSheet, Image, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 const initialDummyData = [
   {
