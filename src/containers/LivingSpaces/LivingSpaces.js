@@ -12,46 +12,39 @@ import { Room } from 'HomeAutomation/src/constants';
 import Carousel from 'react-native-snap-carousel';
 import livingRoom from 'HomeAutomation/src/assets/livingRoom.png';
 import kitchen from 'HomeAutomation/src/assets/kitchen.png';
+import { capitalize } from 'HomeAutomation/src/utils/global';
 
-const dummyState = [
-  {
-    room: 'Living Room',
-    devices: 4,
-    source: livingRoom,
-  },
-  {
-    room: 'Kitchen',
-    devices: 5,
-    source: kitchen,
-  },
-  {
-    room: 'Living Room',
-    devices: 3,
-    source: livingRoom,
-  },
-  {
-    room: 'Kitchen',
-    devices: 5,
-    source: kitchen,
-  },
-  {
-    room: 'Living Room',
-    devices: 2,
-    source: livingRoom,
-  },
-];
+const roomTypeImageMapper = {
+  'Living Room': livingRoom,
+  Kitchen: kitchen,
+  Bedroom: null,
+  None: null,
+};
 
-const LivingSpaces = ({ navigation }) => {
+const LivingSpaces = ({ navigation, roomList }) => {
+  const countNumDevice = gateways => {
+    let count = 0;
+
+    gateways.map(gateway => {
+      count += gateway?.devices.length;
+    });
+
+    return count;
+  };
+
   const renderItem = ({ item, index }) => {
+    const numDevices = countNumDevice(item.gateways);
     return (
       <TouchableOpacity onPress={() => navigation.navigate(Room)}>
         <ImageBackground
-          source={item.source}
+          source={roomTypeImageMapper['Living Room']}
           style={styles.imageBackground}
           imageStyle={{ borderRadius: 15 }}
         >
-          <Text style={styles.roomName}>{item.room}</Text>
-          <Text style={styles.devices}>{item.devices} Devices Present</Text>
+          <Text style={styles.roomName}>{capitalize(item.name)}</Text>
+          <Text style={styles.devices}>
+            {numDevices ? `${numDevices}` : 'No'} Devices Present
+          </Text>
         </ImageBackground>
       </TouchableOpacity>
     );
@@ -63,7 +56,7 @@ const LivingSpaces = ({ navigation }) => {
       <View style={styles.carousel}>
         <Carousel
           layout={'default'}
-          data={dummyState}
+          data={roomList}
           sliderWidth={260}
           itemWidth={260}
           renderItem={renderItem}
