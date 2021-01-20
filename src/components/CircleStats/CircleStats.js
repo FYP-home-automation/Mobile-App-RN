@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import CircleIcon from "../CircleIcon/CircleIcon";
-import { StyleSheet, Image, Text, View, Button } from "react-native";
+import CircleIcon from '../CircleIcon/CircleIcon';
+import { StyleSheet, Text, View } from 'react-native';
 
 const CircleStats = ({ icon, stats, category }) => {
   return (
@@ -17,34 +17,34 @@ const CircleStats = ({ icon, stats, category }) => {
 
 const styles = StyleSheet.create({
   category: {
-    fontWeight: "600",
+    fontWeight: '600',
     opacity: 0.5,
   },
   stats: {
-    fontWeight: "800",
+    fontWeight: '800',
   },
   categoryContainer: {
-    justifyContent: "center",
+    justifyContent: 'center',
     marginLeft: 20,
   },
   container: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginBottom: 20,
   },
   circle: {
     height: 80,
     width: 80,
-    backgroundColor: "#05FFD2",
+    backgroundColor: '#05FFD2',
     borderRadius: 50,
     marginBottom: 20,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   image: {
     flex: 1,
     width: 40,
     height: 40,
-    resizeMode: "contain",
+    resizeMode: 'contain',
   },
 });
 

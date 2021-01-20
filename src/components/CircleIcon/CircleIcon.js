@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { StyleSheet, Image, Text, View, Button } from "react-native";
+import { StyleSheet, Image, View } from 'react-native';
 
 const CircleIcon = ({ icon }) => {
   return (
@@ -17,16 +17,16 @@ const styles = StyleSheet.create({
   circle: {
     height: 75,
     width: 75,
-    backgroundColor: "#05FFD2",
+    backgroundColor: '#05FFD2',
     borderRadius: 50,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   image: {
     flex: 1,
     width: 40,
     height: 40,
-    resizeMode: "contain",
+    resizeMode: 'contain',
   },
 });
 

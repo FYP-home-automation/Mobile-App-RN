@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import { Icon } from "native-base";
-import { StyleSheet, Image, Text, View } from "react-native";
+import { Icon } from 'native-base';
+import { StyleSheet, Text, View } from 'react-native';
 
 const RoomStats = ({ name }) => {
   return (
@@ -28,12 +28,12 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   roomStatsContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     marginRight: 20,
   },
   container: {
-    flexDirection: "row",
+    flexDirection: 'row',
     paddingLeft: 20,
     paddingTop: 10,
   },

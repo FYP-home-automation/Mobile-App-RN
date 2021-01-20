@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { StyleSheet, Text, View, Button, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 
 const Header = () => {
   return (
@@ -18,13 +18,13 @@ const Header = () => {
 
 const styles = StyleSheet.create({
   container: {
-    height: "24%",
-    backgroundColor: "#05FFD2",
-    justifyContent: "center",
+    height: '24%',
+    backgroundColor: '#05FFD2',
+    justifyContent: 'center',
   },
   welcome: {
-    fontWeight: "600",
-    paddingLeft: "10%",
+    fontWeight: '600',
+    paddingLeft: '10%',
   },
   welcomeName: {
     fontSize: 18,
