@@ -21,6 +21,7 @@ const composeEnhancers = composeWithDevTools({
   realtime: true,
   name: 'Kevin Tirta',
   hostname: 'localhost',
+  port: 8000, // the port your remotedev server is running at
 });
 
 const store = createStore(
