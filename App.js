@@ -55,7 +55,7 @@ export default function App() {
           screenOptions={{
             headerShown: false,
           }}
-          initialRouteName={Home}
+          initialRouteName={UsageGraph}
         >
           <Stack.Screen name={Home} component={HomeScreen} />
           <Stack.Screen name={Room} component={RoomScreen} />
