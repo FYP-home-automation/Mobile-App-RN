@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const RoomScreen = ({ icon, navigation }) => {
+const RoomScreen = ({ navigation }) => {
   return (
     <View>
       <ImageBackground style={styles.image} source={livingRoom}>
