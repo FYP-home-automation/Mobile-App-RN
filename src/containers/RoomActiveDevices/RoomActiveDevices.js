@@ -36,8 +36,12 @@ const initialDummyData = [
   },
 ];
 
-const RoomActiveDevices = ({ icon, stats, category }) => {
+const RoomActiveDevices = ({ room }) => {
   const [dummyData, setDummyData] = useState(initialDummyData);
+  // console.log('room testing', room);
+  if (!Boolean(room)) {
+    return null;
+  }
 
   return (
     <View style={styles.container}>
