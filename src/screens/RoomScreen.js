@@ -2,7 +2,7 @@ import React from 'react';
 
 import livingRoom from 'HomeAutomation/src/assets/livingRoom.png';
 import { RoomStatsBar, RoomActiveDevices } from 'HomeAutomation/src/containers';
-import { Button, Icon } from 'native-base';
+import { Icon } from 'native-base';
 
 import {
   StyleSheet,
@@ -13,7 +13,14 @@ import {
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const RoomScreen = ({ navigation }) => {
+import { connect } from 'react-redux';
+
+const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
+  const room = roomList[activeRoomId];
+  const temp = 24;
+  const humidity = 8;
+  const brightness = 20;
+
   return (
     <View>
       <ImageBackground style={styles.image} source={livingRoom}>
@@ -31,11 +38,16 @@ const RoomScreen = ({ navigation }) => {
           </SafeAreaView>
         </View>
       </ImageBackground>
-      <RoomStatsBar />
+      <RoomStatsBar temp={temp} humidity={humidity} brightness={brightness} />
       <RoomActiveDevices />
     </View>
   );
 };
+
+const mapStateToProps = ({ room }) => ({
+  activeRoomId: room.activeRoomId,
+  roomList: room.roomList,
+});
 
 const styles = StyleSheet.create({
   roomName: {
@@ -62,4 +74,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RoomScreen;
+export default connect(mapStateToProps, null)(RoomScreen);
