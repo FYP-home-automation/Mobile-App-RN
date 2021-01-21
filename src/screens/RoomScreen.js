@@ -15,27 +15,25 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const RoomScreen = ({ icon, navigation }) => {
   return (
-    <>
-      <View>
-        <ImageBackground style={styles.image} source={livingRoom}>
-          <View style={styles.child}>
-            <SafeAreaView>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.goBack()}
-              >
-                <Icon name="arrow-back" style={styles.backButtonIcon} />
-              </TouchableOpacity>
-              <View styles={styles.nameContainer}>
-                <Text style={styles.roomName}>Living Room</Text>
-              </View>
-            </SafeAreaView>
-          </View>
-        </ImageBackground>
-        <RoomStatsBar />
-        <RoomActiveDevices />
-      </View>
-    </>
+    <View>
+      <ImageBackground style={styles.image} source={livingRoom}>
+        <View style={styles.child}>
+          <SafeAreaView>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.goBack()}
+            >
+              <Icon name="arrow-back" style={styles.backButtonIcon} />
+            </TouchableOpacity>
+            <View styles={styles.nameContainer}>
+              <Text style={styles.roomName}>Living Room</Text>
+            </View>
+          </SafeAreaView>
+        </View>
+      </ImageBackground>
+      <RoomStatsBar />
+      <RoomActiveDevices />
+    </View>
   );
 };
 
