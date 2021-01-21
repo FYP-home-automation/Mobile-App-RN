@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View, SafeAreaView, StatusBar } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import { Container, Content, Button, Text } from 'native-base';
-import { fetchAllRooms } from 'HomeAutomation/src/redux/actions/roomAction';
+import { Button, Text } from 'native-base';
+import { fetchAllRooms } from 'HomeAutomation/src/redux/actions';
 
 import { UsageGraph } from '../constants';
 import { CircleStats } from 'HomeAutomation/src/components';

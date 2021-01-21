@@ -1,3 +1,3 @@
-import { fetchAllRooms } from './roomAction';
+import { fetchAllRooms, setActiveRoomID } from './roomAction';
 
-export { fetchAllRooms };
+export { fetchAllRooms, setActiveRoomID };

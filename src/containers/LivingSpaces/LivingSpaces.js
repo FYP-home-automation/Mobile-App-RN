@@ -13,6 +13,9 @@ import Carousel from 'react-native-snap-carousel';
 import livingRoom from 'HomeAutomation/src/assets/livingRoom.png';
 import kitchen from 'HomeAutomation/src/assets/kitchen.png';
 import { capitalize } from 'HomeAutomation/src/utils/global';
+import { setActiveRoomID } from 'HomeAutomation/src/redux/actions';
+
+import { connect } from 'react-redux';
 
 const roomTypeImageMapper = {
   'Living Room': livingRoom,
@@ -21,7 +24,7 @@ const roomTypeImageMapper = {
   None: null,
 };
 
-const LivingSpaces = ({ navigation, roomList }) => {
+const LivingSpaces = ({ navigation, roomList, setActiveRoomID }) => {
   const countNumDevice = gateways => {
     let count = 0;
 
@@ -32,10 +35,16 @@ const LivingSpaces = ({ navigation, roomList }) => {
     return count;
   };
 
-  const renderItem = ({ item, index }) => {
+  const renderItem = ({ item }) => {
     const numDevices = countNumDevice(item.gateways);
+
+    const pressRoom = () => {
+      setActiveRoomID(item._id);
+      navigation.navigate(Room);
+    };
+
     return (
-      <TouchableOpacity onPress={() => navigation.navigate(Room)}>
+      <TouchableOpacity onPress={pressRoom}>
         <ImageBackground
           source={roomTypeImageMapper['Living Room']}
           style={styles.imageBackground}
@@ -66,6 +75,8 @@ const LivingSpaces = ({ navigation, roomList }) => {
   );
 };
 
+const mapDispatchToProps = { setActiveRoomID };
+
 const styles = StyleSheet.create({
   devices: {
     color: 'white',
@@ -95,4 +106,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LivingSpaces;
+export default connect(null, mapDispatchToProps)(LivingSpaces);
