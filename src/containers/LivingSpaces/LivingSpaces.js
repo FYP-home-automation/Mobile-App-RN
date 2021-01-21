@@ -35,14 +35,14 @@ const LivingSpaces = ({ navigation, roomList, setActiveRoomID }) => {
     return count;
   };
 
-  const renderItem = ({ item }) => {
-    const numDevices = countNumDevice(item.gateways);
+  const renderItem = ({ item: room }) => {
+    const numDevices = countNumDevice(room.gateways);
 
     const pressRoom = () => {
-      setActiveRoomID(item._id);
+      setActiveRoomID(room._id);
       navigation.navigate(Room);
     };
-
+    // TODO: embed room type
     return (
       <TouchableOpacity onPress={pressRoom}>
         <ImageBackground
@@ -50,7 +50,8 @@ const LivingSpaces = ({ navigation, roomList, setActiveRoomID }) => {
           style={styles.imageBackground}
           imageStyle={{ borderRadius: 15 }}
         >
-          <Text style={styles.roomName}>{capitalize(item.name)}</Text>
+          <Text style={styles.roomName}>{capitalize(room.name)}</Text>
+          <Text style={styles.roomType}>{'Living Room'}</Text>
           <Text style={styles.devices}>
             {numDevices ? `${numDevices}` : 'No'} Devices Present
           </Text>
@@ -78,9 +79,13 @@ const LivingSpaces = ({ navigation, roomList, setActiveRoomID }) => {
 const mapDispatchToProps = { setActiveRoomID };
 
 const styles = StyleSheet.create({
-  devices: {
+  roomType: {
     color: 'white',
     fontWeight: '500',
+  },
+  devices: {
+    color: 'white',
+    fontWeight: '400',
   },
   roomName: {
     color: 'white',
