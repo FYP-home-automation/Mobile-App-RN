@@ -35,11 +35,11 @@ const LivingSpaces = ({ navigation, roomList, setActiveRoomID }) => {
     return count;
   };
 
-  const renderItem = ({ item: room }) => {
+  const renderItem = ({ item: room, index }) => {
     const numDevices = countNumDevice(room.gateways);
 
     const pressRoom = () => {
-      setActiveRoomID(room._id);
+      setActiveRoomID(index);
       navigation.navigate(Room);
     };
     // TODO: embed room type
