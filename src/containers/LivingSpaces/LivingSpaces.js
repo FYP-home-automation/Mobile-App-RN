@@ -10,19 +10,14 @@ import {
 
 import { Room } from 'HomeAutomation/src/constants';
 import Carousel from 'react-native-snap-carousel';
-import livingRoom from 'HomeAutomation/src/assets/livingRoom.png';
-import kitchen from 'HomeAutomation/src/assets/kitchen.png';
-import { capitalize } from 'HomeAutomation/src/utils/global';
+
+import {
+  capitalize,
+  roomTypeImageMapper,
+} from 'HomeAutomation/src/utils/global';
 import { setActiveRoomID } from 'HomeAutomation/src/redux/actions';
 
 import { connect } from 'react-redux';
-
-const roomTypeImageMapper = {
-  'Living Room': livingRoom,
-  Kitchen: kitchen,
-  Bedroom: null,
-  None: null,
-};
 
 const LivingSpaces = ({ navigation, roomList, setActiveRoomID }) => {
   const countNumDevice = gateways => {
