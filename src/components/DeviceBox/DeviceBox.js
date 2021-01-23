@@ -2,10 +2,16 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Icon } from 'native-base';
 
+import { deviceIconNameMapper } from 'HomeAutomation/src/utils/global';
+
 const DeviceBox = ({ name, type, on, onPress }) => {
   const renderIcon = () => (
     <View style={styles.icon}>
-      <Icon name={type} />
+      <Icon
+        name={
+          deviceIconNameMapper[type] ? deviceIconNameMapper[type] : 'md-switch'
+        }
+      />
     </View>
   );
   const colorStyles = {
