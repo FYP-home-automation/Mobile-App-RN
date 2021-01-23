@@ -18,16 +18,18 @@ const Header = () => {
 
 const styles = StyleSheet.create({
   container: {
-    height: '24%',
+    height: '21%',
     backgroundColor: '#05FFD2',
     justifyContent: 'center',
+    paddingTop: 20,
   },
   welcome: {
     fontWeight: '600',
     paddingLeft: '10%',
+    paddingTop: 2,
   },
   welcomeName: {
-    fontSize: 18,
+    fontSize: 19,
   },
 });
 
