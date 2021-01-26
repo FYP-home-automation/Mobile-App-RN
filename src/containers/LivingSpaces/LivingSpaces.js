@@ -19,7 +19,7 @@ import { setActiveRoomID } from 'HomeAutomation/src/redux/actions';
 import { connect } from 'react-redux';
 
 const LivingSpaces = ({ navigation, roomList, setActiveRoomID }) => {
-  const [modalVisible, setModalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const countNumDevice = gateways => {
     let count = 0;
