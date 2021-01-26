@@ -1,8 +1,10 @@
 import React from 'react';
 
-import livingRoom from 'HomeAutomation/src/assets/livingRoom.png';
 import { RoomStatsBar, RoomActiveDevices } from 'HomeAutomation/src/containers';
-import { capitalize } from 'HomeAutomation/src/utils/global';
+import {
+  capitalize,
+  roomTypeImageMapper,
+} from 'HomeAutomation/src/utils/global';
 
 import { Icon } from 'native-base';
 
@@ -24,10 +26,12 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
   const brightness = 20;
   // TODO: dynamic reading for stats, e.g temp, humidity
   // TODO: dynamic devices on/off status
-  // TODO: dynamic room type
   return (
     <View>
-      <ImageBackground style={styles.image} source={livingRoom}>
+      <ImageBackground
+        style={styles.image}
+        source={roomTypeImageMapper[room.room_type]}
+      >
         <View style={styles.child}>
           <SafeAreaView>
             <TouchableOpacity
@@ -38,7 +42,9 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
             </TouchableOpacity>
             <View styles={styles.nameContainer}>
               <Text style={styles.roomName}>{capitalize(room.name)}</Text>
-              <Text style={styles.roomType}>Living Room</Text>
+              <Text style={styles.roomType}>
+                {room.room_type !== 'None' ? room.room_type : 'Room'}
+              </Text>
             </View>
           </SafeAreaView>
         </View>

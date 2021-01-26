@@ -38,16 +38,18 @@ const LivingSpaces = ({ navigation, roomList, setActiveRoomID }) => {
       setActiveRoomID(index);
       navigation.navigate(Room);
     };
-    // TODO: embed room type
+
     return (
       <TouchableOpacity onPress={pressRoom}>
         <ImageBackground
-          source={roomTypeImageMapper['Living Room']}
+          source={roomTypeImageMapper[room.room_type]}
           style={styles.imageBackground}
           imageStyle={{ borderRadius: 15 }}
         >
           <Text style={styles.roomName}>{capitalize(room.name)}</Text>
-          <Text style={styles.roomType}>{'Living Room'}</Text>
+          <Text style={styles.roomType}>
+            {room.room_type !== 'None' ? room.room_type : 'Room'}
+          </Text>
           <Text style={styles.devices}>
             {numDevices ? `${numDevices}` : 'No'} Devices Present
           </Text>
