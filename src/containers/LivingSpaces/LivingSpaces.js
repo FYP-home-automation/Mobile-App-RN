@@ -1,12 +1,10 @@
 import React from 'react';
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  ImageBackground,
-  TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, Text, View, ImageBackground } from 'react-native';
+
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
+import { Icon } from 'native-base';
 
 import { Room } from 'HomeAutomation/src/constants';
 import Carousel from 'react-native-snap-carousel';
@@ -57,7 +55,15 @@ const LivingSpaces = ({ navigation, roomList, setActiveRoomID }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Your Living Spaces</Text>
+      <View style={styles.livingSpacesHeader}>
+        <Text style={styles.title}>Your Living Spaces</Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => console.log('open popup')}
+        >
+          <Icon name="ios-add-circle-outline" style={styles.addButtonIcon} />
+        </TouchableOpacity>
+      </View>
       <View style={styles.carousel}>
         <Carousel
           layout={'default'}
@@ -74,6 +80,14 @@ const LivingSpaces = ({ navigation, roomList, setActiveRoomID }) => {
 const mapDispatchToProps = { setActiveRoomID };
 
 const styles = StyleSheet.create({
+  addButtonIcon: {
+    marginRight: 30,
+  },
+  livingSpacesHeader: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   roomType: {
     color: 'white',
     fontWeight: '500',
