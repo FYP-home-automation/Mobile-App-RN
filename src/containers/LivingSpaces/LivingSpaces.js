@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 
@@ -13,11 +13,14 @@ import {
   capitalize,
   roomTypeImageMapper,
 } from 'HomeAutomation/src/utils/global';
+import { RoomModal } from 'HomeAutomation/src/components';
 import { setActiveRoomID } from 'HomeAutomation/src/redux/actions';
 
 import { connect } from 'react-redux';
 
 const LivingSpaces = ({ navigation, roomList, setActiveRoomID }) => {
+  const [modalVisible, setModalVisible] = useState(true);
+
   const countNumDevice = gateways => {
     let count = 0;
 
@@ -59,7 +62,7 @@ const LivingSpaces = ({ navigation, roomList, setActiveRoomID }) => {
         <Text style={styles.title}>Your Living Spaces</Text>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => console.log('open popup')}
+          onPress={() => setModalVisible(true)}
         >
           <Icon name="ios-add-circle-outline" style={styles.addButtonIcon} />
         </TouchableOpacity>
@@ -73,6 +76,10 @@ const LivingSpaces = ({ navigation, roomList, setActiveRoomID }) => {
           renderItem={renderItem}
         />
       </View>
+      <RoomModal
+        modalVisible={modalVisible}
+        onClose={state => setModalVisible(state)}
+      />
     </View>
   );
 };
