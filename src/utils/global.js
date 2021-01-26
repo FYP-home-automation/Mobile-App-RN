@@ -18,6 +18,7 @@ export const roomTypeImageMapper = {
   Bedroom: bedroom,
   Bathroom: bathroom,
   None: room,
+  Others: room,
 };
 
 export const statsIconNameMapper = {

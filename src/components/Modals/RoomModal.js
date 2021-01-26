@@ -11,13 +11,20 @@ import {
 
 import DropDownPicker from 'react-native-dropdown-picker';
 
+import { addNewRoom } from 'HomeAutomation/src/redux/actions';
+import { connect } from 'react-redux';
+
 const defaultRoom = 'Living Room';
 
-const RoomModal = ({ modalVisible, onClose }) => {
+const RoomModal = ({ modalVisible, onClose, addNewRoom }) => {
   const [roomName, setRoomName] = useState(null);
   const [chosenRoom, setChosenRoom] = useState(defaultRoom);
 
   const pressSubmit = () => {
+    addNewRoom({
+      name: roomName,
+      room_type: chosenRoom,
+    });
     setRoomName(null);
     setChosenRoom(defaultRoom);
     onClose(!modalVisible);
@@ -177,4 +184,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RoomModal;
+const mapDispatchToProps = {
+  addNewRoom,
+};
+
+export default connect(null, mapDispatchToProps)(RoomModal);
