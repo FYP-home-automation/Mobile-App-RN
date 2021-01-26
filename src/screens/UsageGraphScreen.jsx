@@ -2,7 +2,7 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 import { setNumber } from '../redux/actions/roomAction';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { Text, View, Button } from 'react-native';
 
 const UsageGraphScreen = ({ onClick, number }) => {
   return (

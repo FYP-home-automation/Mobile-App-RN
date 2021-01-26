@@ -2,6 +2,8 @@ import {
   SAMPLE,
   GET_ALL_ROOM_SUCCESSFULLY,
   GET_ALL_ROOM_FAILED,
+  ADD_NEW_ROOM_SUCCESSFULLY,
+  ADD_NEW_ROOM_FAILED,
   SET_ACTIVE_ROOM,
 } from '../types';
 import { axiosInstance } from 'HomeAutomation/src/utils/API';
@@ -10,6 +12,22 @@ export const setNumber = num => ({
   type: SAMPLE,
   num,
 });
+
+export const addNewRoom = ({ name, room_type }) => {
+  return async function (dispatch) {
+    try {
+      const result = await axiosInstance.post('/room', { name, room_type });
+      dispatch({
+        type: ADD_NEW_ROOM_SUCCESSFULLY,
+        payload: result.data,
+      });
+    } catch (e) {
+      dispatch({
+        type: ADD_NEW_ROOM_FAILED,
+      });
+    }
+  };
+};
 
 export const setActiveRoomID = roomId => {
   return function (dispatch) {
