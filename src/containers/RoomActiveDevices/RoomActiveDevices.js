@@ -7,7 +7,7 @@ import { DeviceBox } from 'HomeAutomation/src/components';
 import { StyleSheet, Text, View } from 'react-native';
 import { DeviceModal } from 'HomeAutomation/src/components';
 
-const RoomActiveDevices = ({ room }) => {
+const RoomActiveDevices = ({ room, activeRoomId }) => {
   const devices = room.gateways.map(gateway => gateway.devices);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -46,6 +46,7 @@ const RoomActiveDevices = ({ room }) => {
       <DeviceModal
         modalVisible={modalVisible}
         onClose={state => setModalVisible(state)}
+        activeRoomId={activeRoomId}
       />
     </View>
   );
