@@ -11,47 +11,48 @@ import {
 
 import DropDownPicker from 'react-native-dropdown-picker';
 
-import { addNewRoom } from 'HomeAutomation/src/redux/actions';
+import { addNewDevice } from 'HomeAutomation/src/redux/actions';
 import { connect } from 'react-redux';
 
-const defaultRoom = 'Living Room';
+const defaultDevice = 'Lamp';
 
-const DeviceModal = ({ modalVisible, onClose, addNewRoom }) => {
-  const [roomName, setRoomName] = useState(null);
-  const [chosenRoom, setChosenRoom] = useState(defaultRoom);
+const DeviceModal = ({ modalVisible, onClose, addNewDevice, activeRoomId }) => {
+  const [deviceName, setDeviceName] = useState(null);
+  const [chosenDevice, setChosenDevice] = useState(defaultDevice);
 
   const pressSubmit = () => {
-    addNewRoom({
-      name: roomName,
-      room_type: chosenRoom,
+    addNewDevice({
+      name: deviceName,
+      device_type: chosenDevice,
+      activeRoomId: activeRoomId,
     });
-    setRoomName(null);
-    setChosenRoom(defaultRoom);
+    setDeviceName(null);
+    setChosenDevice(defaultDevice);
     onClose(!modalVisible);
   };
 
   const pressCancel = () => {
-    setRoomName(null);
-    setChosenRoom(defaultRoom);
+    setDeviceName(null);
+    setChosenDevice(defaultDevice);
     onClose(!modalVisible);
   };
 
-  const roomOptions = [
+  const deviceOptions = [
     {
-      label: 'Living Room',
-      value: 'Living Room',
+      label: 'Lamp',
+      value: 'Lamp',
     },
     {
-      label: 'Kitchen',
-      value: 'Kitchen',
+      label: 'Printer',
+      value: 'Printer',
     },
     {
-      label: 'Bedroom',
-      value: 'Bedroom',
+      label: 'Tv',
+      value: 'Tv',
     },
     {
-      label: 'Others',
-      value: 'Others',
+      label: 'Trashbin',
+      value: 'Trashbin',
     },
   ];
 
@@ -60,25 +61,25 @@ const DeviceModal = ({ modalVisible, onClose, addNewRoom }) => {
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalTitle}>Add New Room</Text>
+            <Text style={styles.modalTitle}>Add New Device</Text>
             <View style={styles.optionContainer}>
-              <Text style={styles.modalOptionTitle}>Room Name</Text>
+              <Text style={styles.modalOptionTitle}>Device Name</Text>
               <TextInput
-                style={styles.roomName}
-                onChangeText={text => setRoomName(text)}
-                value={roomName}
+                style={styles.roomDevice}
+                onChangeText={text => setDeviceName(text)}
+                value={deviceName}
                 placeholder="input name"
               />
             </View>
             <View style={styles.optionContainer}>
-              <Text style={styles.modalOptionTitle}>Room Type</Text>
+              <Text style={styles.modalOptionTitle}>Device Type</Text>
               <DropDownPicker
-                items={roomOptions}
-                defaultValue={chosenRoom}
+                items={deviceOptions}
+                defaultValue={chosenDevice}
                 containerStyle={styles.dropdownContainer}
                 itemStyle={styles.dropdownItem}
                 labelStyle={styles.dropdownLabel}
-                onChangeItem={item => setChosenRoom(item.value)}
+                onChangeItem={item => setChosenDevice(item.value)}
               />
             </View>
 
@@ -119,7 +120,7 @@ const styles = StyleSheet.create({
     marginBottom: 22,
     zIndex: 1,
   },
-  roomName: {
+  roomDevice: {
     height: 40,
     borderColor: '#C8C8C8',
     width: 120,
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProps = {
-  addNewRoom,
+  addNewDevice,
 };
 
 export default connect(null, mapDispatchToProps)(DeviceModal);

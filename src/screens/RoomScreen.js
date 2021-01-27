@@ -30,7 +30,7 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
     <View>
       <ImageBackground
         style={styles.image}
-        source={roomTypeImageMapper[room.room_type]}
+        source={roomTypeImageMapper[room?.room_type]}
       >
         <View style={styles.child}>
           <SafeAreaView>
@@ -43,14 +43,14 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
             <View styles={styles.nameContainer}>
               <Text style={styles.roomName}>{capitalize(room.name)}</Text>
               <Text style={styles.roomType}>
-                {room.room_type !== 'None' ? room.room_type : 'Room'}
+                {room?.room_type !== 'None' ? room.room_type : 'Room'}
               </Text>
             </View>
           </SafeAreaView>
         </View>
       </ImageBackground>
       <RoomStatsBar temp={temp} humidity={humidity} brightness={brightness} />
-      <RoomActiveDevices room={room} />
+      <RoomActiveDevices room={room} activeRoomId={activeRoomId} />
     </View>
   );
 };
