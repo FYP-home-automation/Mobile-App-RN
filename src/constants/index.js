@@ -1,3 +1,3 @@
-import { Home, Room, UsageGraph } from "./routes";
+import { Home, Room, IndoorTracking } from './routes';
 
-export { Home, Room, UsageGraph };
+export { Home, Room, IndoorTracking };

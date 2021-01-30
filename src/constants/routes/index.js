@@ -1,5 +1,5 @@
-const Home = "Home";
-const Room = "Room";
-const UsageGraph = "Usage Graph";
+const Home = 'Home';
+const Room = 'Room';
+const IndoorTracking = 'Indoor Tracking';
 
-export { Home, Room, UsageGraph };
+export { Home, Room, IndoorTracking };

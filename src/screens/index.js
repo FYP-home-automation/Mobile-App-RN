@@ -1,5 +1,5 @@
 import HomeScreen from './HomeScreen';
 import RoomScreen from './RoomScreen';
-import UsageGraphScreen from './UsageGraphScreen';
+import IndoorTrackingScreen from './IndoorTrackingScreen';
 
-export { HomeScreen, RoomScreen, UsageGraphScreen };
+export { HomeScreen, RoomScreen, IndoorTrackingScreen };

@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { Button, Text } from 'native-base';
 import { fetchAllRooms } from 'HomeAutomation/src/redux/actions';
 
-import { UsageGraph } from '../constants';
+import { IndoorTracking } from '../constants';
 import { CircleStats } from 'HomeAutomation/src/components';
 import { Header, LivingSpaces } from 'HomeAutomation/src/containers';
 import electricity from 'HomeAutomation/src/assets/electricity.png';
@@ -38,11 +38,11 @@ const HomeScreen = ({ navigation, fetchAllRooms, roomList }) => {
       <LivingSpaces navigation={navigation} roomList={roomList} />
       <View style={styles.usageGraphContainer}>
         <Button
-          onPress={() => navigation.navigate(UsageGraph)}
+          onPress={() => navigation.navigate(IndoorTracking)}
           style={styles.usageGraphButton}
           title="See Usage Graph"
         >
-          <Text style={styles.usageGraphText}>See Usage Graph</Text>
+          <Text style={styles.usageGraphText}>See Indoor Tracking</Text>
         </Button>
       </View>
     </View>
