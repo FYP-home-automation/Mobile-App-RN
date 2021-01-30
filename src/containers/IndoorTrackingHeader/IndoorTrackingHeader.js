@@ -1,24 +1,83 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Dimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon } from 'native-base';
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+
+const SetupTab = () => (
+  <View style={[styles.scene, { backgroundColor: '#ff4081' }]}>
+    <Text>testing</Text>
+  </View>
+);
+
+const Tracking = () => (
+  <View style={[styles.scene, { backgroundColor: '#673ab7' }]}>
+    <Text>testing</Text>
+  </View>
+);
+
+const initialLayout = { width: Dimensions.get('window').width };
 
 const IndoorTrackingHeader = ({ navigation }) => {
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: 'Setup', title: 'Setup' },
+    { key: 'Location', title: 'Tracking' },
+  ]);
+
+  const renderScene = SceneMap({
+    Setup: SetupTab,
+    Location: Tracking,
+  });
+
+  const renderTabBar = props => (
+    <TabBar
+      {...props}
+      indicatorStyle={{ backgroundColor: 'black' }}
+      style={{ backgroundColor: '#05FFD2' }}
+      renderLabel={({ route }) => (
+        <Text style={{ color: 'black' }}>{route.title}</Text>
+      )}
+    />
+  );
+
   return (
-    <View style={styles.container}>
-      <SafeAreaView style={styles.mainMenu}>
-        <View style={styles.backButtonContainer}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon name="arrow-back" style={styles.backButtonIcon} />
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.title}>Indoor Tracking</Text>
-        <View style={styles.controlGroup}>
-          <Icon style={styles.controlGroupIcon} name="md-refresh" />
-          <Icon style={styles.controlGroupIcon} name="ios-trash" />
-        </View>
-      </SafeAreaView>
+    <View>
+      <View style={styles.container}>
+        <SafeAreaView style={styles.mainMenu}>
+          <View style={styles.backButtonContainer}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Icon name="arrow-back" style={styles.backButtonIcon} />
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.title}>Indoor Tracking</Text>
+          <View style={styles.controlGroup}>
+            <Icon style={styles.controlGroupIcon} name="md-refresh" />
+            <Icon style={styles.controlGroupIcon} name="ios-trash" />
+          </View>
+        </SafeAreaView>
+        {/* <View style={styles.tabViewContainer}>
+          <TabView
+            style={styles.tabView}
+            navigationState={{ index, routes }}
+            renderScene={renderScene}
+            onIndexChange={setIndex}
+            initialLayout={initialLayout}
+            renderTabBar={renderTabBar}
+          />
+        </View> */}
+      </View>
+      {/* <View style={styles.tabViewContainer}> */}
+      <TabView
+        style={styles.tabView}
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={initialLayout}
+        renderTabBar={renderTabBar}
+      />
+      {/* </View> */}
     </View>
   );
 };
@@ -26,6 +85,16 @@ const IndoorTrackingHeader = ({ navigation }) => {
 export default IndoorTrackingHeader;
 
 const styles = StyleSheet.create({
+  tabView: {
+    flex: 1,
+  },
+  scene: {
+    flex: 1,
+  },
+  tabViewContainer: {
+    // height: 100,
+    flex: 1,
+  },
   backButtonContainer: {
     width: 55,
   },
@@ -35,7 +104,6 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: '#05FFD2',
-    height: 150,
   },
   mainMenu: {
     display: 'flex',
