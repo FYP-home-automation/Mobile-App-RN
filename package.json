@@ -35,6 +35,7 @@
     "react-native-svg": "^12.1.0",
     "react-native-svg-transformer": "^0.14.3",
     "react-native-svg-uri": "^1.2.3",
+    "react-native-tab-view": "^2.15.2",
     "react-native-unimodules": "~0.10.1",
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.4.0",
