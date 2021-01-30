@@ -2,14 +2,13 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 import { setNumber } from '../redux/actions/roomAction';
+import { IndoorTrackingHeader } from 'HomeAutomation/src/containers';
 import { Text, View, Button } from 'react-native';
 
-const IndoorTrackingScreen = ({ onClick, number }) => {
+const IndoorTrackingScreen = ({ onClick, number, navigation }) => {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Indoor tracking Screen</Text>
-      <Button title="testing" onPress={() => onClick(number + 1)}></Button>
-      <Text>{number}</Text>
+    <View>
+      <IndoorTrackingHeader navigation={navigation}></IndoorTrackingHeader>
     </View>
   );
 };
