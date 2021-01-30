@@ -4,9 +4,9 @@ import React from 'react';
 import {
   HomeScreen,
   RoomScreen,
-  UsageGraphScreen,
+  IndoorTrackingScreen,
 } from 'HomeAutomation/src/screens';
-import { Home, Room, UsageGraph } from 'HomeAutomation/src/constants';
+import { Home, Room, IndoorTracking } from 'HomeAutomation/src/constants';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -43,7 +43,10 @@ export default function App() {
         >
           <Stack.Screen name={Home} component={HomeScreen} />
           <Stack.Screen name={Room} component={RoomScreen} />
-          <Stack.Screen name={UsageGraph} component={UsageGraphScreen} />
+          <Stack.Screen
+            name={IndoorTracking}
+            component={IndoorTrackingScreen}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
