@@ -5,17 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon } from 'native-base';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
-const SetupTab = () => (
-  <View style={[styles.scene, { backgroundColor: '#ff4081', flex: 1 }]}>
-    <Text>testing</Text>
-  </View>
-);
-
-const TrackingTab = () => (
-  <View style={[styles.scene, { backgroundColor: '#673ab7', flex: 1 }]}>
-    <Text>testing</Text>
-  </View>
-);
+import { SetupTab, TrackingTab } from 'HomeAutomation/src/containers';
 
 const initialLayout = { width: Dimensions.get('window').width };
 

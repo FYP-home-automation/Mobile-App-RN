@@ -2,12 +2,14 @@ import Header from './Header/Header.js';
 import LivingSpaces from './LivingSpaces/LivingSpaces.js';
 import RoomStatsBar from './RoomStatsBar/RoomStatsBar';
 import RoomActiveDevices from './RoomActiveDevices/RoomActiveDevices';
-import IndoorTrackingHeader from './IndoorTrackingHeader/IndoorTrackingHeader';
+import SetupTab from './IndoorTracking/SetupTab';
+import TrackingTab from './IndoorTracking/TrackingTab';
 
 export {
   Header,
   LivingSpaces,
   RoomStatsBar,
   RoomActiveDevices,
-  IndoorTrackingHeader,
+  SetupTab,
+  TrackingTab,
 };
