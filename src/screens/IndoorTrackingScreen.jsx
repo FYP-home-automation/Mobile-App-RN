@@ -6,13 +6,13 @@ import { Icon } from 'native-base';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
 const SetupTab = () => (
-  <View style={[styles.scene, { backgroundColor: '#ff4081' }]}>
+  <View style={[styles.scene, { backgroundColor: '#ff4081', flex: 1 }]}>
     <Text>testing</Text>
   </View>
 );
 
-const Tracking = () => (
-  <View style={[styles.scene, { backgroundColor: '#673ab7' }]}>
+const TrackingTab = () => (
+  <View style={[styles.scene, { backgroundColor: '#673ab7', flex: 1 }]}>
     <Text>testing</Text>
   </View>
 );
@@ -23,12 +23,12 @@ const IndoorTrackingScreen = ({ navigation }) => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: 'Setup', title: 'Setup' },
-    { key: 'Location', title: 'Tracking' },
+    { key: 'Tracking', title: 'Tracking' },
   ]);
 
   const renderScene = SceneMap({
     Setup: SetupTab,
-    Location: Tracking,
+    Tracking: TrackingTab,
   });
 
   const renderTabBar = props => (
@@ -43,7 +43,7 @@ const IndoorTrackingScreen = ({ navigation }) => {
   );
 
   return (
-    <View>
+    <View style={{ display: 'flex' }}>
       <View style={styles.container}>
         <SafeAreaView style={styles.mainMenu}>
           <View style={styles.backButtonContainer}>
@@ -60,7 +60,6 @@ const IndoorTrackingScreen = ({ navigation }) => {
       </View>
       <View style={styles.tabViewContainer}>
         <TabView
-          style={styles.tabView}
           navigationState={{ index, routes }}
           renderScene={renderScene}
           onIndexChange={setIndex}
@@ -79,7 +78,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   tabViewContainer: {
-    height: 1000,
+    height: '100%',
   },
   backButtonContainer: {
     width: 55,
