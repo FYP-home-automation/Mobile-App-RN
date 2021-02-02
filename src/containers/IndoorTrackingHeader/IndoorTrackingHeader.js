@@ -85,14 +85,10 @@ const IndoorTrackingHeader = ({ navigation }) => {
 export default IndoorTrackingHeader;
 
 const styles = StyleSheet.create({
-  tabView: {
-    flex: 1,
-  },
   scene: {
     flex: 1,
   },
   tabViewContainer: {
-    // height: 100,
     flex: 1,
   },
   backButtonContainer: {
