@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
-
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
 import { Icon } from 'native-base';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 import { Room } from 'HomeAutomation/src/constants';
 import Carousel from 'react-native-snap-carousel';
@@ -18,10 +16,24 @@ import { setActiveRoomID } from 'HomeAutomation/src/redux/actions';
 
 import { connect } from 'react-redux';
 
-const LivingSpaces = ({ navigation, roomList, setActiveRoomID }) => {
+const skeletonDummyData = [
+  {
+    title: 'Item 1',
+    text: 'Text 1',
+  },
+  {
+    title: 'Item 2',
+    text: 'Text 2',
+  },
+];
+
+const LivingSpaces = ({ navigation, roomList, setActiveRoomID, loading }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const countNumDevice = gateways => {
+    if (!gateways) {
+      return 0;
+    }
     let count = 0;
 
     gateways.map(gateway => {
@@ -40,21 +52,37 @@ const LivingSpaces = ({ navigation, roomList, setActiveRoomID }) => {
     };
 
     return (
-      <TouchableOpacity onPress={pressRoom}>
-        <ImageBackground
-          source={roomTypeImageMapper[room.room_type]}
-          style={styles.imageBackground}
-          imageStyle={{ borderRadius: 15 }}
-        >
-          <Text style={styles.roomName}>{capitalize(room.name)}</Text>
-          <Text style={styles.roomType}>
-            {room.room_type !== 'None' ? room.room_type : 'Room'}
-          </Text>
-          <Text style={styles.devices}>
-            {numDevices ? `${numDevices}` : 'No'} Devices Present
-          </Text>
-        </ImageBackground>
-      </TouchableOpacity>
+      <>
+        {loading ? (
+          <SkeletonPlaceholder>
+            <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
+              <SkeletonPlaceholder.Item marginLeft={25}>
+                <SkeletonPlaceholder.Item
+                  width={230}
+                  height={230}
+                  borderRadius={15}
+                />
+              </SkeletonPlaceholder.Item>
+            </SkeletonPlaceholder.Item>
+          </SkeletonPlaceholder>
+        ) : (
+          <TouchableOpacity onPress={pressRoom}>
+            <ImageBackground
+              source={roomTypeImageMapper[room.room_type]}
+              style={styles.imageBackground}
+              imageStyle={{ borderRadius: 15 }}
+            >
+              <Text style={styles.roomName}>{capitalize(room.name)}</Text>
+              <Text style={styles.roomType}>
+                {room.room_type !== 'None' ? room.room_type : 'Room'}
+              </Text>
+              <Text style={styles.devices}>
+                {numDevices ? `${numDevices}` : 'No'} Devices Present
+              </Text>
+            </ImageBackground>
+          </TouchableOpacity>
+        )}
+      </>
     );
   };
 
@@ -72,7 +100,7 @@ const LivingSpaces = ({ navigation, roomList, setActiveRoomID }) => {
       <View style={styles.carousel}>
         <Carousel
           layout={'default'}
-          data={roomList}
+          data={loading ? skeletonDummyData : roomList}
           sliderWidth={260}
           itemWidth={260}
           renderItem={renderItem}

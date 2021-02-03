@@ -11,7 +11,7 @@ import electricity from 'HomeAutomation/src/assets/electricity.png';
 import bill from 'HomeAutomation/src/assets/bill.png';
 import { connect } from 'react-redux';
 
-const HomeScreen = ({ navigation, fetchAllRooms, roomList }) => {
+const HomeScreen = ({ navigation, fetchAllRooms, roomList, loading }) => {
   useEffect(() => {
     fetchAllRooms();
   }, []);
@@ -35,7 +35,11 @@ const HomeScreen = ({ navigation, fetchAllRooms, roomList }) => {
           category="This Month Potential Bill"
         />
       </View>
-      <LivingSpaces navigation={navigation} roomList={roomList} />
+      <LivingSpaces
+        navigation={navigation}
+        roomList={roomList}
+        loading={loading}
+      />
       <View style={styles.usageGraphContainer}>
         <Button
           onPress={() => navigation.navigate(IndoorTracking)}
@@ -51,6 +55,7 @@ const HomeScreen = ({ navigation, fetchAllRooms, roomList }) => {
 
 const mapStateToProps = ({ room }) => ({
   roomList: room.roomList,
+  loading: room.loading,
 });
 
 const mapDispatchToProps = {
