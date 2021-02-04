@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon } from 'native-base';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 import { DeviceBox } from 'HomeAutomation/src/components';
 import { StyleSheet, Text, View } from 'react-native';
@@ -10,10 +11,47 @@ import { DeviceModal } from 'HomeAutomation/src/components';
 const RoomActiveDevices = ({ room, activeRoomId }) => {
   const devices = room.gateways.map(gateway => gateway.devices);
   const [modalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 650);
+  }, []);
 
   if (devices.length <= 0) {
     return null;
   }
+
+  const dummyDevice = [null, null, null, null, null, null];
+
+  const renderList = () => {
+    if (loading) {
+      return dummyDevice.map(item => (
+        <SkeletonPlaceholder>
+          <SkeletonPlaceholder.Item
+            width={90}
+            height={90}
+            borderRadius={10}
+            margin={10}
+          />
+        </SkeletonPlaceholder>
+      ));
+    } else {
+      return devices[0].map(device => (
+        <DeviceBox
+          name={device.name}
+          type={device.device_type}
+          on={true}
+          onPress={() => {
+            // const newData = [...dummyData];
+            // newData[id].on = !newData[id].on;
+            // setDummyData(newData);
+          }}
+        />
+      ));
+    }
+  };
 
   // TODO: Integrate With Back-end
   return (
@@ -29,18 +67,7 @@ const RoomActiveDevices = ({ room, activeRoomId }) => {
           </TouchableOpacity>
         </View>
         <View style={{ ...styles.deviceBoxContainer, ...styles.flexStyle }}>
-          {devices[0].map(device => (
-            <DeviceBox
-              name={device.name}
-              type={device.device_type}
-              on={true}
-              onPress={() => {
-                // const newData = [...dummyData];
-                // newData[id].on = !newData[id].on;
-                // setDummyData(newData);
-              }}
-            />
-          ))}
+          {renderList()}
         </View>
       </View>
       <DeviceModal
