@@ -16,7 +16,6 @@ const initialState = {
 const roomReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOADING_ROOM_LIST:
-      console.log('inside loading room list');
       return {
         ...state,
         loading: true,

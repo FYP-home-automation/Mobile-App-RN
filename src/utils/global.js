@@ -33,3 +33,11 @@ export const deviceIconNameMapper = {
   Tv: 'tv',
   Printer: 'md-print',
 };
+
+export const roomNumColorMapper = {
+  0: 'black',
+  1: 'orange',
+  2: 'red',
+  3: 'yellow',
+  4: 'pink',
+};
