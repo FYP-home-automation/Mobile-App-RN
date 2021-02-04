@@ -39,7 +39,7 @@ const SetupTab = () => {
         {roomnums.map(roomCol => (
           <View>
             {roomCol.map(roomNum => (
-              <View style={styles.testing(roomNum, colorMapper)}></View>
+              <View style={styles.room(roomNum, colorMapper)}></View>
             ))}
           </View>
         ))}
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
   },
-  testing: (roomNum, colorMapper) => ({
+  room: (roomNum, colorMapper) => ({
     width: 2,
     height: 2,
     backgroundColor: colorMapper[roomNum] ? colorMapper[roomNum] : 'white',
