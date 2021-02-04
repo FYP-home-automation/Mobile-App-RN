@@ -1,26 +1,45 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import data from '../../assets/rooms.json';
+import { roomNumColorMapper } from 'HomeAutomation/src/utils/global';
 
 const SetupTab = () => {
-  console.log('inside');
-  console.log(data.roomnums.length);
-  console.log(data.roomnums[0].length);
-  console.log(data.roomnums[2].length);
-
   const roomnums = data.roomnums;
-  console.log(roomnums.length);
-  console.log(roomnums[0].length);
+  const [colorMapper, setColorMapper] = useState(roomNumColorMapper);
 
-  const slicedRoomnums = roomnums.slice(1, 20);
+  useEffect(() => {
+    setInterval(() => {
+      const dummyColor = [
+        '#FFA500',
+        '#0000FF',
+        '#800080',
+        '#808080',
+        '#00FFFF',
+      ];
+      const newColorMapper = { ...colorMapper };
+
+      for (let i = 1; i < 8; i++) {
+        const color = dummyColor[getRandomInt(0, 4)];
+        newColorMapper[i] = color;
+      }
+
+      setColorMapper(newColorMapper);
+    }, 2000);
+  }, []);
+
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.flexRow}>
-        {slicedRoomnums.map(roomCol => (
+        {roomnums.map(roomCol => (
           <View>
-            {roomCol.map(room => (
-              <View style={styles.testing}></View>
+            {roomCol.map(roomNum => (
+              <View style={styles.testing(roomNum, colorMapper)}></View>
             ))}
           </View>
         ))}
@@ -41,11 +60,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  testing: {
-    width: 1,
-    height: 1,
-    backgroundColor: 'black',
-  },
+  testing: (roomNum, colorMapper) => ({
+    width: 2,
+    height: 2,
+    backgroundColor: colorMapper[roomNum] ? colorMapper[roomNum] : 'white',
+  }),
 });
 
 export default SetupTab;

@@ -41,7 +41,6 @@ export const setActiveRoomID = roomId => {
 
 export const fetchAllRooms = () => {
   return async function (dispatch) {
-    // console.log('inside lalla');
     dispatch({
       type: LOADING_ROOM_LIST,
     });
