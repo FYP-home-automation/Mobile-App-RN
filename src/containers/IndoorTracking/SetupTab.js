@@ -52,12 +52,12 @@ const styles = StyleSheet.create({
   flexRow: {
     display: 'flex',
     flexDirection: 'row',
+    marginTop: 100,
   },
   container: {
     flex: 1,
     backgroundColor: '#ff4081',
     display: 'flex',
-    justifyContent: 'center',
     alignItems: 'center',
   },
   testing: (roomNum, colorMapper) => ({
