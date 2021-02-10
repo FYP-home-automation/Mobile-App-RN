@@ -19,10 +19,6 @@ const RoomActiveDevices = ({ room, activeRoomId }) => {
     }, 650);
   }, []);
 
-  if (devices.length <= 0) {
-    return null;
-  }
-
   const dummyDevice = [null, null, null, null, null, null];
 
   const renderList = () => {
@@ -38,6 +34,10 @@ const RoomActiveDevices = ({ room, activeRoomId }) => {
         </SkeletonPlaceholder>
       ));
     } else {
+      if (devices.length <= 0) {
+        return null;
+      }
+
       return devices[0].map(device => (
         <DeviceBox
           name={device.name}
