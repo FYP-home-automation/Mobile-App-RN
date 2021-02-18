@@ -11,13 +11,25 @@ const initialLayout = { width: Dimensions.get('window').width };
 
 const IndoorTrackingScreen = ({ navigation }) => {
   const [index, setIndex] = React.useState(0);
+  const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   const [routes] = React.useState([
     { key: 'Setup', title: 'Setup' },
     { key: 'Tracking', title: 'Tracking' },
   ]);
 
+  const SetupTabProps = () => (
+    <SetupTab
+      image={image}
+      setImage={setImage}
+      loading={loading}
+      setLoading={state => setLoading(state)}
+    ></SetupTab>
+  );
+
   const renderScene = SceneMap({
-    Setup: SetupTab,
+    Setup: SetupTabProps,
     Tracking: TrackingTab,
   });
 
@@ -43,7 +55,9 @@ const IndoorTrackingScreen = ({ navigation }) => {
           </View>
           <Text style={styles.title}>Indoor Tracking</Text>
           <View style={styles.controlGroup}>
-            <Icon style={styles.controlGroupIcon} name="md-refresh" />
+            <TouchableOpacity onPress={() => setImage(null)}>
+              <Icon style={styles.controlGroupIcon} name="md-refresh" />
+            </TouchableOpacity>
             <Icon style={styles.controlGroupIcon} name="ios-trash" />
           </View>
         </SafeAreaView>
@@ -55,6 +69,7 @@ const IndoorTrackingScreen = ({ navigation }) => {
           onIndexChange={setIndex}
           initialLayout={initialLayout}
           renderTabBar={renderTabBar}
+          test={'testing'}
         />
       </View>
     </View>
