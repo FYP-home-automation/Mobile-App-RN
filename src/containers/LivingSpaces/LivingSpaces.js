@@ -10,6 +10,7 @@ import Carousel from 'react-native-snap-carousel';
 import {
   capitalize,
   roomTypeImageMapper,
+  countNumDevice,
 } from 'HomeAutomation/src/utils/global';
 import { RoomModal } from 'HomeAutomation/src/components';
 import { setActiveRoomID } from 'HomeAutomation/src/redux/actions';
@@ -29,19 +30,6 @@ const skeletonDummyData = [
 
 const LivingSpaces = ({ navigation, roomList, setActiveRoomID, loading }) => {
   const [modalVisible, setModalVisible] = useState(false);
-
-  const countNumDevice = gateways => {
-    if (!gateways) {
-      return 0;
-    }
-    let count = 0;
-
-    gateways.map(gateway => {
-      count += gateway?.devices.length;
-    });
-
-    return count;
-  };
 
   const renderItem = ({ item: room, index }) => {
     const numDevices = countNumDevice(room.gateways);

@@ -4,6 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon } from 'native-base';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
+import { countNumDevice } from 'HomeAutomation/src/utils/global';
 import { DeviceBox } from 'HomeAutomation/src/components';
 import { StyleSheet, Text, View } from 'react-native';
 import { DeviceModal } from 'HomeAutomation/src/components';
@@ -13,6 +14,7 @@ const RoomActiveDevices = ({ room, activeRoomId }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  const numDevices = countNumDevice(room.gateways);
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -58,7 +60,11 @@ const RoomActiveDevices = ({ room, activeRoomId }) => {
     <View style={styles.flexStyle}>
       <View style={styles.container}>
         <View style={styles.roomDeviceTopSection}>
-          <Text style={styles.title}>5 Active Devices</Text>
+          <Text style={styles.title}>
+            {numDevices
+              ? `${numDevices} Active Devices`
+              : 'No Active Devices Present'}
+          </Text>
           <TouchableOpacity
             style={styles.button}
             onPress={() => setModalVisible(true)}

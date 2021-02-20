@@ -6,6 +6,20 @@ import room from 'HomeAutomation/src/assets/room.jpg';
 
 export const capitalize = string => string[0].toUpperCase() + string.slice(1);
 
+// gateways
+export const countNumDevice = gateways => {
+  if (!gateways) {
+    return 0;
+  }
+  let count = 0;
+
+  gateways.map(gateway => {
+    count += gateway?.devices.length;
+  });
+
+  return count;
+};
+
 export const statsSymbolMappper = {
   temp: '°C',
   humidity: '%',
