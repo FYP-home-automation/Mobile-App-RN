@@ -55,3 +55,11 @@ export const roomNumColorMapper = {
   3: 'yellow',
   4: 'pink',
 };
+
+export const roomNumRoomTypeMapper = {
+  0: 'Kitchen',
+  1: 'Living Room',
+  2: 'Bathroom',
+  3: 'Reading room',
+  4: 'Bedroom',
+};
