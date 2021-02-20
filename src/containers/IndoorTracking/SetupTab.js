@@ -2,6 +2,8 @@ import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import data from '../../assets/rooms.json';
 import { roomNumColorMapper } from 'HomeAutomation/src/utils/global';
+import { RoomLegends } from 'HomeAutomation/src/components';
+
 import { Icon } from 'native-base';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as ImagePicker from 'expo-image-picker';
@@ -53,19 +55,47 @@ const SetupTab = ({ image, setImage }) => {
   };
 
   const renderSteps = () => {
+    // Show View when loading is true
+    if (loading) {
+      return (
+        <AnimatedLoader
+          visible={true}
+          overlayColor="rgba(255,255,255,0.75)"
+          source={require('../../assets/48401-ox-lantern-zodiac-lunar-new-year-2021.json')}
+          animationStyle={styles.lottie}
+          speed={1}
+        >
+          <Text style={styles.waitText}>Wait a moment ...</Text>
+        </AnimatedLoader>
+      );
+    }
+
+    // Show View when image has been uploaded
     if (image) {
       return (
-        <View style={styles.flexRow}>
-          {roomnums.map(roomCol => (
-            <View>
-              {roomCol.map(roomNum => (
-                <View style={styles.room(roomNum, colorMapper)}></View>
-              ))}
-            </View>
-          ))}
+        <View>
+          <View style={styles.topSection}>
+            <Text style={styles.topSectionFont}>
+              User Position: Living Room 1
+            </Text>
+          </View>
+
+          <View style={styles.flexRow}>
+            {roomnums.map(roomCol => (
+              <View>
+                {roomCol.map(roomNum => (
+                  <View style={styles.room(roomNum, colorMapper)}></View>
+                ))}
+              </View>
+            ))}
+          </View>
+
+          <RoomLegends />
         </View>
       );
     }
+
+    // Show View when image has not been uploaded/ uploading image screen
     return (
       <TouchableOpacity
         onPress={() => {
@@ -84,26 +114,22 @@ const SetupTab = ({ image, setImage }) => {
     );
   };
 
-  return (
-    <View style={styles.container}>
-      {loading ? (
-        <AnimatedLoader
-          visible={true}
-          overlayColor="rgba(255,255,255,0.75)"
-          source={require('../../assets/48401-ox-lantern-zodiac-lunar-new-year-2021.json')}
-          animationStyle={styles.lottie}
-          speed={1}
-        >
-          <Text>Doing something...</Text>
-        </AnimatedLoader>
-      ) : (
-        renderSteps()
-      )}
-    </View>
-  );
+  return <View style={styles.container}>{renderSteps()}</View>;
 };
 
 const styles = StyleSheet.create({
+  topSectionFont: {
+    fontWeight: '500',
+    textAlign: 'center',
+    fontSize: 17.5,
+  },
+  topSection: {
+    marginTop: 30,
+  },
+  waitText: {
+    fontWeight: '400',
+    fontSize: 15.5,
+  },
   lottie: {
     width: 300,
     height: 300,
@@ -118,6 +144,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+
     textAlign: 'center',
   },
   uploadIcon: {
@@ -126,7 +153,8 @@ const styles = StyleSheet.create({
   flexRow: {
     display: 'flex',
     flexDirection: 'row',
-    marginTop: 100,
+    marginTop: 30,
+    justifyContent: 'center',
   },
   container: {
     flex: 1,
