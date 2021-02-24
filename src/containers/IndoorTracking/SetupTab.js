@@ -10,10 +10,16 @@ import * as ImagePicker from 'expo-image-picker';
 
 import AnimatedLoader from 'react-native-animated-loader';
 
+import LottieView from 'lottie-react-native';
+
+const userLocationBoxSize = 40;
+
 const SetupTab = ({ image, setImage }) => {
   const roomnums = data.roomnums;
   const [colorMapper, setColorMapper] = useState(roomNumColorMapper);
   const [loading, setLoading] = useState(false);
+  const [xPos, setXPos] = useState(0);
+  const [yPos, setYPos] = useState(0);
 
   useEffect(() => {
     setInterval(() => {
@@ -32,7 +38,7 @@ const SetupTab = ({ image, setImage }) => {
       }
 
       setColorMapper(newColorMapper);
-    }, 2000);
+    }, 200000);
   }, []);
 
   function getRandomInt(min, max) {
@@ -79,15 +85,24 @@ const SetupTab = ({ image, setImage }) => {
               User Position: Living Room 1
             </Text>
           </View>
+          <View style={styles.mapContainer}>
+            <View style={styles.flexRow}>
+              {roomnums.map(roomCol => (
+                <View>
+                  {roomCol.map(roomNum => (
+                    <View style={styles.room(roomNum, colorMapper)}></View>
+                  ))}
+                </View>
+              ))}
 
-          <View style={styles.flexRow}>
-            {roomnums.map(roomCol => (
-              <View>
-                {roomCol.map(roomNum => (
-                  <View style={styles.room(roomNum, colorMapper)}></View>
-                ))}
+              <View style={styles.userIcon}>
+                <LottieView
+                  source={require('../../assets/5291-simple-radar-blink-animation-for-lottie.json')}
+                  autoPlay
+                  loop
+                />
               </View>
-            ))}
+            </View>
           </View>
 
           <RoomLegends />
@@ -118,6 +133,15 @@ const SetupTab = ({ image, setImage }) => {
 };
 
 const styles = StyleSheet.create({
+  userIcon: {
+    width: userLocationBoxSize,
+    height: userLocationBoxSize,
+    position: 'absolute',
+    borderWidth: 1,
+    borderColor: 'white',
+    top: 10 - userLocationBoxSize / 2, // (userLocationBoxSize / 2) is for the offset, so that icon start at center correctly
+    left: 10 - userLocationBoxSize / 2,
+  },
   topSectionFont: {
     fontWeight: '500',
     textAlign: 'center',
@@ -154,7 +178,12 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     marginTop: 30,
-    justifyContent: 'center',
+    // justifyContent: 'center',
+    // position: 'relative',
+  },
+  mapContainer: {
+    display: 'flex',
+    alignItems: 'center',
   },
   container: {
     flex: 1,
