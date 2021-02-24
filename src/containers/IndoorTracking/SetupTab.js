@@ -18,8 +18,8 @@ const SetupTab = ({ image, setImage }) => {
   const roomnums = data.roomnums;
   const [colorMapper, setColorMapper] = useState(roomNumColorMapper);
   const [loading, setLoading] = useState(false);
-  const [xPos, setXPos] = useState(0);
-  const [yPos, setYPos] = useState(0);
+  const [xPos, setXPos] = useState(120);
+  const [yPos, setYPos] = useState(130);
 
   useEffect(() => {
     setInterval(() => {
@@ -39,6 +39,21 @@ const SetupTab = ({ image, setImage }) => {
 
       setColorMapper(newColorMapper);
     }, 200000);
+
+    setInterval(() => {
+      setXPos(prevXPos => {
+        if (prevXPos + 5 <= 256) {
+          return prevXPos + 5;
+        }
+        return prevXPos;
+      });
+      setYPos(prevYPos => {
+        if (prevYPos + 5 <= 256) {
+          return prevYPos + 5;
+        }
+        return prevYPos;
+      });
+    }, 1000);
   }, []);
 
   function getRandomInt(min, max) {
@@ -95,7 +110,7 @@ const SetupTab = ({ image, setImage }) => {
                 </View>
               ))}
 
-              <View style={styles.userIcon}>
+              <View style={styles.userIcon(xPos, yPos)}>
                 <LottieView
                   source={require('../../assets/5291-simple-radar-blink-animation-for-lottie.json')}
                   autoPlay
@@ -133,15 +148,15 @@ const SetupTab = ({ image, setImage }) => {
 };
 
 const styles = StyleSheet.create({
-  userIcon: {
+  userIcon: (xPos, yPos) => ({
     width: userLocationBoxSize,
     height: userLocationBoxSize,
     position: 'absolute',
     borderWidth: 1,
     borderColor: 'white',
-    top: 10 - userLocationBoxSize / 2, // (userLocationBoxSize / 2) is for the offset, so that icon start at center correctly
-    left: 10 - userLocationBoxSize / 2,
-  },
+    top: xPos - userLocationBoxSize / 2, // (userLocationBoxSize / 2) is for the offset, so that icon start at center correctly
+    left: yPos - userLocationBoxSize / 2,
+  }),
   topSectionFont: {
     fontWeight: '500',
     textAlign: 'center',
@@ -168,7 +183,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-
     textAlign: 'center',
   },
   uploadIcon: {
@@ -178,8 +192,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     marginTop: 30,
-    // justifyContent: 'center',
-    // position: 'relative',
   },
   mapContainer: {
     display: 'flex',
