@@ -39,7 +39,7 @@ export default function App() {
           screenOptions={{
             headerShown: false,
           }}
-          initialRouteName={Home}
+          initialRouteName={IndoorTracking}
         >
           <Stack.Screen name={Home} component={HomeScreen} />
           <Stack.Screen name={Room} component={RoomScreen} />
