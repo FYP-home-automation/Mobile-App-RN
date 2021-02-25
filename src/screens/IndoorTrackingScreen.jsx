@@ -28,9 +28,18 @@ const IndoorTrackingScreen = ({ navigation }) => {
     ></SetupTab>
   );
 
+  const TrackingTabProps = () => (
+    <TrackingTab
+      image={image}
+      setImage={setImage}
+      loading={loading}
+      setLoading={state => setLoading(state)}
+    ></TrackingTab>
+  );
+
   const renderScene = SceneMap({
     Setup: SetupTabProps,
-    Tracking: TrackingTab,
+    Tracking: TrackingTabProps,
   });
 
   const renderTabBar = props => (
