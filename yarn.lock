@@ -12747,6 +12747,13 @@ react-native-document-picker@^5.0.0:
   resolved "https://registry.yarnpkg.com/react-native-document-picker/-/react-native-document-picker-5.0.0.tgz#15c2557edd6c3ebc129b529e52556ec378c99853"
   integrity sha512-VL1fcYyAx5d9/JlGI3hyuZm3JRGPHAYaU6rKD2Kn3K4b11xB4NdjVvtAiRRFEwDm8BCBKxDoTXRWoGYOhtefyQ==
 
+react-native-draggable@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-draggable/-/react-native-draggable-3.3.0.tgz#6f07c3ad4cff018bf0455fc48dbfe5f0af9b72cd"
+  integrity sha512-aU20CaKBmzXrwE9eTJZ+GDOr52mXLchg5Vydbx5rz8nYXlN+ppHIoTPgyXduyWNwpZ/DR6tyFtMwdgUHpuN6oA==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-drawer@2.5.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/react-native-drawer/-/react-native-drawer-2.5.1.tgz#08b9314184f48c724f1b467f8859797369798654"

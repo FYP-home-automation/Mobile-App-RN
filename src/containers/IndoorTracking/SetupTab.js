@@ -1,18 +1,15 @@
-import React, { useEffect, useState, useContext, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import data from '../../assets/rooms.json';
 import { roomNumColorMapper } from 'HomeAutomation/src/utils/global';
 import { RoomLegends } from 'HomeAutomation/src/components';
 
-import { Icon } from 'native-base';
+import { Icon, Button } from 'native-base';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as ImagePicker from 'expo-image-picker';
 
 import AnimatedLoader from 'react-native-animated-loader';
-
-import LottieView from 'lottie-react-native';
-
-const userLocationBoxSize = 40;
+import Draggable from 'react-native-draggable';
 
 const SetupTab = ({ image, setImage }) => {
   const roomnums = data.roomnums;
@@ -75,6 +72,10 @@ const SetupTab = ({ image, setImage }) => {
     }
   };
 
+  const onSubmit = () => {
+    console.log('testings');
+  };
+
   const renderSteps = () => {
     // Show View when loading is true
     if (loading) {
@@ -105,18 +106,44 @@ const SetupTab = ({ image, setImage }) => {
             </View>
           </View>
           <View style={styles.mapContainer}>
-            <View style={styles.flexRow}>
-              {roomnums.map(roomCol => (
-                <View>
-                  {roomCol.map(roomNum => (
-                    <View style={styles.room(roomNum, colorMapper)}></View>
-                  ))}
-                </View>
-              ))}
+            <View>
+              <View style={styles.flexRow}>
+                {roomnums.map(roomCol => (
+                  <View>
+                    {roomCol.map(roomNum => (
+                      <View style={styles.room(roomNum, colorMapper)}></View>
+                    ))}
+                  </View>
+                ))}
+              </View>
+              <Draggable
+                x={1}
+                y={1}
+                minX={0}
+                minY={0}
+                maxX={256}
+                maxY={256}
+                renderColor="red"
+                renderText="B"
+                onRelease={e => {
+                  console.log(
+                    'location X: ',
+                    e.nativeEvent
+                    // ' location Y: ',
+                    // e.nativeEvent
+                  );
+                  return e;
+                }}
+              />
             </View>
           </View>
 
           <RoomLegends />
+          <View style={styles.submitContainer}>
+            <Button style={styles.submitButton} onPress={() => onSubmit()}>
+              <Text style={styles.submitText}>Submit Location</Text>
+            </Button>
+          </View>
         </View>
       );
     }
@@ -144,6 +171,18 @@ const SetupTab = ({ image, setImage }) => {
 };
 
 const styles = StyleSheet.create({
+  submitContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 25,
+  },
+  submitButton: {
+    backgroundColor: '#05FFD2',
+  },
+  submitText: {
+    padding: 10,
+  },
   outerInstructionBox: {
     display: 'flex',
     alignItems: 'center',
@@ -186,11 +225,11 @@ const styles = StyleSheet.create({
   flexRow: {
     display: 'flex',
     flexDirection: 'row',
-    marginTop: 30,
   },
   mapContainer: {
     display: 'flex',
     alignItems: 'center',
+    marginTop: 30,
   },
   container: {
     flex: 1,
