@@ -18,7 +18,7 @@ const SetupTab = ({ image, setImage }) => {
   const roomnums = data.roomnums;
   const [colorMapper, setColorMapper] = useState(roomNumColorMapper);
   const [loading, setLoading] = useState(false);
-  const [xPos, setXPos] = useState(120);
+  const [xPos, setXPos] = useState(100);
   const [yPos, setYPos] = useState(130);
 
   useEffect(() => {
@@ -43,13 +43,13 @@ const SetupTab = ({ image, setImage }) => {
     setInterval(() => {
       setXPos(prevXPos => {
         if (prevXPos + 5 <= 256) {
-          return prevXPos + 5;
+          return prevXPos + 3;
         }
         return prevXPos;
       });
       setYPos(prevYPos => {
         if (prevYPos + 5 <= 256) {
-          return prevYPos + 5;
+          return prevYPos + 3;
         }
         return prevYPos;
       });
@@ -152,8 +152,6 @@ const styles = StyleSheet.create({
     width: userLocationBoxSize,
     height: userLocationBoxSize,
     position: 'absolute',
-    borderWidth: 1,
-    borderColor: 'white',
     top: xPos - userLocationBoxSize / 2, // (userLocationBoxSize / 2) is for the offset, so that icon start at center correctly
     left: yPos - userLocationBoxSize / 2,
   }),
