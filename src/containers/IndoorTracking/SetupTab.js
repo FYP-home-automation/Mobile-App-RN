@@ -96,9 +96,13 @@ const SetupTab = ({ image, setImage }) => {
       return (
         <View>
           <View style={styles.topSection}>
-            <Text style={styles.topSectionFont}>
-              User Position: Living Room 1
-            </Text>
+            <Text style={styles.topSectionFont}>Setup Instruction:</Text>
+          </View>
+          <View style={styles.outerInstructionBox}>
+            <View style={styles.instructionBox}>
+              <Text>1. Place Bluetooth Tower location to correct location</Text>
+              <Text>2. Submit location and go to tracking tab</Text>
+            </View>
           </View>
           <View style={styles.mapContainer}>
             <View style={styles.flexRow}>
@@ -140,6 +144,14 @@ const SetupTab = ({ image, setImage }) => {
 };
 
 const styles = StyleSheet.create({
+  outerInstructionBox: {
+    display: 'flex',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  instructionBox: {
+    width: '70%',
+  },
   topSectionFont: {
     fontWeight: '500',
     textAlign: 'center',
