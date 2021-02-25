@@ -17,7 +17,6 @@ const userLocationBoxSize = 40;
 const TrackingTab = ({ image, setImage }) => {
   const roomnums = data.roomnums;
   const [colorMapper, setColorMapper] = useState(roomNumColorMapper);
-  const [loading, setLoading] = useState(false);
   const [xPos, setXPos] = useState(100);
   const [yPos, setYPos] = useState(130);
 
@@ -63,21 +62,6 @@ const TrackingTab = ({ image, setImage }) => {
   }
 
   const renderSteps = () => {
-    // Show View when loading is true
-    if (loading) {
-      return (
-        <AnimatedLoader
-          visible={true}
-          overlayColor="rgba(255,255,255,0.75)"
-          source={require('../../assets/48401-ox-lantern-zodiac-lunar-new-year-2021.json')}
-          animationStyle={styles.lottie}
-          speed={1}
-        >
-          <Text style={styles.waitText}>Wait a moment ...</Text>
-        </AnimatedLoader>
-      );
-    }
-
     // Show View when image has been uploaded
     if (image) {
       return (

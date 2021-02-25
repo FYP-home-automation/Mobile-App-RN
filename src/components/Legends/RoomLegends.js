@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   }),
   container: {
-    borderWidth: 2,
+    borderWidth: 1,
     padding: 10,
     borderRadius: 5,
     flex: 5,
