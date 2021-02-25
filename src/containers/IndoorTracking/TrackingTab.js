@@ -62,19 +62,6 @@ const TrackingTab = ({ image, setImage }) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.cancelled) {
-      setImage(result.uri);
-    }
-  };
-
   const renderSteps = () => {
     // Show View when loading is true
     if (loading) {
@@ -125,22 +112,22 @@ const TrackingTab = ({ image, setImage }) => {
       );
     }
 
-    // Show View when image has not been uploaded/ uploading image screen
+    // Show Warning when image hasnt been uploaded
     return (
-      <TouchableOpacity
-        onPress={() => {
-          setLoading(true);
-          setTimeout(() => {
-            pickImage();
-          }, 50);
-        }}
-        style={styles.topMargin}
-      >
-        <View style={styles.uploadBox}>
-          <Icon style={styles.uploadIcon} name="md-cloud-upload" />
-          <Text>Upload your Floorplan here</Text>
+      <View>
+        <View style={{ display: 'flex', alignItems: 'center', marginTop: 0 }}>
+          <LottieView
+            source={require('../../assets/5081-empty-box.json')}
+            autoPlay
+            loop={false}
+            style={styles.emptyBox}
+          />
         </View>
-      </TouchableOpacity>
+        <Text style={styles.setupReminder}>
+          Looks like no floor plan has been uploaded. Please setup floor plan at
+          Setup Tab.
+        </Text>
+      </View>
     );
   };
 
@@ -148,6 +135,13 @@ const TrackingTab = ({ image, setImage }) => {
 };
 
 const styles = StyleSheet.create({
+  emptyBox: {
+    height: 200,
+  },
+  setupReminder: {
+    padding: 29,
+    fontSize: 15,
+  },
   userIcon: (xPos, yPos) => ({
     width: userLocationBoxSize,
     height: userLocationBoxSize,
@@ -170,9 +164,6 @@ const styles = StyleSheet.create({
   lottie: {
     width: 300,
     height: 300,
-  },
-  topMargin: {
-    marginTop: 100,
   },
   uploadBox: {
     borderWidth: 2,
