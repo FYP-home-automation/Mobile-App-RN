@@ -109,14 +109,6 @@ const SetupTab = ({ image, setImage }) => {
                   ))}
                 </View>
               ))}
-
-              <View style={styles.userIcon(xPos, yPos)}>
-                <LottieView
-                  source={require('../../assets/5291-simple-radar-blink-animation-for-lottie.json')}
-                  autoPlay
-                  loop
-                />
-              </View>
             </View>
           </View>
 
@@ -148,13 +140,6 @@ const SetupTab = ({ image, setImage }) => {
 };
 
 const styles = StyleSheet.create({
-  userIcon: (xPos, yPos) => ({
-    width: userLocationBoxSize,
-    height: userLocationBoxSize,
-    position: 'absolute',
-    top: xPos - userLocationBoxSize / 2, // (userLocationBoxSize / 2) is for the offset, so that icon start at center correctly
-    left: yPos - userLocationBoxSize / 2,
-  }),
   topSectionFont: {
     fontWeight: '500',
     textAlign: 'center',
