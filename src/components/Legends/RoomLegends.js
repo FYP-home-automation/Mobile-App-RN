@@ -5,15 +5,16 @@ import {
   roomNumRoomTypeMapper,
   roomNumColorMapper,
 } from 'HomeAutomation/src/utils/global';
+import data from '../../assets/rooms.json';
 
 const RoomLegends = ({}) => {
-  const roomsNum = [0, 1, 2, 3, 4];
+  const roomdict = data.roomdict;
 
   const BoxWithType = num => {
     return (
       <View style={styles.boxContainer}>
         <View style={styles.box(num)}></View>
-        <Text>{roomNumRoomTypeMapper[num]}</Text>
+        <Text>{roomdict[num]}</Text>
       </View>
     );
   };
@@ -25,7 +26,8 @@ const RoomLegends = ({}) => {
         <View>
           <Text style={styles.title}>Legends</Text>
           <View style={styles.legends}>
-            {roomsNum.map(num => BoxWithType(num))}
+            {/* {roomsNum.map(num => BoxWithType(num))} */}
+            {Object.keys(roomdict).map(key => BoxWithType(key))}
           </View>
         </View>
       </View>
@@ -50,7 +52,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 2,
-    width: 80,
+    width: 100,
   },
   title: {
     fontWeight: '600',
