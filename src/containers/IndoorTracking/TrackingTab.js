@@ -15,7 +15,7 @@ import LottieView from 'lottie-react-native';
 const userLocationBoxSize = 40;
 
 const TrackingTab = ({ image, setImage }) => {
-  const roomnums = data.roomnums;
+  const roomnums = data.roomtypes;
   const [colorMapper, setColorMapper] = useState(roomNumColorMapper);
   const [xPos, setXPos] = useState(100);
   const [yPos, setYPos] = useState(130);
@@ -177,8 +177,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   room: (roomNum, colorMapper) => ({
-    width: 2,
-    height: 2,
+    width: 4,
+    height: 4,
     backgroundColor: colorMapper[roomNum] ? colorMapper[roomNum] : 'white',
   }),
 });

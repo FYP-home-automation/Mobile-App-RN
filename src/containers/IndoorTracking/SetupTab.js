@@ -12,45 +12,31 @@ import AnimatedLoader from 'react-native-animated-loader';
 import Draggable from 'react-native-draggable';
 
 const SetupTab = ({ image, setImage }) => {
-  const roomnums = data.roomnums;
+  const roomnums = data.roomtypes;
   const [colorMapper, setColorMapper] = useState(roomNumColorMapper);
   const [loading, setLoading] = useState(false);
-  const [xPos, setXPos] = useState(100);
-  const [yPos, setYPos] = useState(130);
+  const [locA, setLocA] = useState(0);
+  const [locB, setLocB] = useState(0);
+  const [locC, setLocC] = useState(0);
 
   useEffect(() => {
-    setInterval(() => {
-      const dummyColor = [
-        '#FFA500',
-        '#0000FF',
-        '#800080',
-        '#808080',
-        '#00FFFF',
-      ];
-      const newColorMapper = { ...colorMapper };
-
-      for (let i = 1; i < 8; i++) {
-        const color = dummyColor[getRandomInt(0, 4)];
-        newColorMapper[i] = color;
-      }
-
-      setColorMapper(newColorMapper);
-    }, 200000);
-
-    setInterval(() => {
-      setXPos(prevXPos => {
-        if (prevXPos + 5 <= 256) {
-          return prevXPos + 3;
-        }
-        return prevXPos;
-      });
-      setYPos(prevYPos => {
-        if (prevYPos + 5 <= 256) {
-          return prevYPos + 3;
-        }
-        return prevYPos;
-      });
-    }, 1000);
+    // Note: example to randomize Color
+    //
+    // setInterval(() => {
+    //   const dummyColor = [
+    //     '#FFA500',
+    //     '#0000FF',
+    //     '#800080',
+    //     '#808080',
+    //     '#00FFFF',
+    //   ];
+    //   const newColorMapper = { ...colorMapper };
+    //   for (let i = 1; i < 8; i++) {
+    //     const color = dummyColor[getRandomInt(0, 4)];
+    //     newColorMapper[i] = color;
+    //   }
+    //   setColorMapper(newColorMapper);
+    // }, 200000);
   }, []);
 
   function getRandomInt(min, max) {
@@ -117,20 +103,21 @@ const SetupTab = ({ image, setImage }) => {
                 ))}
               </View>
               <Draggable
-                x={1}
-                y={1}
+                x={0}
+                y={0}
                 minX={0}
                 minY={0}
                 maxX={256}
                 maxY={256}
+                renderSize={25}
                 renderColor="red"
                 renderText="B"
                 onRelease={e => {
                   console.log(
                     'location X: ',
-                    e.nativeEvent
-                    // ' location Y: ',
-                    // e.nativeEvent
+                    e.nativeEvent.pageX,
+                    'location Y: ',
+                    e.nativeEvent.pageY
                   );
                   return e;
                 }}
@@ -238,8 +225,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   room: (roomNum, colorMapper) => ({
-    width: 2,
-    height: 2,
+    width: 4,
+    height: 4,
     backgroundColor: colorMapper[roomNum] ? colorMapper[roomNum] : 'white',
   }),
 });
