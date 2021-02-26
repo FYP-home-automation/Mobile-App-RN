@@ -11,13 +11,16 @@ import * as ImagePicker from 'expo-image-picker';
 import AnimatedLoader from 'react-native-animated-loader';
 import Draggable from 'react-native-draggable';
 
+const xOffset = 61.5;
+const yOffset = 280;
+
 const SetupTab = ({ image, setImage }) => {
   const roomnums = data.roomtypes;
   const [colorMapper, setColorMapper] = useState(roomNumColorMapper);
   const [loading, setLoading] = useState(false);
-  const [locA, setLocA] = useState(0);
-  const [locB, setLocB] = useState(0);
-  const [locC, setLocC] = useState(0);
+  const [locA, setLocA] = useState({ x: 0, y: 0 });
+  const [locB, setLocB] = useState({ x: 0, y: 0 });
+  const [locC, setLocC] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     // Note: example to randomize Color
@@ -39,11 +42,33 @@ const SetupTab = ({ image, setImage }) => {
     // }, 200000);
   }, []);
 
-  function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
+  const DragIcon = (x, y, char) => (
+    <Draggable
+      x={x}
+      y={y}
+      minX={0}
+      minY={0}
+      maxX={256}
+      maxY={256}
+      renderSize={25}
+      renderColor="red"
+      renderText={char}
+      onRelease={e => {
+        const locX = e.nativeEvent.pageX - xOffset;
+        const locY = e.nativeEvent.pageY - yOffset;
+        if (char == 'A') {
+          setLocA({ x: locX, y: locY });
+        } else if (char == 'B') {
+          setLocB({ x: locX, y: locY });
+        } else if (char == 'C') {
+          setLocC({ x: locX, y: locY });
+        } else {
+          console.log('unidentified char');
+        }
+        return e;
+      }}
+    />
+  );
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -58,7 +83,11 @@ const SetupTab = ({ image, setImage }) => {
     }
   };
 
-  const onSubmit = () => {};
+  const onSubmit = () => {
+    console.log('A, x: ', locA.x, ',y: ', locA.y);
+    console.log('B, x: ', locB.x, ',y: ', locB.y);
+    console.log('C, x: ', locC.x, ',y: ', locC.y);
+  };
 
   const renderSteps = () => {
     // Show View when loading is true
@@ -100,26 +129,9 @@ const SetupTab = ({ image, setImage }) => {
                   </View>
                 ))}
               </View>
-              <Draggable
-                x={0}
-                y={0}
-                minX={0}
-                minY={0}
-                maxX={256}
-                maxY={256}
-                renderSize={25}
-                renderColor="red"
-                renderText="B"
-                onRelease={e => {
-                  console.log(
-                    'location X: ',
-                    e.nativeEvent.pageX,
-                    'location Y: ',
-                    e.nativeEvent.pageY
-                  );
-                  return e;
-                }}
-              />
+              {DragIcon(0, 0, 'A')}
+              {DragIcon(26, 0, 'B')}
+              {DragIcon(52, 0, 'C')}
             </View>
           </View>
 
