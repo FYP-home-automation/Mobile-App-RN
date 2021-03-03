@@ -26,7 +26,6 @@ const RoomLegends = ({}) => {
         <View>
           <Text style={styles.title}>Legends</Text>
           <View style={styles.legends}>
-            {/* {roomsNum.map(num => BoxWithType(num))} */}
             {Object.keys(roomdict).map(key => BoxWithType(key))}
           </View>
         </View>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, useCallback } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, ScrollView, Switch } from 'react-native';
 import data from '../../assets/rooms.json';
 import { roomNumColorMapper } from 'HomeAutomation/src/utils/global';
 import { RoomLegends } from 'HomeAutomation/src/components';
@@ -14,11 +14,27 @@ import LottieView from 'lottie-react-native';
 
 const userLocationBoxSize = 40;
 
+const initialData = [
+  {
+    name: 'Person A',
+    controlStatus: true,
+  },
+  {
+    name: 'Person B',
+    controlStatus: false,
+  },
+  {
+    name: 'Person C',
+    controlStatus: false,
+  },
+];
+
 const TrackingTab = ({ image, setImage }) => {
   const roomnums = data.roomtypes;
   const [colorMapper, setColorMapper] = useState(roomNumColorMapper);
   const [xPos, setXPos] = useState(100);
   const [yPos, setYPos] = useState(130);
+  const [devices, setDevices] = useState(initialData);
 
   useEffect(() => {
     setInterval(() => {
@@ -61,6 +77,27 @@ const TrackingTab = ({ image, setImage }) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  const activeDevice = (device, id) => {
+    const toogleSwitch = () => {
+      const newActiveDevices = [...devices];
+      newActiveDevices[id].controlStatus = !newActiveDevices[id].controlStatus;
+      setDevices(newActiveDevices);
+    };
+
+    return (
+      <View style={styles.activeCard}>
+        <Text>{device.name}</Text>
+        <Switch
+          trackColor={{ false: '#767577', true: '#2a74b5' }}
+          ios_backgroundColor="#3e3e3e"
+          style={styles.switch}
+          value={device.controlStatus}
+          onValueChange={() => toogleSwitch()}
+        ></Switch>
+      </View>
+    );
+  };
+
   const renderSteps = () => {
     // Show View when image has been uploaded
     if (image) {
@@ -92,6 +129,19 @@ const TrackingTab = ({ image, setImage }) => {
           </View>
 
           <RoomLegends />
+
+          <View style={styles.controllerSection}>
+            <View style={{ flex: 1 }}></View>
+            <View style={styles.control}>
+              <Text style={styles.controllerTitle}>Controller</Text>
+              <ScrollView style={styles.scrollView}>
+                {/* {activeDevice('Person A', true)}
+                {activeDevice('Person B', false)} */}
+                {devices.map((device, id) => activeDevice(device, id))}
+              </ScrollView>
+            </View>
+            <View style={{ flex: 1 }}></View>
+          </View>
         </View>
       );
     }
@@ -119,6 +169,35 @@ const TrackingTab = ({ image, setImage }) => {
 };
 
 const styles = StyleSheet.create({
+  switch: {
+    transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }],
+  },
+  activeCard: {
+    borderRadius: 5,
+    padding: 10,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  controllerTitle: {
+    fontSize: 15,
+    fontWeight: '500',
+  },
+  scrollView: {
+    backgroundColor: '#3eeaed',
+    height: '20%',
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  control: {
+    flex: 5,
+  },
+  controllerSection: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginTop: 20,
+  },
   emptyBox: {
     height: 200,
   },
