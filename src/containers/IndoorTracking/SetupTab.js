@@ -10,19 +10,19 @@ import * as ImagePicker from 'expo-image-picker';
 
 import AnimatedLoader from 'react-native-animated-loader';
 import Draggable from 'react-native-draggable';
+import { connect } from 'react-redux';
+import { setLength, setWidth } from 'HomeAutomation/src/redux/actions';
 
 const xOffset = 61.5;
 const yOffset = 280;
 
-const SetupTab = ({ image, setImage }) => {
+const SetupTab = ({ image, setImage, setWidth, setLength, width, length }) => {
   const roomnums = data.roomtypes;
   const [colorMapper, setColorMapper] = useState(roomNumColorMapper);
   const [loading, setLoading] = useState(false);
   const [locA, setLocA] = useState({ x: 0, y: 0 });
   const [locB, setLocB] = useState({ x: 0, y: 0 });
   const [locC, setLocC] = useState({ x: 0, y: 0 });
-  const [length, setLength] = useState(0);
-  const [width, setWidth] = useState(0);
 
   useEffect(() => {
     // Note: example to randomize Color
@@ -156,8 +156,9 @@ const SetupTab = ({ image, setImage }) => {
             <Text style={styles.sizeType}>Length: </Text>
             <TextInput
               style={styles.textInput}
-              value={length.toString()}
-              onChangeText={val => setLength(val)}
+              value={length}
+              onChangeText={val => setLength(parseInt(val))}
+              keyboardType="numeric"
             ></TextInput>
             <Text style={styles.unitType}>m</Text>
           </View>
@@ -165,8 +166,9 @@ const SetupTab = ({ image, setImage }) => {
             <Text style={styles.sizeType}>Width: </Text>
             <TextInput
               style={styles.textInput}
-              value={width.toString()}
-              onChangeText={val => setWidth(val)}
+              value={width}
+              onChangeText={val => setWidth(parseInt(val))}
+              keyboardType="numeric"
             ></TextInput>
             <Text style={styles.unitType}>m</Text>
           </View>
@@ -293,4 +295,14 @@ const styles = StyleSheet.create({
   }),
 });
 
-export default SetupTab;
+const mapDispatchToProps = {
+  setLength,
+  setWidth,
+};
+
+const mapStateToProps = ({ tracking }) => ({
+  length: tracking.length,
+  width: tracking.width,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SetupTab);
