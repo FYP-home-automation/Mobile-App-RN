@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, TextInput } from 'react-native';
 import data from '../../assets/rooms.json';
 import { roomNumColorMapper } from 'HomeAutomation/src/utils/global';
 import { RoomLegends } from 'HomeAutomation/src/components';
@@ -21,6 +21,8 @@ const SetupTab = ({ image, setImage }) => {
   const [locA, setLocA] = useState({ x: 0, y: 0 });
   const [locB, setLocB] = useState({ x: 0, y: 0 });
   const [locC, setLocC] = useState({ x: 0, y: 0 });
+  const [length, setLength] = useState(0);
+  const [width, setWidth] = useState(0);
 
   useEffect(() => {
     // Note: example to randomize Color
@@ -147,20 +149,43 @@ const SetupTab = ({ image, setImage }) => {
 
     // Show View when image has not been uploaded/ uploading image screen
     return (
-      <TouchableOpacity
-        onPress={() => {
-          setLoading(true);
-          setTimeout(() => {
-            pickImage();
-          }, 50);
-        }}
-        style={styles.topMargin}
-      >
-        <View style={styles.uploadBox}>
-          <Icon style={styles.uploadIcon} name="md-cloud-upload" />
-          <Text>Upload your Floorplan here</Text>
+      <>
+        <View style={styles.floorPlanSize}>
+          <Text style={styles.sizeTitle}>Enter your floor plan size: </Text>
+          <View style={styles.flexRowContainer}>
+            <Text style={styles.sizeType}>Length: </Text>
+            <TextInput
+              style={styles.textInput}
+              value={length.toString()}
+              onChangeText={val => setLength(val)}
+            ></TextInput>
+            <Text style={styles.unitType}>m</Text>
+          </View>
+          <View style={styles.flexRowContainer}>
+            <Text style={styles.sizeType}>Width: </Text>
+            <TextInput
+              style={styles.textInput}
+              value={width.toString()}
+              onChangeText={val => setWidth(val)}
+            ></TextInput>
+            <Text style={styles.unitType}>m</Text>
+          </View>
         </View>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            setLoading(true);
+            setTimeout(() => {
+              pickImage();
+            }, 50);
+          }}
+          style={styles.topMargin}
+        >
+          <View style={styles.uploadBox}>
+            <Icon style={styles.uploadIcon} name="md-cloud-upload" />
+            <Text>Upload your Floorplan here</Text>
+          </View>
+        </TouchableOpacity>
+      </>
     );
   };
 
@@ -168,6 +193,33 @@ const SetupTab = ({ image, setImage }) => {
 };
 
 const styles = StyleSheet.create({
+  unitType: {
+    marginLeft: 10,
+  },
+  sizeType: {
+    width: 60,
+  },
+  flexRowContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  textInput: {
+    borderWidth: 1,
+    backgroundColor: 'white',
+    borderRadius: 5,
+    padding: 4,
+    width: 120,
+  },
+  sizeTitle: {
+    fontSize: 15,
+    fontWeight: '500',
+  },
+  floorPlanSize: {
+    width: '60%',
+    marginTop: 40,
+  },
   submitContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -205,7 +257,7 @@ const styles = StyleSheet.create({
     height: 300,
   },
   topMargin: {
-    marginTop: 100,
+    marginTop: 50,
   },
   uploadBox: {
     borderWidth: 2,
