@@ -57,7 +57,7 @@ const SetupTab = ({ image, setImage, setWidth, setLength, width, length }) => {
       renderText={char}
       onRelease={e => {
         const locX = e.nativeEvent.pageX - xOffset;
-        const locY = e.nativeEvent.pageY - yOffset;
+        const locY = 256 - (e.nativeEvent.pageY - yOffset);
         if (char == 'A') {
           setLocA({ x: locX, y: locY });
         } else if (char == 'B') {
@@ -89,6 +89,8 @@ const SetupTab = ({ image, setImage, setWidth, setLength, width, length }) => {
     console.log('A, x: ', locA.x, ',y: ', locA.y);
     console.log('B, x: ', locB.x, ',y: ', locB.y);
     console.log('C, x: ', locC.x, ',y: ', locC.y);
+
+    // real length: (locX/256) * length
   };
 
   const renderSteps = () => {
@@ -131,9 +133,9 @@ const SetupTab = ({ image, setImage, setWidth, setLength, width, length }) => {
                   </View>
                 ))}
               </View>
-              {DragIcon(0, 0, 'A')}
-              {DragIcon(26, 0, 'B')}
-              {DragIcon(52, 0, 'C')}
+              {DragIcon(0, 256 - 25, 'A')}
+              {DragIcon(26, 256 - 25, 'B')}
+              {DragIcon(52, 256 - 25, 'C')}
             </View>
           </View>
 
