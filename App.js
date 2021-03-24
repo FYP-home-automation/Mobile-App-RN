@@ -5,8 +5,14 @@ import {
   HomeScreen,
   RoomScreen,
   IndoorTrackingScreen,
+  LoginScreen,
 } from 'HomeAutomation/src/screens';
-import { Home, Room, IndoorTracking } from 'HomeAutomation/src/constants';
+import {
+  Home,
+  Room,
+  IndoorTracking,
+  Login,
+} from 'HomeAutomation/src/constants';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -39,8 +45,9 @@ export default function App() {
           screenOptions={{
             headerShown: false,
           }}
-          initialRouteName={IndoorTracking}
+          initialRouteName={Login}
         >
+          <Stack.Screen name={Login} component={LoginScreen} />
           <Stack.Screen name={Home} component={HomeScreen} />
           <Stack.Screen name={Room} component={RoomScreen} />
           <Stack.Screen

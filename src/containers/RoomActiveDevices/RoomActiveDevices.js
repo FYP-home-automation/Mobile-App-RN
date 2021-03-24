@@ -40,11 +40,11 @@ const RoomActiveDevices = ({ room, activeRoomId }) => {
         return null;
       }
 
-      return devices[0].map(device => (
+      return devices[0].map((device, id) => (
         <DeviceBox
           name={device.name}
           type={device.device_type}
-          on={true}
+          on={id == 2 || id == 4 ? false : true}
           onPress={() => {
             // const newData = [...dummyData];
             // newData[id].on = !newData[id].on;

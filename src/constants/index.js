@@ -1,3 +1,3 @@
-import { Home, Room, IndoorTracking } from './routes';
+import { Home, Room, IndoorTracking, Login } from './routes';
 
-export { Home, Room, IndoorTracking };
+export { Home, Room, IndoorTracking, Login };
