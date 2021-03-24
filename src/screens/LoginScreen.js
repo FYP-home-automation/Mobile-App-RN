@@ -17,37 +17,62 @@ import { connect } from 'react-redux';
 const LoginScreen = ({ navigation }) => {
   const [signInStatus, setSignInStatus] = useState(true);
 
-  // const LoginContainer = () => {
-  //   if (signInStatus) {
-  //     return (
-  //       <View style={styles.loginContainer}>
-  //         <TextInput
-  //           style={styles.username}
-  //           // onChangeText={text => setRoomName(text)}
-  //           // value={roomName}
-  //           placeholder="username"
-  //         />
-  //         <TextInput
-  //           style={styles.username}
-  //           // onChangeText={text => setRoomName(text)}
-  //           // value={roomName}
-  //           placeholder="password"
-  //         />
-  //         <View>
-  //           <Button style={styles.submitButton} onPress={() => onSubmit()}>
-  //             <Text style={styles.submitText}>Sign In</Text>
-  //           </Button>
-  //         </View>
-  //       </View>
-  //     );
-  //   }
-  //   return null;
-  // };
+  const LoginContainer = () => {
+    if (signInStatus) {
+      return (
+        <View style={styles.loginContainer}>
+          <TextInput
+            style={styles.username}
+            // onChangeText={text => setRoomName(text)}
+            // value={roomName}
+            placeholder="username"
+          />
+          <TextInput
+            style={styles.username}
+            // onChangeText={text => setRoomName(text)}
+            // value={roomName}
+            placeholder="password"
+          />
+          <View>
+            <Button style={styles.submitButton} onPress={() => onSubmit()}>
+              <Text style={styles.submitText}>Sign In</Text>
+            </Button>
+          </View>
+        </View>
+      );
+    }
+    return (
+      <View style={styles.loginContainer}>
+        <TextInput
+          style={styles.username}
+          // onChangeText={text => setRoomName(text)}
+          // value={roomName}
+          placeholder="username"
+        />
+        <TextInput
+          style={styles.username}
+          // onChangeText={text => setRoomName(text)}
+          // value={roomName}
+          placeholder="password"
+        />
+        <TextInput
+          style={styles.username}
+          // onChangeText={text => setRoomName(text)}
+          // value={roomName}
+          placeholder="verify password"
+        />
+        <View>
+          <Button style={styles.submitButton} onPress={() => onSubmit()}>
+            <Text style={styles.submitText}>Sign Up</Text>
+          </Button>
+        </View>
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
-      <Text>tseting</Text>
-      {/* <View style={styles.background}>
+      <View style={styles.background}>
         <Image style={styles.logo} source={Logo} />
         <View style={styles.titleContainer}>
           <Text style={styles.titleWithUnderline}>Homely </Text>
@@ -78,11 +103,11 @@ const LoginScreen = ({ navigation }) => {
             Sign Up
           </Text>
         </View>
-
+        {LoginContainer()}
         <View style={styles.copyrightContainer}>
           <Text style={styles.footer}>@Copyright 2021</Text>
         </View>
-      </SafeAreaView> */}
+      </SafeAreaView>
     </View>
   );
 };
@@ -105,7 +130,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
+    // flex: 1,
+    height: 75,
   },
   logo: {
     width: 60,
@@ -136,7 +162,6 @@ const styles = StyleSheet.create({
   },
   iotAnimation: {
     height: 185,
-    display: 'flex',
   },
   background: {
     backgroundColor: '#05FFD2',
@@ -156,7 +181,6 @@ const styles = StyleSheet.create({
   },
   loginContainer: {
     alignItems: 'center',
-    // marginTop: 70,
     display: 'flex',
   },
   submitButton: {
@@ -172,4 +196,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, null)(LoginScreen);
+export default LoginScreen;
