@@ -95,7 +95,7 @@ const SetupTab = ({ image, setImage, setWidth, setLength, width, length }) => {
 
   const renderSteps = () => {
     // Show View when loading is true
-    if (loading) {
+    if (true) {
       return (
         <AnimatedLoader
           visible={true}
@@ -110,6 +110,7 @@ const SetupTab = ({ image, setImage, setWidth, setLength, width, length }) => {
     }
 
     // Show View when image has been uploaded
+    console.log(roomnums.length);
     if (image) {
       return (
         <View>
