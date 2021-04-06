@@ -55,11 +55,11 @@ export const roomNumColorMapper = {
   0: 'black',
   1: 'orange',
   2: 'blue',
-  3: 'yellow',
-  4: 'pink',
-  5: 'cyan',
-  6: 'green',
-  7: 'gray',
+  3: 'cyan',
+  4: 'green',
+  5: 'gray',
+  6: 'pink',
+  7: 'yellow',
 };
 
 export const roomNumColorMapperArray = Object.values(roomNumColorMapper).slice(
@@ -72,7 +72,13 @@ export const colorMapperList = roomNumColorMapperArray.map(color => {
     label: '',
     value: color,
     icon: () => (
-      <View style={{ backgroundColor: color, width: 10, height: 10 }}></View>
+      <View
+        style={{
+          backgroundColor: color,
+          width: 10,
+          height: 10,
+        }}
+      ></View>
     ),
   };
 });

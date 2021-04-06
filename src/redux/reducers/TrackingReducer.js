@@ -1,10 +1,17 @@
-import { SET_LENGTH, SET_WIDTH, SET_FLOORPLAN, SET_LOADING } from '../types';
+import {
+  SET_LENGTH,
+  SET_WIDTH,
+  SET_FLOORPLAN,
+  SET_LOADING,
+  SET_ROOM_NUM,
+} from '../types';
 
 const initialState = {
   length: 0,
   width: 0,
   data: {},
   loading: false,
+  roomNum: 0,
 };
 
 const trackingReducer = (state = initialState, action) => {
@@ -30,6 +37,12 @@ const trackingReducer = (state = initialState, action) => {
         ...state,
         loading: action.payload,
       };
+    case SET_ROOM_NUM: {
+      return {
+        ...state,
+        roomNum: action.payload,
+      };
+    }
     default:
       return state;
   }

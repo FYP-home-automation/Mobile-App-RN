@@ -20,6 +20,7 @@ import {
   setWidth,
   setFloorPlan,
   setLoading,
+  setRoomNum,
 } from 'HomeAutomation/src/redux/actions';
 import axios from 'axios';
 
@@ -32,13 +33,14 @@ const SetupTab = ({
   setLength,
   setFloorPlan,
   setLoading,
+  setRoomNum,
   loading,
   width,
   length,
   data,
   roomList,
+  roomNum,
 }) => {
-  console.log(colorMapperList);
   const [colorMapper, setColorMapper] = useState(roomNumColorMapper);
   // const [loading, setLoading] = useState(false);
   const [locA, setLocA] = useState({ x: 0, y: 0 });
@@ -46,7 +48,6 @@ const SetupTab = ({
   const [locC, setLocC] = useState({ x: 0, y: 0 });
 
   // console.log('data ', data);
-  console.log('loading ', loading);
 
   // useEffect(() => {
   //   console.log('testing');
@@ -81,29 +82,17 @@ const SetupTab = ({
   );
 
   const roomRow = (room, id) => {
-    console.log(id);
+    console.log(roomNum);
+    const colorMapperListModified = colorMapperList.slice(0, roomNum);
+    console.log(colorMapperListModified);
     return (
       <View style={styles.roomCard(id)}>
         <Text>{room.name}</Text>
         <DropDownPicker
-          items={
-            colorMapperList
-            //   [
-            //   {
-            //     label: 'USA',
-            //     value: 'usa',
-            //     icon: () => <Text> tes </Text>,
-            //   },
-            //   { label: 'UK', value: 'uk', icon: () => <Text> tes</Text> },
-            //   {
-            //     label: 'France',
-            //     value: 'france',
-            //     icon: () => <Text> test </Text>,
-            //   },
-            // ]
-          }
+          items={colorMapperListModified}
           defaultValue={'orange'}
-          containerStyle={{ height: 30 }}
+          containerStyle={{ height: 29 }}
+          dropDownMaxHeight={80}
           style={{ backgroundColor: '#fafafa' }}
           itemStyle={{
             justifyContent: 'flex-start',
@@ -157,6 +146,7 @@ const SetupTab = ({
 
       const nameArr = image_name.split('.');
       const nameOnly = nameArr[0];
+
       // Step 3. Check Record
       const response3 = await axios.get(
         `http://18.136.85.164/media/outputs/${nameOnly}.json`
@@ -172,8 +162,16 @@ const SetupTab = ({
           2: 'bathroom',
         },
       };
-      setFloorPlan({ ...data, ...defaultFloorPlanTypes });
 
+      // Step 3. Check How many Room Detected
+      const response4 = await axios.get(
+        `http://18.136.85.164/media/room_json_to_room/${nameOnly}.json`
+      );
+
+      const roomNum = Object.entries(response4.data).length - 1;
+
+      setRoomNum(roomNum);
+      setFloorPlan({ ...data, ...defaultFloorPlanTypes });
       setLoading(false);
     }
   };
@@ -304,6 +302,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     zIndex: -id,
+    marginBottom: 5,
   }),
   roomMapperTitle: {
     fontSize: 15,
@@ -311,12 +310,16 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   roomMapper: {
-    height: 160,
+    height: 180,
   },
   scrollView: {
     backgroundColor: '#3eeaed',
     borderRadius: 5,
     marginTop: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 5,
+    paddingBottom: 5,
   },
   unitType: {
     marginLeft: 10,
@@ -423,6 +426,7 @@ const mapDispatchToProps = {
   setWidth,
   setFloorPlan,
   setLoading,
+  setRoomNum,
 };
 
 const mapStateToProps = ({ tracking, room }) => ({
@@ -431,6 +435,7 @@ const mapStateToProps = ({ tracking, room }) => ({
   data: tracking.data,
   loading: tracking.loading,
   roomList: room.roomList,
+  roomNum: tracking.roomNum,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetupTab);

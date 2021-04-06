@@ -17,3 +17,4 @@ export const SET_LENGTH = 'SET_LENGTH';
 export const SET_WIDTH = 'SET_WIDTH';
 export const SET_FLOORPLAN = 'SET_FLOORPLAN';
 export const SET_LOADING = 'SET_LOADING';
+export const SET_ROOM_NUM = 'SET_ROOM_NUM';
