@@ -104,10 +104,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   container: {
-    // padding: 20,
     display: 'flex',
     borderColor: 'black',
-    // borderWidth: 1,
     width: '90%',
     marginTop: 10,
   },

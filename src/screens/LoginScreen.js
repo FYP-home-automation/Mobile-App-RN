@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Icon, Button } from 'native-base';
+
 import {
   StyleSheet,
   Text,
@@ -14,6 +14,8 @@ import LottieView from 'lottie-react-native';
 
 import { connect } from 'react-redux';
 
+import { Button } from 'native-base';
+
 const LoginScreen = ({ navigation }) => {
   const [signInStatus, setSignInStatus] = useState(true);
 
@@ -23,14 +25,14 @@ const LoginScreen = ({ navigation }) => {
         <View style={styles.loginContainer}>
           <TextInput
             style={styles.username}
-            // onChangeText={text => setRoomName(text)}
-            // value={roomName}
+            onChangeText={text => setRoomName(text)}
+            value={roomName}
             placeholder="username"
           />
           <TextInput
             style={styles.username}
-            // onChangeText={text => setRoomName(text)}
-            // value={roomName}
+            onChangeText={text => setRoomName(text)}
+            value={roomName}
             placeholder="password"
           />
           <View>

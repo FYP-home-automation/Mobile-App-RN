@@ -95,7 +95,7 @@ const SetupTab = ({ image, setImage, setWidth, setLength, width, length }) => {
 
   const renderSteps = () => {
     // Show View when loading is true
-    if (true) {
+    if (loading) {
       return (
         <AnimatedLoader
           visible={true}
@@ -292,8 +292,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   room: (roomNum, colorMapper) => ({
-    width: 4,
-    height: 4,
+    width: 2,
+    height: 2,
     backgroundColor: colorMapper[roomNum] ? colorMapper[roomNum] : 'white',
   }),
 });

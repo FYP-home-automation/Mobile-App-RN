@@ -168,7 +168,7 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
       </ImageBackground>
       <RoomStatsBar temp={temp} humidity={humidity} brightness={brightness} />
       <RoomActiveDevices room={room} activeRoomId={activeRoomId} />
-      <Button onPress={() => getTranscription()}>
+      {/* <Button onPress={() => getTranscription()}>
         <Text>Click Me!</Text>
       </Button>
 
@@ -182,7 +182,13 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
             {isRecording ? 'Recording...' : 'Start recording'}
           </Text>
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
+
+      <View style={styles.alignMic}>
+        <View style={styles.micContainer}>
+          <Icon style={styles.uploadIcon} name="md-mic" />
+        </View>
+      </View>
     </View>
   );
 };
@@ -193,6 +199,17 @@ const mapStateToProps = ({ room }) => ({
 });
 
 const styles = StyleSheet.create({
+  alignMic: {
+    alignItems: 'center',
+  },
+  micContainer: {
+    borderRadius: 50,
+    width: 70,
+    height: 70,
+    backgroundColor: '#ff7a00',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   roomType: {
     color: '#ffff',
     fontWeight: '600',

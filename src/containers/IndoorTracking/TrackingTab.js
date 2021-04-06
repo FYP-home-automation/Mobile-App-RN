@@ -256,8 +256,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   room: (roomNum, colorMapper) => ({
-    width: 4,
-    height: 4,
+    width: 2,
+    height: 2,
     backgroundColor: colorMapper[roomNum] ? colorMapper[roomNum] : 'white',
   }),
 });
