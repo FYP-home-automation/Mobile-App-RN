@@ -97,7 +97,11 @@ const SetupTab = ({
           itemStyle={{
             justifyContent: 'flex-start',
           }}
-          dropDownStyle={{ backgroundColor: '#fafafa' }}
+          arrowStyle={{ height: 15 }}
+          dropDownStyle={{
+            backgroundColor: '#fafafa',
+            zIndex: 6000,
+          }}
           onChangeItem={item => console.log(item)}
         />
       </View>
@@ -206,13 +210,7 @@ const SetupTab = ({
       return (
         <View>
           <View style={styles.topSection}>
-            <Text style={styles.topSectionFont}>Setup Instruction:</Text>
-          </View>
-          <View style={styles.outerInstructionBox}>
-            <View style={styles.instructionBox}>
-              <Text>1. Place Bluetooth Tower location to correct location</Text>
-              <Text>2. Submit location and go to tracking tab</Text>
-            </View>
+            <Text style={styles.topSectionFont}>Uploaded Floor Plan</Text>
           </View>
           <View style={styles.mapContainer}>
             <View>
@@ -232,11 +230,9 @@ const SetupTab = ({
           </View>
           <View style={styles.roomMapper}>
             <Text style={styles.roomMapperTitle}>Room Mapper</Text>
-            <ScrollView style={styles.scrollView}>
-              {/* {activeDevice('Person A', true)}
-                {activeDevice('Person B', false)} */}
+            <View style={styles.scrollView}>
               {roomList.map((room, id) => roomRow(room, id))}
-            </ScrollView>
+            </View>
           </View>
           <View style={styles.submitContainer}>
             <Button style={styles.submitButton} onPress={() => onSubmit()}>
@@ -290,7 +286,6 @@ const SetupTab = ({
       </>
     );
   };
-
   return <View style={styles.container}>{renderSteps()}</View>;
 };
 
@@ -301,8 +296,9 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
-    zIndex: -id,
+    zIndex: 10 - id,
     marginBottom: 5,
+    position: 'relative',
   }),
   roomMapperTitle: {
     fontSize: 15,
@@ -310,7 +306,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   roomMapper: {
-    height: 180,
+    // height: 200,
+    position: 'relative',
   },
   scrollView: {
     backgroundColor: '#3eeaed',
@@ -413,6 +410,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#6666ff',
     display: 'flex',
     alignItems: 'center',
+    // zIndex: -10,
+    position: 'relative',
   },
   room: (roomNum, colorMapper) => ({
     width: 2,
