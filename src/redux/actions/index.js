@@ -1,6 +1,11 @@
 import { fetchAllRooms, setActiveRoomID, addNewRoom } from './roomAction';
 import { addNewDevice } from './DeviceAction';
-import { setWidth, setLength } from './TrackingAction';
+import {
+  setWidth,
+  setLength,
+  setFloorPlan,
+  setLoading,
+} from './TrackingAction';
 
 export {
   fetchAllRooms,
@@ -9,4 +14,6 @@ export {
   addNewDevice,
   setWidth,
   setLength,
+  setFloorPlan,
+  setLoading,
 };

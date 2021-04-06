@@ -55,4 +55,6 @@ export const roomNumColorMapper = {
   3: 'yellow',
   4: 'pink',
   5: 'cyan',
+  6: 'green',
+  7: 'gray',
 };

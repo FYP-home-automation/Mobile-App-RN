@@ -1,8 +1,10 @@
-import { SET_LENGTH, SET_WIDTH } from '../types';
+import { SET_LENGTH, SET_WIDTH, SET_FLOORPLAN, SET_LOADING } from '../types';
 
 const initialState = {
   length: 0,
   width: 0,
+  data: {},
+  loading: false,
 };
 
 const trackingReducer = (state = initialState, action) => {
@@ -16,6 +18,17 @@ const trackingReducer = (state = initialState, action) => {
       return {
         ...state,
         width: action.payload,
+      };
+    case SET_FLOORPLAN:
+      return {
+        ...state,
+        data: action.payload,
+      };
+
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: action.payload,
       };
     default:
       return state;

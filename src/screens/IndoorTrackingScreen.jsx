@@ -4,12 +4,14 @@ import { View, Text, StyleSheet, SafeAreaView, Dimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon } from 'native-base';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import { connect } from 'react-redux';
 
 import { SetupTab, TrackingTab } from 'HomeAutomation/src/containers';
+import { setFloorPlan } from 'HomeAutomation/src/redux/actions';
 
 const initialLayout = { width: Dimensions.get('window').width };
 
-const IndoorTrackingScreen = ({ navigation }) => {
+const IndoorTrackingScreen = ({ navigation, setFloorPlan }) => {
   const [index, setIndex] = React.useState(0);
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -64,7 +66,7 @@ const IndoorTrackingScreen = ({ navigation }) => {
           </View>
           <Text style={styles.title}>Indoor Tracking</Text>
           <View style={styles.controlGroup}>
-            <TouchableOpacity onPress={() => setImage(null)}>
+            <TouchableOpacity onPress={() => setFloorPlan({})}>
               <Icon style={styles.controlGroupIcon} name="md-refresh" />
             </TouchableOpacity>
             <Icon style={styles.controlGroupIcon} name="ios-trash" />
@@ -85,7 +87,11 @@ const IndoorTrackingScreen = ({ navigation }) => {
   );
 };
 
-export default IndoorTrackingScreen;
+const mapDispatchToProps = {
+  setFloorPlan,
+};
+
+export default connect(null, mapDispatchToProps)(IndoorTrackingScreen);
 
 const styles = StyleSheet.create({
   scene: {

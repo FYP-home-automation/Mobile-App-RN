@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, TextInput } from 'react-native';
-import data from '../../assets/rooms.json';
+import defaultData from '../../assets/rooms.json';
 import { roomNumColorMapper } from 'HomeAutomation/src/utils/global';
 import { RoomLegends } from 'HomeAutomation/src/components';
 
@@ -11,38 +11,41 @@ import * as ImagePicker from 'expo-image-picker';
 import AnimatedLoader from 'react-native-animated-loader';
 import Draggable from 'react-native-draggable';
 import { connect } from 'react-redux';
-import { setLength, setWidth } from 'HomeAutomation/src/redux/actions';
+import {
+  setLength,
+  setWidth,
+  setFloorPlan,
+  setLoading,
+} from 'HomeAutomation/src/redux/actions';
+import axios from 'axios';
 
 const xOffset = 61.5;
 const yOffset = 280;
 
-const SetupTab = ({ image, setImage, setWidth, setLength, width, length }) => {
-  const roomnums = data.roomtypes;
+const SetupTab = ({
+  image,
+  setImage,
+  setWidth,
+  setLength,
+  setFloorPlan,
+  setLoading,
+  loading,
+  width,
+  length,
+  data,
+}) => {
   const [colorMapper, setColorMapper] = useState(roomNumColorMapper);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [locA, setLocA] = useState({ x: 0, y: 0 });
   const [locB, setLocB] = useState({ x: 0, y: 0 });
   const [locC, setLocC] = useState({ x: 0, y: 0 });
 
-  useEffect(() => {
-    // Note: example to randomize Color
-    //
-    // setInterval(() => {
-    //   const dummyColor = [
-    //     '#FFA500',
-    //     '#0000FF',
-    //     '#800080',
-    //     '#808080',
-    //     '#00FFFF',
-    //   ];
-    //   const newColorMapper = { ...colorMapper };
-    //   for (let i = 1; i < 8; i++) {
-    //     const color = dummyColor[getRandomInt(0, 4)];
-    //     newColorMapper[i] = color;
-    //   }
-    //   setColorMapper(newColorMapper);
-    // }, 200000);
-  }, []);
+  // console.log('data ', data);
+  console.log('loading ', loading);
+
+  // useEffect(() => {
+  //   console.log('testing');
+  // }, []);
 
   const DragIcon = (x, y, char) => (
     <Draggable
@@ -81,7 +84,57 @@ const SetupTab = ({ image, setImage, setWidth, setLength, width, length }) => {
     });
 
     if (!result.cancelled) {
+      setLoading(true);
+      // console.log(result.uri);
       setImage(result.uri);
+
+      // Step 1. Upload Image
+      let formdata = new FormData();
+      formdata.append('raw_floor_plan', {
+        uri: result.uri,
+        name: 'image.jpg',
+        type: 'image/jpeg',
+      });
+      const response = await axios.post(
+        'http://18.136.85.164/api/floorplan',
+        formdata
+      );
+
+      // console.log('response', response.data);
+
+      const pathArr = response.data.raw_floor_plan.split('/');
+      const image_name = pathArr[pathArr.length - 1];
+
+      // Step 2. Post Image
+      let formdata2 = new FormData();
+      formdata2.append('image_name', image_name);
+      // console.log('formdata 2', formdata2);
+      const response2 = await axios.post(
+        'http://18.136.85.164/deepfloorplan',
+        formdata2
+      );
+      // console.log('response2', response2.data);
+
+      const nameArr = image_name.split('.');
+      const nameOnly = nameArr[0];
+      // Step 3. Check Record
+      const response3 = await axios.get(
+        `http://18.136.85.164/media/outputs/${nameOnly}.json`
+      );
+
+      const data = response3.data;
+      // console.log('response3', response3.data);
+      const defaultFloorPlanTypes = {
+        roomdict: {
+          4: 'bedroom',
+          3: 'living room',
+          5: 'hall',
+          2: 'bathroom',
+        },
+      };
+      setFloorPlan({ ...data, ...defaultFloorPlanTypes });
+
+      setLoading(false);
     }
   };
 
@@ -95,6 +148,7 @@ const SetupTab = ({ image, setImage, setWidth, setLength, width, length }) => {
 
   const renderSteps = () => {
     // Show View when loading is true
+    console.log('loading ', loading);
     if (loading) {
       return (
         <AnimatedLoader
@@ -110,8 +164,9 @@ const SetupTab = ({ image, setImage, setWidth, setLength, width, length }) => {
     }
 
     // Show View when image has been uploaded
-    console.log(roomnums.length);
-    if (image) {
+    // console.log(roomnums.length);
+    if (data.roomnums) {
+      console.log('inside man');
       return (
         <View>
           <View style={styles.topSection}>
@@ -126,7 +181,7 @@ const SetupTab = ({ image, setImage, setWidth, setLength, width, length }) => {
           <View style={styles.mapContainer}>
             <View>
               <View style={styles.flexRow}>
-                {roomnums.map(roomCol => (
+                {data.roomnums.map(roomCol => (
                   <View>
                     {roomCol.map(roomNum => (
                       <View style={styles.room(roomNum, colorMapper)}></View>
@@ -140,7 +195,6 @@ const SetupTab = ({ image, setImage, setWidth, setLength, width, length }) => {
             </View>
           </View>
 
-          <RoomLegends />
           <View style={styles.submitContainer}>
             <Button style={styles.submitButton} onPress={() => onSubmit()}>
               <Text style={styles.submitText}>Submit Location</Text>
@@ -178,7 +232,7 @@ const SetupTab = ({ image, setImage, setWidth, setLength, width, length }) => {
         </View>
         <TouchableOpacity
           onPress={() => {
-            setLoading(true);
+            // setLoading(true);
             setTimeout(() => {
               pickImage();
             }, 50);
@@ -301,11 +355,15 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = {
   setLength,
   setWidth,
+  setFloorPlan,
+  setLoading,
 };
 
 const mapStateToProps = ({ tracking }) => ({
   length: tracking.length,
   width: tracking.width,
+  data: tracking.data,
+  loading: tracking.loading,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetupTab);
