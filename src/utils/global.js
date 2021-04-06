@@ -1,3 +1,6 @@
+import React from 'react';
+import { View } from 'react-native';
+
 import livingRoom from 'HomeAutomation/src/assets/livingRoom.png';
 import kitchen from 'HomeAutomation/src/assets/kitchen.png';
 import bathroom from 'HomeAutomation/src/assets/bathroom.jpg';
@@ -58,3 +61,51 @@ export const roomNumColorMapper = {
   6: 'green',
   7: 'gray',
 };
+
+export const roomNumColorMapperArray = Object.values(roomNumColorMapper).slice(
+  1,
+  roomNumColorMapper.length
+);
+
+export const colorMapperList = roomNumColorMapperArray.map(color => {
+  return {
+    label: '',
+    value: color,
+    icon: () => (
+      <View style={{ backgroundColor: color, width: 10, height: 10 }}></View>
+    ),
+  };
+});
+
+// [
+//   {
+//     label: 'orange',
+//     value: 'orange',
+//     icon: () => <View style={styles.roomColor}> tes </View>,
+//   },
+//   {
+//     label: 'blue',
+//     value: 'blue',
+//     icon: () => <View> test </View>,
+//   },
+//   {
+//     label: 'yellow',
+//     value: 'yellow',
+//     icon: () => <View style={styles.roomColor}> tes </View>,
+//   },
+//   {
+//     label: 'pink',
+//     value: 'pink',
+//     icon: () => <View> test </View>,
+//   },
+//   {
+//     label: 'cyan',
+//     value: 'cyan',
+//     icon: () => <View style={styles.roomColor}> tes </View>,
+//   },
+//   {
+//     label: 'blue',
+//     value: 'blue',
+//     icon: () => <View> test </View>,
+//   },
+// ];

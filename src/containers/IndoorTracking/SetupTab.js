@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, TextInput } from 'react-native';
+import { View, StyleSheet, Text, TextInput, ScrollView } from 'react-native';
 import defaultData from '../../assets/rooms.json';
-import { roomNumColorMapper } from 'HomeAutomation/src/utils/global';
+import {
+  roomNumColorMapper,
+  colorMapperList,
+} from 'HomeAutomation/src/utils/global';
 import { RoomLegends } from 'HomeAutomation/src/components';
 
 import { Icon, Button } from 'native-base';
@@ -9,6 +12,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as ImagePicker from 'expo-image-picker';
 
 import AnimatedLoader from 'react-native-animated-loader';
+import DropDownPicker from 'react-native-dropdown-picker';
 import Draggable from 'react-native-draggable';
 import { connect } from 'react-redux';
 import {
@@ -23,7 +27,6 @@ const xOffset = 61.5;
 const yOffset = 280;
 
 const SetupTab = ({
-  image,
   setImage,
   setWidth,
   setLength,
@@ -33,7 +36,9 @@ const SetupTab = ({
   width,
   length,
   data,
+  roomList,
 }) => {
+  console.log(colorMapperList);
   const [colorMapper, setColorMapper] = useState(roomNumColorMapper);
   // const [loading, setLoading] = useState(false);
   const [locA, setLocA] = useState({ x: 0, y: 0 });
@@ -74,6 +79,41 @@ const SetupTab = ({
       }}
     />
   );
+
+  const roomRow = (room, id) => {
+    console.log(id);
+    return (
+      <View style={styles.roomCard(id)}>
+        <Text>{room.name}</Text>
+        <DropDownPicker
+          items={
+            colorMapperList
+            //   [
+            //   {
+            //     label: 'USA',
+            //     value: 'usa',
+            //     icon: () => <Text> tes </Text>,
+            //   },
+            //   { label: 'UK', value: 'uk', icon: () => <Text> tes</Text> },
+            //   {
+            //     label: 'France',
+            //     value: 'france',
+            //     icon: () => <Text> test </Text>,
+            //   },
+            // ]
+          }
+          defaultValue={'orange'}
+          containerStyle={{ height: 30 }}
+          style={{ backgroundColor: '#fafafa' }}
+          itemStyle={{
+            justifyContent: 'flex-start',
+          }}
+          dropDownStyle={{ backgroundColor: '#fafafa' }}
+          onChangeItem={item => console.log(item)}
+        />
+      </View>
+    );
+  };
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -148,7 +188,7 @@ const SetupTab = ({
 
   const renderSteps = () => {
     // Show View when loading is true
-    console.log('loading ', loading);
+    // console.log('loading ', loading);
     if (loading) {
       return (
         <AnimatedLoader
@@ -164,9 +204,7 @@ const SetupTab = ({
     }
 
     // Show View when image has been uploaded
-    // console.log(roomnums.length);
     if (data.roomnums) {
-      console.log('inside man');
       return (
         <View>
           <View style={styles.topSection}>
@@ -194,7 +232,14 @@ const SetupTab = ({
               {DragIcon(52, 256 - 25, 'C')}
             </View>
           </View>
-
+          <View style={styles.roomMapper}>
+            <Text style={styles.roomMapperTitle}>Room Mapper</Text>
+            <ScrollView style={styles.scrollView}>
+              {/* {activeDevice('Person A', true)}
+                {activeDevice('Person B', false)} */}
+              {roomList.map((room, id) => roomRow(room, id))}
+            </ScrollView>
+          </View>
           <View style={styles.submitContainer}>
             <Button style={styles.submitButton} onPress={() => onSubmit()}>
               <Text style={styles.submitText}>Submit Location</Text>
@@ -252,6 +297,27 @@ const SetupTab = ({
 };
 
 const styles = StyleSheet.create({
+  roomCard: id => ({
+    height: 31,
+    flexDirection: 'row',
+    // borderWidth: 1,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    zIndex: -id,
+  }),
+  roomMapperTitle: {
+    fontSize: 15,
+    fontWeight: '500',
+    marginTop: 20,
+  },
+  roomMapper: {
+    height: 160,
+  },
+  scrollView: {
+    backgroundColor: '#3eeaed',
+    borderRadius: 5,
+    marginTop: 10,
+  },
   unitType: {
     marginLeft: 10,
   },
@@ -359,11 +425,12 @@ const mapDispatchToProps = {
   setLoading,
 };
 
-const mapStateToProps = ({ tracking }) => ({
+const mapStateToProps = ({ tracking, room }) => ({
   length: tracking.length,
   width: tracking.width,
   data: tracking.data,
   loading: tracking.loading,
+  roomList: room.roomList,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetupTab);
