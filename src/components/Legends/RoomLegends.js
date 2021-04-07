@@ -2,16 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { roomNumColorMapper } from 'HomeAutomation/src/utils/global';
-import data from '../../assets/rooms.json';
 
-const RoomLegends = ({ roomNum, roomNumToType }) => {
-  console.log(roomNum);
-  console.log(roomNumToType);
-  // console.log('inside asd');
-  const roomdict = data.roomdict;
+const RoomLegends = ({ roomNumToType }) => {
   const roomArr = Object.values(roomNumToType);
   const uniqueRoomArr = [...new Set(roomArr)];
-  // console.log(uniqueRoomArr);
 
   const BoxWithType = num => {
     return (

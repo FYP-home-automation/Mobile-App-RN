@@ -53,12 +53,8 @@ const TrackingTab = ({ data, roomNum, roomNumToType }) => {
     }
     roomNumToColorTemp[0] = 'black';
 
-    // console.log('asd asdfsfd s');
-    // console.log(roomNumToColor);
     setRoomNumToColor(roomNumToColorTemp);
   }, []);
-
-  console.log('asdf', roomNumToColor);
 
   // useEffect(() => {
   //   setInterval(() => {
@@ -125,7 +121,6 @@ const TrackingTab = ({ data, roomNum, roomNumToType }) => {
   const renderSteps = () => {
     // Show View when image has been uploaded
     if (data.roomnums) {
-      console.log('testing 123');
       return (
         <View>
           <View style={styles.topSection}>
