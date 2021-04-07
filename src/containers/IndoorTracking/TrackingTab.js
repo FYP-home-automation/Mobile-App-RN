@@ -154,8 +154,8 @@ const TrackingTab = ({ image, setImage, data }) => {
               // this.ws.send('Hello');
             }}
             onMessage={e => console.log(e)}
-            onError={console.log}
-            onClose={console.log}
+            onError={e => console.log('error ', e)}
+            onClose={e => console.log('onClose ', e)}
             reconnect // Will try to reconnect onClose
           />
         </View>

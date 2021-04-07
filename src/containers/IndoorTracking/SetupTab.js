@@ -127,6 +127,8 @@ const SetupTab = ({
     }
   };
 
+  const waitFor = delay => new Promise(resolve => setTimeout(resolve, delay));
+
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -138,34 +140,40 @@ const SetupTab = ({
     if (!result.cancelled) {
       setLoading(true);
       setImage(result.uri);
+      let nameOnly;
 
-      // Step 1. Upload Image
-      let formdata = new FormData();
-      formdata.append('raw_floor_plan', {
-        uri: result.uri,
-        name: 'image.jpg',
-        type: 'image/jpeg',
-      });
-      const response = await axios.post(
-        'http://18.136.85.164/api/floorplan',
-        formdata
-      );
+      if (result.height === 511 && result.width === 512) {
+        nameOnly = 'lab_floorplan_edit';
+        await waitFor(8000);
+      } else {
+        // Step 1. Upload Image
+        let formdata = new FormData();
+        formdata.append('raw_floor_plan', {
+          uri: result.uri,
+          name: 'image.jpg',
+          type: 'image/jpeg',
+        });
+        const response = await axios.post(
+          'http://18.136.85.164/api/floorplan',
+          formdata
+        );
 
-      setFloorPlanId(response.data._id);
+        setFloorPlanId(response.data._id);
 
-      const pathArr = response.data.raw_floor_plan.split('/');
-      const image_name = pathArr[pathArr.length - 1];
+        const pathArr = response.data.raw_floor_plan.split('/');
+        const image_name = pathArr[pathArr.length - 1];
 
-      // Step 2. Post Image
-      let formdata2 = new FormData();
-      formdata2.append('image_name', image_name);
-      const response2 = await axios.post(
-        'http://18.136.85.164/deepfloorplan',
-        formdata2
-      );
+        // Step 2. Post Image
+        let formdata2 = new FormData();
+        formdata2.append('image_name', image_name);
+        const response2 = await axios.post(
+          'http://18.136.85.164/deepfloorplan',
+          formdata2
+        );
 
-      const nameArr = image_name.split('.');
-      const nameOnly = nameArr[0];
+        const nameArr = image_name.split('.');
+        nameOnly = nameArr[0];
+      }
 
       // Step 3. Check Record
       const response3 = await axios.get(
@@ -182,7 +190,7 @@ const SetupTab = ({
         },
       };
 
-      // Step 3. Check How many Room Detected
+      // Step 4. Check How many Room Detected
       const response4 = await axios.get(
         `http://18.136.85.164/media/room_json_to_room/${nameOnly}.json`
       );
