@@ -6,6 +6,7 @@ import {
   setFloorPlan,
   setLoading,
   setRoomNum,
+  setFloorPlanId,
 } from './TrackingAction';
 
 export {
@@ -18,4 +19,5 @@ export {
   setFloorPlan,
   setLoading,
   setRoomNum,
+  setFloorPlanId,
 };

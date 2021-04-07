@@ -4,11 +4,13 @@ import {
   SET_FLOORPLAN,
   SET_LOADING,
   SET_ROOM_NUM,
+  SET_FLOORPLAN_ID,
 } from '../types';
 
 const initialState = {
-  length: 0,
-  width: 0,
+  length: 10,
+  width: 10,
+  floorplanId: 0,
   data: {},
   loading: false,
   roomNum: 0,
@@ -43,6 +45,11 @@ const trackingReducer = (state = initialState, action) => {
         roomNum: action.payload,
       };
     }
+    case SET_FLOORPLAN_ID:
+      return {
+        ...state,
+        floorplanId: action.payload,
+      };
     default:
       return state;
   }

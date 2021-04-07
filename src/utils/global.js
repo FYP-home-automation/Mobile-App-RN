@@ -67,10 +67,10 @@ export const roomNumColorMapperArray = Object.values(roomNumColorMapper).slice(
   roomNumColorMapper.length
 );
 
-export const colorMapperList = roomNumColorMapperArray.map(color => {
+export const colorMapperList = roomNumColorMapperArray.map((color, id) => {
   return {
     label: '',
-    value: color,
+    value: id + 1,
     icon: () => (
       <View
         style={{

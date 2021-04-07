@@ -21,6 +21,7 @@ import {
   setFloorPlan,
   setLoading,
   setRoomNum,
+  setFloorPlanId,
 } from 'HomeAutomation/src/redux/actions';
 import axios from 'axios';
 
@@ -34,17 +35,20 @@ const SetupTab = ({
   setFloorPlan,
   setLoading,
   setRoomNum,
+  setFloorPlanId,
   loading,
   width,
   length,
   data,
   roomList,
   roomNum,
+  floorplanId,
 }) => {
   const [colorMapper, setColorMapper] = useState(roomNumColorMapper);
   const [locA, setLocA] = useState({ x: 0, y: 0 });
   const [locB, setLocB] = useState({ x: 0, y: 0 });
   const [locC, setLocC] = useState({ x: 0, y: 0 });
+  const [roomIdToNumMapper, setRoomIdToNumMapper] = useState({});
 
   const DragIcon = (x, y, char) => (
     <Draggable
@@ -76,12 +80,19 @@ const SetupTab = ({
 
   const roomRow = (room, id) => {
     const colorMapperListModified = colorMapperList.slice(0, roomNum);
+
+    const setRoomAndColorMapping = item => {
+      const roomId = room._id;
+      const roomNum = item.value;
+      setRoomIdToNumMapper({ ...roomIdToNumMapper, [roomId]: roomNum });
+    };
+
     return (
       <View style={styles.roomCard(id)}>
         <Text>{room.name}</Text>
         <DropDownPicker
           items={colorMapperListModified}
-          defaultValue={'orange'}
+          defaultValue={1}
           containerStyle={{ height: 29 }}
           dropDownMaxHeight={80}
           style={{ backgroundColor: '#fafafa' }}
@@ -93,7 +104,7 @@ const SetupTab = ({
             backgroundColor: '#fafafa',
             zIndex: 6000,
           }}
-          onChangeItem={item => console.log(item)}
+          onChangeItem={item => setRoomAndColorMapping(item)}
         />
       </View>
     );
@@ -141,7 +152,7 @@ const SetupTab = ({
         formdata
       );
 
-      // console.log('response', response.data);
+      setFloorPlanId(response.data._id);
 
       const pathArr = response.data.raw_floor_plan.split('/');
       const image_name = pathArr[pathArr.length - 1];
@@ -188,12 +199,38 @@ const SetupTab = ({
     }
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
+    // real length: (locX/256) * length
     console.log('A, x: ', locA.x, ',y: ', locA.y);
     console.log('B, x: ', locB.x, ',y: ', locB.y);
     console.log('C, x: ', locC.x, ',y: ', locC.y);
 
-    // real length: (locX/256) * length
+    console.log(roomIdToNumMapper);
+
+    // 1. Connect FloorPlan With House
+    const response1 = axios.put(
+      'http://18.136.85.164/api/attach_floor/1&' + floorplanId
+    );
+    console.log('response1 ', response1.data);
+
+    // 2. Map roomNum with roomId
+    // const response2 = axios.put();
+
+    for (const roomId in roomIdToNumMapper) {
+      // <room_json_num>&<room_pk>&<floorplan_pk>
+      const response2 = await axios.put(
+        'http://18.136.85.164/api/change_floorplan_mapping/' +
+          roomIdToNumMapper[roomId] +
+          '&' +
+          roomId +
+          '&' +
+          floorplanId
+      );
+      console.log('testing');
+      console.log(response2.data);
+    }
+
+    // 3. Map anchor with MAC address
   };
 
   const renderSteps = () => {
@@ -288,7 +325,7 @@ const SetupTab = ({
           style={styles.topMargin}
         >
           <View style={styles.uploadBox}>
-            <Icon style={styles.uploadIcon} name="md60oud-upload" />
+            <Icon style={styles.uploadIcon} name="md-cloud-upload" />
             <Text>Upload your Floorplan here</Text>
           </View>
         </TouchableOpacity>
@@ -435,6 +472,7 @@ const mapDispatchToProps = {
   setFloorPlan,
   setLoading,
   setRoomNum,
+  setFloorPlanId,
 };
 
 const mapStateToProps = ({ tracking, room }) => ({
@@ -444,6 +482,7 @@ const mapStateToProps = ({ tracking, room }) => ({
   loading: tracking.loading,
   roomList: room.roomList,
   roomNum: tracking.roomNum,
+  floorplanId: tracking.floorplanId,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetupTab);

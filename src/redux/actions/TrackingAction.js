@@ -4,6 +4,7 @@ import {
   SET_FLOORPLAN,
   SET_LOADING,
   SET_ROOM_NUM,
+  SET_FLOORPLAN_ID,
 } from '../types';
 
 export const setLength = num => ({
@@ -29,4 +30,9 @@ export const setLoading = loading => ({
 export const setRoomNum = roomNum => ({
   type: SET_ROOM_NUM,
   payload: roomNum,
+});
+
+export const setFloorPlanId = floorplanId => ({
+  type: SET_FLOORPLAN_ID,
+  payload: floorplanId,
 });
