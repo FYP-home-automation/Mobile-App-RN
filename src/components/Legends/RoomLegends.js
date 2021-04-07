@@ -1,33 +1,40 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import {
-  roomNumRoomTypeMapper,
-  roomNumColorMapper,
-} from 'HomeAutomation/src/utils/global';
+import { roomNumColorMapper } from 'HomeAutomation/src/utils/global';
 import data from '../../assets/rooms.json';
 
-const RoomLegends = ({}) => {
+const RoomLegends = ({ roomNum, roomNumToType }) => {
+  console.log(roomNum);
+  console.log(roomNumToType);
+  // console.log('inside asd');
   const roomdict = data.roomdict;
+  const roomArr = Object.values(roomNumToType);
+  const uniqueRoomArr = [...new Set(roomArr)];
+  // console.log(uniqueRoomArr);
 
   const BoxWithType = num => {
     return (
       <View style={styles.boxContainer}>
         <View style={styles.box(num)}></View>
-        <Text>{roomdict[num]}</Text>
+        <Text>{uniqueRoomArr[num - 1]}</Text>
       </View>
     );
   };
+
+  const legends = [];
+
+  for (let i = 1; i <= uniqueRoomArr.length; i++) {
+    legends.push(BoxWithType(i));
+  }
 
   return (
     <View style={styles.outerContainer}>
       <View style={{ flex: 1 }}></View>
       <View style={styles.container}>
         <View>
-          <Text style={styles.title}>Legends</Text>
-          <View style={styles.legends}>
-            {Object.keys(roomdict).map(key => BoxWithType(key))}
-          </View>
+          <Text style={styles.title}>Legend</Text>
+          <View style={styles.legends}>{legends}</View>
         </View>
       </View>
       <View style={{ flex: 1 }}></View>
@@ -51,7 +58,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 2,
-    width: 100,
+    width: 110,
   },
   title: {
     fontWeight: '600',

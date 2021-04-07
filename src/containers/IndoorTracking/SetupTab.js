@@ -4,7 +4,6 @@ import defaultData from '../../assets/rooms.json';
 import {
   roomNumColorMapper,
   colorMapperList,
-  file,
 } from 'HomeAutomation/src/utils/global';
 import { RoomLegends } from 'HomeAutomation/src/components';
 
@@ -23,6 +22,7 @@ import {
   setLoading,
   setRoomNum,
   setFloorPlanId,
+  setRoomNumToType,
 } from 'HomeAutomation/src/redux/actions';
 import axios from 'axios';
 
@@ -37,6 +37,7 @@ const SetupTab = ({
   setLoading,
   setRoomNum,
   setFloorPlanId,
+  setRoomNumToType,
   loading,
   width,
   length,
@@ -44,6 +45,7 @@ const SetupTab = ({
   roomList,
   roomNum,
   floorplanId,
+  roomNumToType,
 }) => {
   const [colorMapper, setColorMapper] = useState(roomNumColorMapper);
   const [locA, setLocA] = useState({ x: 0, y: 0 });
@@ -82,9 +84,13 @@ const SetupTab = ({
   const roomRow = (room, id) => {
     const colorMapperListModified = colorMapperList.slice(0, roomNum);
     const setRoomAndColorMapping = item => {
+      // console.log(item);
+      // console.log(room);
+      // console.log(roomNumToType);
       const roomId = room._id;
       const roomNum = item.value;
       setRoomIdToNumMapper({ ...roomIdToNumMapper, [roomId]: roomNum });
+      setRoomNumToType({ ...roomNumToType, [item.value]: room.room_type });
     };
 
     return (
@@ -144,7 +150,7 @@ const SetupTab = ({
 
       if (result.height === 511 && result.width === 512) {
         nameOnly = 'lab_floorplan_edit';
-        await waitFor(8000);
+        // await waitFor(8000);
       } else {
         // Step 1. Upload Image
         let formdata = new FormData();
@@ -473,6 +479,7 @@ const mapDispatchToProps = {
   setLoading,
   setRoomNum,
   setFloorPlanId,
+  setRoomNumToType,
 };
 
 const mapStateToProps = ({ tracking, room }) => ({
@@ -483,6 +490,7 @@ const mapStateToProps = ({ tracking, room }) => ({
   roomList: room.roomList,
   roomNum: tracking.roomNum,
   floorplanId: tracking.floorplanId,
+  roomNumToType: tracking.roomNumToType,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetupTab);

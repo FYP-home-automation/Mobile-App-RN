@@ -5,6 +5,7 @@ import {
   SET_LOADING,
   SET_ROOM_NUM,
   SET_FLOORPLAN_ID,
+  SET_ROOMNUM_TO_TYPE,
 } from '../types';
 
 const initialState = {
@@ -14,6 +15,7 @@ const initialState = {
   data: {},
   loading: false,
   roomNum: 0,
+  roomNumToType: {},
 };
 
 const trackingReducer = (state = initialState, action) => {
@@ -49,6 +51,12 @@ const trackingReducer = (state = initialState, action) => {
       return {
         ...state,
         floorplanId: action.payload,
+      };
+
+    case SET_ROOMNUM_TO_TYPE:
+      return {
+        ...state,
+        roomNumToType: action.payload,
       };
     default:
       return state;

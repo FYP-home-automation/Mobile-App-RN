@@ -19,3 +19,4 @@ export const SET_FLOORPLAN = 'SET_FLOORPLAN';
 export const SET_LOADING = 'SET_LOADING';
 export const SET_ROOM_NUM = 'SET_ROOM_NUM';
 export const SET_FLOORPLAN_ID = 'SET_FLOORPLAN_ID';
+export const SET_ROOMNUM_TO_TYPE = 'SET_ROOMNUM_TO_TYPE';

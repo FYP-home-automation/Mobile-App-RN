@@ -30,12 +30,35 @@ const initialData = [
   },
 ];
 
-const TrackingTab = ({ image, setImage, data }) => {
-  // const roomnums = data.roomtypes;
+const TrackingTab = ({ data, roomNum, roomNumToType }) => {
   const [colorMapper, setColorMapper] = useState(roomNumColorMapper);
   const [xPos, setXPos] = useState(100);
   const [yPos, setYPos] = useState(130);
   const [devices, setDevices] = useState(initialData);
+  const [roomNumToColor, setRoomNumToColor] = useState({});
+
+  const roomArr = Object.values(roomNumToType);
+  const uniqueRoomArr = [...new Set(roomArr)];
+
+  useEffect(() => {
+    const typeToColor = {};
+    const roomNumToColorTemp = {};
+    for (let i = 1; i <= uniqueRoomArr.length; i++) {
+      typeToColor[uniqueRoomArr[i - 1]] = roomNumColorMapper[i];
+    }
+
+    for (const roomNum in roomNumToType) {
+      const roomType = roomNumToType[roomNum];
+      roomNumToColorTemp[roomNum] = typeToColor[roomType];
+    }
+    roomNumToColorTemp[0] = 'black';
+
+    // console.log('asd asdfsfd s');
+    // console.log(roomNumToColor);
+    setRoomNumToColor(roomNumToColorTemp);
+  }, []);
+
+  console.log('asdf', roomNumToColor);
 
   // useEffect(() => {
   //   setInterval(() => {
@@ -102,6 +125,7 @@ const TrackingTab = ({ image, setImage, data }) => {
   const renderSteps = () => {
     // Show View when image has been uploaded
     if (data.roomnums) {
+      console.log('testing 123');
       return (
         <View>
           <View style={styles.topSection}>
@@ -114,7 +138,7 @@ const TrackingTab = ({ image, setImage, data }) => {
               {data.roomnums.map(roomCol => (
                 <View>
                   {roomCol.map(roomNum => (
-                    <View style={styles.room(roomNum, colorMapper)}></View>
+                    <View style={styles.room(roomNum, roomNumToColor)}></View>
                   ))}
                 </View>
               ))}
@@ -129,7 +153,7 @@ const TrackingTab = ({ image, setImage, data }) => {
             </View>
           </View>
 
-          <RoomLegends />
+          <RoomLegends roomNum={roomNum} roomNumToType={roomNumToType} />
 
           <View style={styles.controllerSection}>
             <View style={{ flex: 1 }}></View>
@@ -144,7 +168,7 @@ const TrackingTab = ({ image, setImage, data }) => {
             <View style={{ flex: 1 }}></View>
           </View>
 
-          <WS
+          {/* <WS
             // ref={ref => {
             //   this.ws = ref;
             // }}
@@ -157,7 +181,7 @@ const TrackingTab = ({ image, setImage, data }) => {
             onError={e => console.log('error ', e)}
             onClose={e => console.log('onClose ', e)}
             reconnect // Will try to reconnect onClose
-          />
+          /> */}
         </View>
       );
     }
@@ -272,14 +296,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   room: (roomNum, colorMapper) => ({
-    width: 2,
-    height: 2,
+    width: 4,
+    height: 4,
     backgroundColor: colorMapper[roomNum] ? colorMapper[roomNum] : 'white',
   }),
 });
 
 const mapStateToProps = ({ tracking, room }) => ({
   data: tracking.data,
+  roomNum: tracking.roomNum,
+  roomNumToType: tracking.roomNumToType,
 });
 
 export default connect(mapStateToProps, {})(TrackingTab);
