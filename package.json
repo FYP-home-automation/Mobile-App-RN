@@ -51,6 +51,7 @@
     "react-native-tab-view": "^2.15.2",
     "react-native-unimodules": "~0.10.1",
     "react-native-web": "~0.11.7",
+    "react-native-websocket": "^1.0.2",
     "react-navigation": "^4.4.0",
     "react-redux": "^7.2.1",
     "redux": "^4.0.5",
@@ -58,7 +59,8 @@
     "redux-thunk": "^2.3.0",
     "remote-redux-devtools": "^0.5.16",
     "remotedev-rn-debugger": "0.8.1",
-    "remotedev-server": "^0.3.1"
+    "remotedev-server": "^0.3.1",
+    "websocket": "^1.0.33"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

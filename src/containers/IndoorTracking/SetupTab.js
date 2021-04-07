@@ -4,6 +4,7 @@ import defaultData from '../../assets/rooms.json';
 import {
   roomNumColorMapper,
   colorMapperList,
+  file,
 } from 'HomeAutomation/src/utils/global';
 import { RoomLegends } from 'HomeAutomation/src/components';
 
@@ -80,7 +81,7 @@ const SetupTab = ({
 
   const roomRow = (room, id) => {
     const colorMapperListModified = colorMapperList.slice(0, roomNum);
-
+    console.log(colorMapperListModified);
     const setRoomAndColorMapping = item => {
       const roomId = room._id;
       const roomNum = item.value;
@@ -137,7 +138,7 @@ const SetupTab = ({
 
     if (!result.cancelled) {
       setLoading(true);
-      // console.log(result.uri);
+      // console.log('uri', result.uri);
       setImage(result.uri);
 
       // Step 1. Upload Image
@@ -249,9 +250,11 @@ const SetupTab = ({
         </AnimatedLoader>
       );
     }
-
+    console.log('inside');
     // Show View when image has been uploaded
     if (data.roomnums) {
+      console.log('testing');
+      console.log(data.roomnums.length);
       return (
         <View>
           <View style={styles.topSection}>
@@ -460,8 +463,8 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   room: (roomNum, colorMapper) => ({
-    width: 2,
-    height: 2,
+    width: 4,
+    height: 4,
     backgroundColor: colorMapper[roomNum] ? colorMapper[roomNum] : 'white',
   }),
 });

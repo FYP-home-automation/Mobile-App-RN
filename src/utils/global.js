@@ -83,35 +83,5 @@ export const colorMapperList = roomNumColorMapperArray.map((color, id) => {
   };
 });
 
-// [
-//   {
-//     label: 'orange',
-//     value: 'orange',
-//     icon: () => <View style={styles.roomColor}> tes </View>,
-//   },
-//   {
-//     label: 'blue',
-//     value: 'blue',
-//     icon: () => <View> test </View>,
-//   },
-//   {
-//     label: 'yellow',
-//     value: 'yellow',
-//     icon: () => <View style={styles.roomColor}> tes </View>,
-//   },
-//   {
-//     label: 'pink',
-//     value: 'pink',
-//     icon: () => <View> test </View>,
-//   },
-//   {
-//     label: 'cyan',
-//     value: 'cyan',
-//     icon: () => <View style={styles.roomColor}> tes </View>,
-//   },
-//   {
-//     label: 'blue',
-//     value: 'blue',
-//     icon: () => <View> test </View>,
-//   },
-// ];
+export const file =
+  'file:///Users/kevingondokusumo/Library/Developer/CoreSimulator/Devices/72FE7FC4-D500-49CB-98D0-F4CDBC08C597/data/Containers/Data/Application/73DDE2D0-4758-41EC-A459-BB8C539D8184/Library/Caches/ExponentExperienceData/%2540anonymous%252FHomeAutomation-40e15085-aa10-4db2-ab2a-aa5c568d5808/ImagePicker/2A4FC93D-5ED4-4582-B82B-B4EF36A0EAEA.jpg';

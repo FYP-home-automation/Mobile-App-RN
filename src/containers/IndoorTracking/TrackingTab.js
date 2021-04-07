@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useContext, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, ScrollView, Switch } from 'react-native';
-import data from '../../assets/rooms.json';
+
 import { roomNumColorMapper } from 'HomeAutomation/src/utils/global';
 import { RoomLegends } from 'HomeAutomation/src/components';
 
@@ -9,8 +9,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as ImagePicker from 'expo-image-picker';
 
 import AnimatedLoader from 'react-native-animated-loader';
-
+import WS from 'react-native-websocket';
 import LottieView from 'lottie-react-native';
+import { connect } from 'react-redux';
 
 const userLocationBoxSize = 40;
 
@@ -29,46 +30,50 @@ const initialData = [
   },
 ];
 
-const TrackingTab = ({ image, setImage }) => {
-  const roomnums = data.roomtypes;
+const TrackingTab = ({ image, setImage, data }) => {
+  // const roomnums = data.roomtypes;
   const [colorMapper, setColorMapper] = useState(roomNumColorMapper);
   const [xPos, setXPos] = useState(100);
   const [yPos, setYPos] = useState(130);
   const [devices, setDevices] = useState(initialData);
 
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     const dummyColor = [
+  //       '#FFA500',
+  //       '#0000FF',
+  //       '#800080',
+  //       '#808080',
+  //       '#00FFFF',
+  //     ];
+  //     const newColorMapper = { ...colorMapper };
+
+  //     for (let i = 1; i < 8; i++) {
+  //       const color = dummyColor[getRandomInt(0, 4)];
+  //       newColorMapper[i] = color;
+  //     }
+
+  //     setColorMapper(newColorMapper);
+  //   }, 200000);
+
+  //   setInterval(() => {
+  //     setXPos(prevXPos => {
+  //       if (prevXPos + 5 <= 256) {
+  //         return prevXPos + 3;
+  //       }
+  //       return prevXPos;
+  //     });
+  //     setYPos(prevYPos => {
+  //       if (prevYPos + 5 <= 256) {
+  //         return prevYPos + 3;
+  //       }
+  //       return prevYPos;
+  //     });
+  //   }, 1000);
+  // }, []);
+
   useEffect(() => {
-    setInterval(() => {
-      const dummyColor = [
-        '#FFA500',
-        '#0000FF',
-        '#800080',
-        '#808080',
-        '#00FFFF',
-      ];
-      const newColorMapper = { ...colorMapper };
-
-      for (let i = 1; i < 8; i++) {
-        const color = dummyColor[getRandomInt(0, 4)];
-        newColorMapper[i] = color;
-      }
-
-      setColorMapper(newColorMapper);
-    }, 200000);
-
-    setInterval(() => {
-      setXPos(prevXPos => {
-        if (prevXPos + 5 <= 256) {
-          return prevXPos + 3;
-        }
-        return prevXPos;
-      });
-      setYPos(prevYPos => {
-        if (prevYPos + 5 <= 256) {
-          return prevYPos + 3;
-        }
-        return prevYPos;
-      });
-    }, 1000);
+    console.log('inside');
   }, []);
 
   function getRandomInt(min, max) {
@@ -100,7 +105,7 @@ const TrackingTab = ({ image, setImage }) => {
 
   const renderSteps = () => {
     // Show View when image has been uploaded
-    if (image) {
+    if (data.roomnums) {
       return (
         <View>
           <View style={styles.topSection}>
@@ -110,7 +115,7 @@ const TrackingTab = ({ image, setImage }) => {
           </View>
           <View style={styles.mapContainer}>
             <View style={styles.flexRow}>
-              {roomnums.map(roomCol => (
+              {data.roomnums.map(roomCol => (
                 <View>
                   {roomCol.map(roomNum => (
                     <View style={styles.room(roomNum, colorMapper)}></View>
@@ -142,6 +147,21 @@ const TrackingTab = ({ image, setImage }) => {
             </View>
             <View style={{ flex: 1 }}></View>
           </View>
+
+          <WS
+            // ref={ref => {
+            //   this.ws = ref;
+            // }}
+            url="wss://aqueous-depths-15794.herokuapp.com/ws/polData/"
+            onOpen={() => {
+              console.log('Open!');
+              // this.ws.send('Hello');
+            }}
+            onMessage={e => console.log(e)}
+            onError={console.log}
+            onClose={console.log}
+            reconnect // Will try to reconnect onClose
+          />
         </View>
       );
     }
@@ -262,4 +282,8 @@ const styles = StyleSheet.create({
   }),
 });
 
-export default TrackingTab;
+const mapStateToProps = ({ tracking, room }) => ({
+  data: tracking.data,
+});
+
+export default connect(mapStateToProps, {})(TrackingTab);
