@@ -51,6 +51,8 @@ const SetupTab = ({
   const [locA, setLocA] = useState({ x: 0, y: 0 });
   const [locB, setLocB] = useState({ x: 0, y: 0 });
   const [locC, setLocC] = useState({ x: 0, y: 0 });
+  const [locD, setLocD] = useState({ x: 0, y: 0 });
+
   const [roomIdToNumMapper, setRoomIdToNumMapper] = useState({});
 
   const DragIcon = (x, y, char) => (
@@ -73,6 +75,8 @@ const SetupTab = ({
           setLocB({ x: locX, y: locY });
         } else if (char == 'C') {
           setLocC({ x: locX, y: locY });
+        } else if (char == 'D') {
+          setLocD({ x: locX, y: locY });
         } else {
           console.log('unidentified char');
         }
@@ -214,6 +218,7 @@ const SetupTab = ({
     console.log('A, x: ', locA.x, ',y: ', locA.y);
     console.log('B, x: ', locB.x, ',y: ', locB.y);
     console.log('C, x: ', locC.x, ',y: ', locC.y);
+    console.log('C, x: ', locD.x, ',y: ', locD.y);
 
     console.log(roomIdToNumMapper);
 
@@ -277,6 +282,7 @@ const SetupTab = ({
               {DragIcon(0, 256 - 25, 'A')}
               {DragIcon(26, 256 - 25, 'B')}
               {DragIcon(52, 256 - 25, 'C')}
+              {DragIcon(78, 256 - 25, 'D')}
             </View>
           </View>
           <View style={styles.roomMapper}>
