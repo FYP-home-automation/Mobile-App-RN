@@ -72,10 +72,6 @@ const TrackingTab = ({ image, setImage, data }) => {
   //   }, 1000);
   // }, []);
 
-  useEffect(() => {
-    console.log('inside');
-  }, []);
-
   function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);

@@ -81,7 +81,6 @@ const SetupTab = ({
 
   const roomRow = (room, id) => {
     const colorMapperListModified = colorMapperList.slice(0, roomNum);
-    console.log(colorMapperListModified);
     const setRoomAndColorMapping = item => {
       const roomId = room._id;
       const roomNum = item.value;
@@ -138,7 +137,6 @@ const SetupTab = ({
 
     if (!result.cancelled) {
       setLoading(true);
-      // console.log('uri', result.uri);
       setImage(result.uri);
 
       // Step 1. Upload Image
@@ -161,12 +159,10 @@ const SetupTab = ({
       // Step 2. Post Image
       let formdata2 = new FormData();
       formdata2.append('image_name', image_name);
-      // console.log('formdata 2', formdata2);
       const response2 = await axios.post(
         'http://18.136.85.164/deepfloorplan',
         formdata2
       );
-      // console.log('response2', response2.data);
 
       const nameArr = image_name.split('.');
       const nameOnly = nameArr[0];
@@ -177,7 +173,6 @@ const SetupTab = ({
       );
 
       const data = response3.data;
-      // console.log('response3', response3.data);
       const defaultFloorPlanTypes = {
         roomdict: {
           4: 'bedroom',
@@ -212,7 +207,6 @@ const SetupTab = ({
     const response1 = axios.put(
       'http://18.136.85.164/api/attach_floor/1&' + floorplanId
     );
-    console.log('response1 ', response1.data);
 
     // 2. Map roomNum with roomId
     // const response2 = axios.put();
@@ -227,8 +221,6 @@ const SetupTab = ({
           '&' +
           floorplanId
       );
-      console.log('testing');
-      console.log(response2.data);
     }
 
     // 3. Map anchor with MAC address
@@ -236,7 +228,6 @@ const SetupTab = ({
 
   const renderSteps = () => {
     // Show View when loading is true
-    // console.log('loading ', loading);
     if (loading) {
       return (
         <AnimatedLoader
@@ -250,11 +241,9 @@ const SetupTab = ({
         </AnimatedLoader>
       );
     }
-    console.log('inside');
+
     // Show View when image has been uploaded
     if (data.roomnums) {
-      console.log('testing');
-      console.log(data.roomnums.length);
       return (
         <View>
           <View style={styles.topSection}>
