@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { View, StyleSheet, Text, TextInput, ScrollView } from 'react-native';
 import defaultData from '../../assets/rooms.json';
 import {
@@ -42,16 +42,9 @@ const SetupTab = ({
   roomNum,
 }) => {
   const [colorMapper, setColorMapper] = useState(roomNumColorMapper);
-  // const [loading, setLoading] = useState(false);
   const [locA, setLocA] = useState({ x: 0, y: 0 });
   const [locB, setLocB] = useState({ x: 0, y: 0 });
   const [locC, setLocC] = useState({ x: 0, y: 0 });
-
-  // console.log('data ', data);
-
-  // useEffect(() => {
-  //   console.log('testing');
-  // }, []);
 
   const DragIcon = (x, y, char) => (
     <Draggable
@@ -82,9 +75,7 @@ const SetupTab = ({
   );
 
   const roomRow = (room, id) => {
-    console.log(roomNum);
     const colorMapperListModified = colorMapperList.slice(0, roomNum);
-    console.log(colorMapperListModified);
     return (
       <View style={styles.roomCard(id)}>
         <Text>{room.name}</Text>
@@ -106,6 +97,23 @@ const SetupTab = ({
         />
       </View>
     );
+  };
+
+  const setHouseSize = async () => {
+    let formdata = new FormData();
+
+    formdata.append('dim_x', length);
+    formdata.append('dim_y', width);
+    formdata.append('name', 'My House');
+
+    try {
+      const response = await axios.put(
+        'http://18.136.85.164/api/house/1',
+        formdata
+      );
+    } catch (e) {
+      console.log('error setting house size ', e);
+    }
   };
 
   const pickImage = async () => {
@@ -273,13 +281,14 @@ const SetupTab = ({
           onPress={() => {
             // setLoading(true);
             setTimeout(() => {
+              setHouseSize();
               pickImage();
             }, 50);
           }}
           style={styles.topMargin}
         >
           <View style={styles.uploadBox}>
-            <Icon style={styles.uploadIcon} name="md-cloud-upload" />
+            <Icon style={styles.uploadIcon} name="md60oud-upload" />
             <Text>Upload your Floorplan here</Text>
           </View>
         </TouchableOpacity>
