@@ -4,11 +4,6 @@ import { View, StyleSheet, Text, ScrollView, Switch } from 'react-native';
 import { roomNumColorMapper } from 'HomeAutomation/src/utils/global';
 import { RoomLegends } from 'HomeAutomation/src/components';
 
-import { Icon } from 'native-base';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import * as ImagePicker from 'expo-image-picker';
-
-import AnimatedLoader from 'react-native-animated-loader';
 import WS from 'react-native-websocket';
 import LottieView from 'lottie-react-native';
 import { connect } from 'react-redux';
@@ -118,6 +113,12 @@ const TrackingTab = ({ data, roomNum, roomNumToType }) => {
     );
   };
 
+  const updateLocation = e => {
+    const data = e.data;
+    console.log('getting data');
+    console.log(data);
+  };
+
   const renderSteps = () => {
     // Show View when image has been uploaded
     if (data.roomnums) {
@@ -162,21 +163,17 @@ const TrackingTab = ({ data, roomNum, roomNumToType }) => {
             </View>
             <View style={{ flex: 1 }}></View>
           </View>
-
-          {/* <WS
-            // ref={ref => {
-            //   this.ws = ref;
-            // }}
+          <WS
             url="wss://aqueous-depths-15794.herokuapp.com/ws/polData/"
             onOpen={() => {
               console.log('Open!');
               // this.ws.send('Hello');
             }}
-            onMessage={e => console.log(e)}
+            onMessage={e => updateLocation(e)}
             onError={e => console.log('error ', e)}
             onClose={e => console.log('onClose ', e)}
             reconnect // Will try to reconnect onClose
-          /> */}
+          />
         </View>
       );
     }
