@@ -62,6 +62,7 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
   const getTranscription = async () => {
     // this.setState({ isFetching: true });
     setIsFetching(true);
+    console.log('fetching data');
     try {
       const info = await FileSystem.getInfoAsync(recording.getURI());
       console.log(`FILE INFO: ${JSON.stringify(info)}`);
@@ -76,17 +77,15 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
 
       console.log('form data', formData);
 
-      const response = await fetch(config.CLOUD_FUNCTION_URL, {
+      const response = await fetch('http://localhost:3005/speech', {
         method: 'POST',
         body: formData,
       });
-      const data = await response.json();
-      console.log('data', data);
-      // this.setState({ query: data.transcript });
+      console.log('response ', response);
+      // const data = await response.json();
+      console.log('data ', response.transcript);
     } catch (error) {
       console.log('There was an error', error);
-      // this.stopRecording();
-      // this.resetRecording();
     }
     this.setState({ isFetching: false });
   };
@@ -133,7 +132,6 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
     } catch (error) {
       console.log(error);
       // we will take a closer look at stopRecording function further in this article
-      this.stopRecording();
     }
 
     // if recording was successful we store the result in variable,
@@ -168,7 +166,7 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
       </ImageBackground>
       <RoomStatsBar temp={temp} humidity={humidity} brightness={brightness} />
       <RoomActiveDevices room={room} activeRoomId={activeRoomId} />
-      {/* <Button onPress={() => getTranscription()}>
+      <Button onPress={() => getTranscription()}>
         <Text>Click Me!</Text>
       </Button>
 
@@ -182,7 +180,7 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
             {isRecording ? 'Recording...' : 'Start recording'}
           </Text>
         </Text>
-      </TouchableOpacity> */}
+      </TouchableOpacity>
 
       <View style={styles.alignMic}>
         <View style={styles.micContainer}>

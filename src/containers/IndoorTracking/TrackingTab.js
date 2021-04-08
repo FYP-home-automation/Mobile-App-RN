@@ -25,10 +25,10 @@ const initialData = [
   },
 ];
 
-const TrackingTab = ({ data, roomNum, roomNumToType }) => {
+const TrackingTab = ({ data, roomNum, roomNumToType, length, width }) => {
   const [colorMapper, setColorMapper] = useState(roomNumColorMapper);
-  const [xPos, setXPos] = useState(100);
-  const [yPos, setYPos] = useState(130);
+  const [xPos, setXPos] = useState(60);
+  const [yPos, setYPos] = useState(200);
   const [devices, setDevices] = useState(initialData);
   const [roomNumToColor, setRoomNumToColor] = useState({});
 
@@ -114,9 +114,21 @@ const TrackingTab = ({ data, roomNum, roomNumToType }) => {
   };
 
   const updateLocation = e => {
-    const data = e.data;
-    console.log('getting data');
-    console.log(data);
+    const data = JSON.parse(e.data);
+    // console.log('getting data');
+    // console.log(data);
+
+    if (data.distance) {
+      const { x_cor, y_cor } = data.coordinates;
+      console.log(x_cor, y_cor);
+      // console.log(data.distance);
+      const newXCor = (x_cor / length) * 256;
+      const newYCor = (y_cor / width) * 256;
+
+      // const newYCor = y_cor/width * 64;
+      setXPos(newXCor);
+      setYPos(newYCor);
+    }
   };
 
   const renderSteps = () => {
@@ -241,8 +253,8 @@ const styles = StyleSheet.create({
     width: userLocationBoxSize,
     height: userLocationBoxSize,
     position: 'absolute',
-    top: xPos - userLocationBoxSize / 2, // (userLocationBoxSize / 2) is for the offset, so that icon start at center correctly
-    left: yPos - userLocationBoxSize / 2,
+    left: xPos - userLocationBoxSize / 2, // (userLocationBoxSize / 2) is for the offset, so that icon start at center correctly
+    bottom: yPos - userLocationBoxSize / 2,
   }),
   topSectionFont: {
     fontWeight: '500',
@@ -298,6 +310,8 @@ const mapStateToProps = ({ tracking, room }) => ({
   data: tracking.data,
   roomNum: tracking.roomNum,
   roomNumToType: tracking.roomNumToType,
+  length: tracking.length,
+  width: tracking.width,
 });
 
 export default connect(mapStateToProps, {})(TrackingTab);

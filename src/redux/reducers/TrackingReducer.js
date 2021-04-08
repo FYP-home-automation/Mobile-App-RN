@@ -9,8 +9,8 @@ import {
 } from '../types';
 
 const initialState = {
-  length: 10,
-  width: 10,
+  length: 20.7,
+  width: 20.7,
   floorplanId: 0,
   data: {},
   loading: false,
