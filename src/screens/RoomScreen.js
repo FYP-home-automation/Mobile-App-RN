@@ -20,8 +20,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as FileSystem from 'expo-file-system';
 import * as Permissions from 'expo-permissions';
 import { Audio } from 'expo-av';
-
 import * as Speech from 'expo-speech';
+import axios from 'axios';
+
 import { connect } from 'react-redux';
 
 const recordingOptions = {
@@ -64,26 +65,26 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
     setIsFetching(true);
     console.log('fetching data');
     try {
-      const info = await FileSystem.getInfoAsync(recording.getURI());
-      console.log(`FILE INFO: ${JSON.stringify(info)}`);
-      const uri = info.uri;
+      const { uri } = await FileSystem.getInfoAsync(recording.getURI());
+      // now we create formData which will be sent to our backend
       const formData = new FormData();
       formData.append('file', {
         uri,
-        type: 'audio/x-wav',
-        // could be anything
-        name: 'speech2text',
+        // as different audio types are used for android and ios - we should handle it
+        type: Platform.OS === 'ios' ? 'audio/x-wav' : 'audio/m4a',
+        name: Platform.OS === 'ios' ? `${Date.now()}.wav` : `${Date.now()}.m4a`,
       });
 
-      console.log('form data', formData);
+      formData.append('uri', uri);
 
-      const response = await fetch('http://localhost:3005/speech', {
-        method: 'POST',
-        body: formData,
+      const resp = await axios.post('http://localhost:3005/speech', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
-      console.log('response ', response);
-      // const data = await response.json();
-      console.log('data ', response.transcript);
+
+      const transcription = resp.data;
+      console.log('transcription ', transcription);
     } catch (error) {
       console.log('There was an error', error);
     }
@@ -95,10 +96,7 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
     setIsRecording(false);
     try {
       // stop the recording
-      // console.log('recording stop', recording);
       await recording.stopAndUnloadAsync();
-      const uri = recording.getURI();
-      console.log('Recording stopped and stored at', uri);
     } catch (error) {
       console.log('error', error);
     }
