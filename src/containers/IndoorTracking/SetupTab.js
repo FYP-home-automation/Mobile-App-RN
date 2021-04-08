@@ -154,6 +154,12 @@ const SetupTab = ({
 
       if (result.height === 511 && result.width === 512) {
         nameOnly = 'lab_floorplan_edit';
+
+        const response1 = await axios.put(
+          'http://18.136.85.164/api/attach_floor/1&57'
+        );
+        console.log('response 1, ', response1);
+
         // await waitFor(8000);
       } else {
         // Step 1. Upload Image
