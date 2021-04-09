@@ -19,7 +19,6 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
-// import { FileSystem } from 'expo';
 import * as FileSystem from 'expo-file-system';
 import * as Permissions from 'expo-permissions';
 import { Audio } from 'expo-av';
@@ -65,9 +64,8 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
   };
 
   const getTranscription = async () => {
-    // this.setState({ isFetching: true });
     setIsFetching(true);
-    console.log('fetching data');
+
     try {
       const { uri } = await FileSystem.getInfoAsync(recording.getURI());
       // now we create formData which will be sent to our backend
@@ -88,7 +86,11 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
       });
 
       const transcription = resp.data;
-      console.log('transcription ', transcription);
+
+      // console.log('transcription ', transcription);
+
+      // delete recording
+      await FileSystem.deleteAsync(recording.getURI());
     } catch (error) {
       console.log('There was an error', error);
     }
@@ -141,6 +143,7 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
     setRecording(recording);
   };
 
+  console.log('is Recording', isRecording);
   // TODO: dynamic reading for stats, e.g temp, humidity
   // TODO: dynamic devices on/off status
   return (
@@ -192,7 +195,8 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
           <LottieView
             source={require('../assets/35468-mic-animation.json')}
             style={styles.micStyle}
-            autoPlay={true}
+            autoPlay={isRecording}
+            loop={isRecording}
           />
         </TouchableWithoutFeedback>
       </View>
