@@ -5,8 +5,14 @@ import {
   LOADING_ROOM_LIST,
   ADD_NEW_ROOM_SUCCESSFULLY,
   ADD_NEW_ROOM_FAILED,
+  SET_TRANSCRIPTION,
 } from '../types';
 import { axiosInstance } from 'HomeAutomation/src/utils/API';
+
+export const setTranscription = transcript => ({
+  type: SET_TRANSCRIPTION,
+  payload: transcript,
+});
 
 export const setActiveRoomID = roomId => {
   return function (dispatch) {

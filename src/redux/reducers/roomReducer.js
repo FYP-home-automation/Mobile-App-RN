@@ -5,12 +5,14 @@ import {
   ADD_NEW_ROOM_SUCCESSFULLY,
   ADD_NEW_DEVICE_SUCCESSFULLY,
   LOADING_ROOM_LIST,
+  SET_TRANSCRIPTION,
 } from '../types';
 
 const initialState = {
   roomList: [],
   activeRoomId: null,
   loading: true,
+  transcription: '',
 };
 
 const roomReducer = (state = initialState, action) => {
@@ -50,6 +52,11 @@ const roomReducer = (state = initialState, action) => {
       return {
         ...state,
         roomList: [],
+      };
+    case SET_TRANSCRIPTION:
+      return {
+        ...state,
+        transcription: action.payload,
       };
     default:
       return state;

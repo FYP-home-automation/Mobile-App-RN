@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import { RoomStatsBar, RoomActiveDevices } from 'HomeAutomation/src/containers';
 import {
@@ -15,6 +15,9 @@ import {
   ImageBackground,
   SafeAreaView,
 } from 'react-native';
+
+import { setTranscription } from 'HomeAutomation/src/redux/actions';
+
 import {
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -49,7 +52,13 @@ const recordingOptions = {
   },
 };
 
-const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
+const RoomScreen = ({
+  navigation,
+  activeRoomId,
+  roomList,
+  setTranscription,
+  transcription,
+}) => {
   const room = Number.isInteger(activeRoomId) ? roomList[activeRoomId] : null;
   const temp = 24;
   const humidity = 8;
@@ -57,11 +66,31 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
   const [isRecording, setIsRecording] = useState(false);
   const [recording, setRecording] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
+  const micRef = useRef(null);
 
-  const speak = () => {
-    const thingToSay = '';
-    Speech.speak(thingToSay);
-  };
+  // const speak = () => {
+  //   Speech.speak(thingToSay);
+  // };
+
+  useEffect(() => {
+    if (micRef) {
+      if (isRecording) {
+        micRef.current.play();
+      } else {
+        micRef.current.reset();
+      }
+    }
+  }, [isRecording]);
+
+  useEffect(() => {
+    if (!isFetching) {
+      if (transcription !== '') {
+        console.log('transcription ', transcription);
+        Speech.speak(transcription);
+        setTranscription('');
+      }
+    }
+  }, [isFetching]);
 
   const getTranscription = async () => {
     setIsFetching(true);
@@ -87,6 +116,7 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
 
       const transcription = resp.data;
 
+      setTranscription(transcription);
       // console.log('transcription ', transcription);
 
       // delete recording
@@ -94,7 +124,7 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
     } catch (error) {
       console.log('There was an error', error);
     }
-    this.setState({ isFetching: false });
+    setIsFetching(false);
   };
 
   const stopRecording = async () => {
@@ -103,6 +133,8 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
     try {
       // stop the recording
       await recording.stopAndUnloadAsync();
+
+      await getTranscription();
     } catch (error) {
       console.log('error', error);
     }
@@ -143,7 +175,6 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
     setRecording(recording);
   };
 
-  console.log('is Recording', isRecording);
   // TODO: dynamic reading for stats, e.g temp, humidity
   // TODO: dynamic devices on/off status
   return (
@@ -171,11 +202,8 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
       </ImageBackground>
       <RoomStatsBar temp={temp} humidity={humidity} brightness={brightness} />
       <RoomActiveDevices room={room} activeRoomId={activeRoomId} />
-      <Button onPress={() => getTranscription()}>
-        <Text>Click Me!</Text>
-      </Button>
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPressIn={startRecording}
         onPressOut={stopRecording}
         style={styles.button}
@@ -185,18 +213,18 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
             {isRecording ? 'Recording...' : 'Start recording'}
           </Text>
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <View style={styles.alignMic}>
         <TouchableWithoutFeedback
-          onPressIn={() => console.log('onpress in')}
-          onPressOut={() => console.log('onpress out')}
+          onPressIn={startRecording}
+          onPressOut={stopRecording}
         >
           <LottieView
+            ref={micRef}
             source={require('../assets/35468-mic-animation.json')}
             style={styles.micStyle}
-            autoPlay={isRecording}
-            loop={isRecording}
+            autoPlay={false}
           />
         </TouchableWithoutFeedback>
       </View>
@@ -207,6 +235,7 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
 const mapStateToProps = ({ room }) => ({
   activeRoomId: room.activeRoomId,
   roomList: room.roomList,
+  transcription: room.transcription,
 });
 
 const styles = StyleSheet.create({
@@ -261,4 +290,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, null)(RoomScreen);
+const mapDispatchToProps = {
+  setTranscription,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RoomScreen);

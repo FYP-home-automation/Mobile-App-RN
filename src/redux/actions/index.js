@@ -1,4 +1,9 @@
-import { fetchAllRooms, setActiveRoomID, addNewRoom } from './roomAction';
+import {
+  fetchAllRooms,
+  setActiveRoomID,
+  addNewRoom,
+  setTranscription,
+} from './roomAction';
 import { addNewDevice } from './DeviceAction';
 import {
   setWidth,
@@ -22,4 +27,5 @@ export {
   setRoomNum,
   setFloorPlanId,
   setRoomNumToType,
+  setTranscription,
 };
