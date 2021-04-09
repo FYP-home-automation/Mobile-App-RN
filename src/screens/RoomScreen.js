@@ -15,13 +15,17 @@ import {
   ImageBackground,
   SafeAreaView,
 } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from 'react-native-gesture-handler';
 // import { FileSystem } from 'expo';
 import * as FileSystem from 'expo-file-system';
 import * as Permissions from 'expo-permissions';
 import { Audio } from 'expo-av';
 import * as Speech from 'expo-speech';
 import axios from 'axios';
+import LottieView from 'lottie-react-native';
 
 import { connect } from 'react-redux';
 
@@ -140,7 +144,7 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
   // TODO: dynamic reading for stats, e.g temp, humidity
   // TODO: dynamic devices on/off status
   return (
-    <View>
+    <View style={styles.roomContainer}>
       <ImageBackground
         style={styles.image}
         source={roomTypeImageMapper[room?.room_type]}
@@ -181,9 +185,16 @@ const RoomScreen = ({ navigation, activeRoomId, roomList }) => {
       </TouchableOpacity>
 
       <View style={styles.alignMic}>
-        <View style={styles.micContainer}>
-          <Icon style={styles.uploadIcon} name="md-mic" />
-        </View>
+        <TouchableWithoutFeedback
+          onPressIn={() => console.log('onpress in')}
+          onPressOut={() => console.log('onpress out')}
+        >
+          <LottieView
+            source={require('../assets/35468-mic-animation.json')}
+            style={styles.micStyle}
+            autoPlay={true}
+          />
+        </TouchableWithoutFeedback>
       </View>
     </View>
   );
@@ -195,8 +206,17 @@ const mapStateToProps = ({ room }) => ({
 });
 
 const styles = StyleSheet.create({
+  roomContainer: {
+    flex: 1,
+  },
+  micStyle: {
+    width: 180,
+    height: 180,
+  },
   alignMic: {
     alignItems: 'center',
+    justifyContent: 'flex-end',
+    flex: 1,
   },
   micContainer: {
     borderRadius: 50,
