@@ -9,7 +9,7 @@ const Header = () => {
         <Text style={{ ...styles.welcome, ...styles.welcomeName }}>
           Hello Karuna,
         </Text>
-        <Text style={styles.welcome}>I am Home Max</Text>
+        <Text style={styles.welcome}>I am Homely</Text>
         <Text style={styles.welcome}>your Smart Home System</Text>
       </SafeAreaView>
     </View>

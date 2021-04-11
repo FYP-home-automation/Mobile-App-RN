@@ -68,10 +68,6 @@ const RoomScreen = ({
   const [isFetching, setIsFetching] = useState(false);
   const micRef = useRef(null);
 
-  // const speak = () => {
-  //   Speech.speak(thingToSay);
-  // };
-
   useEffect(() => {
     if (micRef) {
       if (isRecording) {
