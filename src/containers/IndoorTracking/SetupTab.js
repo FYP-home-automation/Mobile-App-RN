@@ -1,9 +1,11 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { View, StyleSheet, Text, TextInput, ScrollView } from 'react-native';
 import defaultData from '../../assets/rooms.json';
+
 import {
   roomNumColorMapper,
   colorMapperList,
+  MACAdd,
 } from 'HomeAutomation/src/utils/global';
 import { RoomLegends } from 'HomeAutomation/src/components';
 
@@ -54,6 +56,27 @@ const SetupTab = ({
   const [locD, setLocD] = useState({ x: 0, y: 0 });
 
   const [roomIdToNumMapper, setRoomIdToNumMapper] = useState({});
+
+  const [macAddToIdMapper, setMacAddToIdMapper] = useState({});
+
+  useEffect(() => {
+    const getMacId = async () => {
+      const obj = {};
+      for (const idx in MACAdd) {
+        // console.log('add ', MACAdd[idx]);
+        const add = MACAdd[idx];
+        const resp = await axios.get(
+          `http://18.136.85.164/api/gateway_macaddress/${add}`
+        );
+
+        const id = resp.data._id;
+        obj[[add]] = id;
+      }
+      setMacAddToIdMapper(obj);
+    };
+
+    getMacId();
+  }, []);
 
   const DragIcon = (x, y, char) => (
     <Draggable

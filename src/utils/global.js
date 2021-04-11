@@ -83,5 +83,9 @@ export const colorMapperList = roomNumColorMapperArray.map((color, id) => {
   };
 });
 
-export const file =
-  'file:///Users/kevingondokusumo/Library/Developer/CoreSimulator/Devices/72FE7FC4-D500-49CB-98D0-F4CDBC08C597/data/Containers/Data/Application/73DDE2D0-4758-41EC-A459-BB8C539D8184/Library/Caches/ExponentExperienceData/%2540anonymous%252FHomeAutomation-40e15085-aa10-4db2-ab2a-aa5c568d5808/ImagePicker/2A4FC93D-5ED4-4582-B82B-B4EF36A0EAEA.jpg';
+export const MACAdd = [
+  '8C:AA:B5:83:FE:8C',
+  'B4:E6:2D:FA:51:69',
+  '8C:AA:B5:84:02:08',
+  '8C:AA:B5:84:05:78',
+];
