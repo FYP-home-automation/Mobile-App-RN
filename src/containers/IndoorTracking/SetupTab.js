@@ -29,7 +29,7 @@ import {
 import axios from 'axios';
 
 const xOffset = 61.5;
-const yOffset = 280;
+const yOffset = 219;
 
 const SetupTab = ({
   setImage,
@@ -78,6 +78,8 @@ const SetupTab = ({
     getMacId();
   }, []);
 
+  // console.log('macAddToIdMapper ', macAddToIdMapper);
+
   const DragIcon = (x, y, char) => (
     <Draggable
       x={x}
@@ -111,9 +113,6 @@ const SetupTab = ({
   const roomRow = (room, id) => {
     const colorMapperListModified = colorMapperList.slice(0, roomNum);
     const setRoomAndColorMapping = item => {
-      // console.log(item);
-      // console.log(room);
-      // console.log(roomNumToType);
       const roomId = room._id;
       const roomNum = item.value;
       setRoomIdToNumMapper({ ...roomIdToNumMapper, [roomId]: roomNum });
@@ -273,6 +272,57 @@ const SetupTab = ({
     }
 
     // 3. Map anchor with MAC address
+    const add1 = MACAdd[0];
+    let formdata1 = new FormData();
+    formdata1.append('name', 'M5 Stack 1');
+    formdata1.append('address', add1);
+    formdata1.append('x_cor', (locA.x / 256) * length);
+    formdata1.append('y_cor', (locA.y / 256) * width);
+    const response3 = await axios.put(
+      `http://18.136.85.164/api/gateway/${macAddToIdMapper[add1]}`,
+      formdata1
+    );
+
+    console.log('resp 3', response3.data);
+
+    const add2 = MACAdd[1];
+    let formdata2 = new FormData();
+    formdata2.append('name', 'M5 Stack 2');
+    formdata2.append('address', add2);
+    formdata2.append('x_cor', (locB.x / 256) * length);
+    formdata2.append('y_cor', (locB.y / 256) * width);
+    const response4 = await axios.put(
+      `http://18.136.85.164/api/gateway/${macAddToIdMapper[add2]}`,
+      formdata2
+    );
+
+    console.log('resp 4', response4.data);
+
+    const add3 = MACAdd[2];
+    let formdata3 = new FormData();
+    formdata3.append('name', 'M5 Stack 3');
+    formdata3.append('address', add3);
+    formdata3.append('x_cor', (locC.x / 256) * length);
+    formdata3.append('y_cor', (locC.y / 256) * width);
+    const response5 = await axios.put(
+      `http://18.136.85.164/api/gateway/${macAddToIdMapper[add3]}`,
+      formdata3
+    );
+
+    console.log('resp 5', response5.data);
+
+    const add4 = MACAdd[3];
+    let formdata4 = new FormData();
+    formdata4.append('name', 'M5 Stack 4');
+    formdata4.append('address', add4);
+    formdata4.append('x_cor', (locD.x / 256) * length);
+    formdata4.append('y_cor', (locD.y / 256) * width);
+    const response6 = await axios.put(
+      `http://18.136.85.164/api/gateway/${macAddToIdMapper[add4]}`,
+      formdata4
+    );
+
+    console.log('resp 6', response6.data);
   };
 
   const renderSteps = () => {
