@@ -56,7 +56,6 @@ const SetupTab = ({
   const [locD, setLocD] = useState({ x: 0, y: 0 });
 
   const [roomIdToNumMapper, setRoomIdToNumMapper] = useState({});
-
   const [macAddToIdMapper, setMacAddToIdMapper] = useState({});
 
   useEffect(() => {
@@ -111,6 +110,7 @@ const SetupTab = ({
   );
 
   const roomRow = (room, id) => {
+    // console.log(id);
     const colorMapperListModified = colorMapperList.slice(0, roomNum);
     const setRoomAndColorMapping = item => {
       const roomId = room._id;
@@ -164,8 +164,8 @@ const SetupTab = ({
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
+      // allowsEditing: true,
+      // aspect: [4, 3],
       quality: 1,
     });
 
@@ -174,13 +174,14 @@ const SetupTab = ({
       setImage(result.uri);
       let nameOnly;
 
-      if (result.height === 511 && result.width === 512) {
+      if (result.height === 512 && result.width === 512) {
         nameOnly = 'lab_floorplan_edit';
 
-        // WARNING: change 57 in future
-        // const response1 = await axios.put(
-        //   'http://18.136.85.164/api/attach_floor/1&57'
-        // );
+        // WARNING: change 57 in future, changed to 100
+        const response1 = await axios.put(
+          'http://18.136.85.164/api/attach_floor/1&100'
+        );
+
         // console.log('response 1, ', response1);
 
         // await waitFor(8000);
@@ -234,7 +235,7 @@ const SetupTab = ({
         `http://18.136.85.164/media/room_json_to_room/${nameOnly}.json`
       );
 
-      const roomNum = Object.entries(response4.data).length - 1;
+      const roomNum = roomList.length;
 
       setRoomNum(roomNum);
       setFloorPlan({ ...data, ...defaultFloorPlanTypes });

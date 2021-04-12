@@ -4,6 +4,7 @@ import { View, StyleSheet, Text, ScrollView, Switch } from 'react-native';
 import { roomNumColorMapper } from 'HomeAutomation/src/utils/global';
 import { RoomLegends } from 'HomeAutomation/src/components';
 
+import room_fill_data from '../../assets/rooms_fill.json';
 import WS from 'react-native-websocket';
 import LottieView from 'lottie-react-native';
 import { connect } from 'react-redux';
@@ -15,22 +16,25 @@ const initialData = [
     name: 'Person A',
     controlStatus: true,
   },
-  {
-    name: 'Person B',
-    controlStatus: false,
-  },
-  {
-    name: 'Person C',
-    controlStatus: false,
-  },
+  // {
+  //   name: 'Person B',
+  //   controlStatus: false,
+  // },
+  // {
+  //   name: 'Person C',
+  //   controlStatus: false,
+  // },
 ];
 
 const TrackingTab = ({ data, roomNum, roomNumToType, length, width }) => {
+  const room_fill = room_fill_data.roomnums;
+  // console.log('room_fill ', room_fill);
   const [colorMapper, setColorMapper] = useState(roomNumColorMapper);
-  const [xPos, setXPos] = useState(60);
-  const [yPos, setYPos] = useState(200);
+  const [xPos, setXPos] = useState(0);
+  const [yPos, setYPos] = useState(0);
   const [devices, setDevices] = useState(initialData);
   const [roomNumToColor, setRoomNumToColor] = useState({});
+  const [changeRoomMapper, setChangeRoomMapper] = useState({});
 
   const roomArr = Object.values(roomNumToType);
   const uniqueRoomArr = [...new Set(roomArr)];
@@ -49,6 +53,7 @@ const TrackingTab = ({ data, roomNum, roomNumToType, length, width }) => {
     roomNumToColorTemp[0] = 'black';
 
     setRoomNumToColor(roomNumToColorTemp);
+    setChangeRoomMapper(roomNumToColorTemp);
   }, []);
 
   // useEffect(() => {
@@ -113,6 +118,8 @@ const TrackingTab = ({ data, roomNum, roomNumToType, length, width }) => {
     );
   };
 
+  console.log(changeRoomMapper);
+
   const updateLocation = e => {
     const data = JSON.parse(e.data);
     // console.log('getting data');
@@ -120,6 +127,8 @@ const TrackingTab = ({ data, roomNum, roomNumToType, length, width }) => {
 
     if (data.distance) {
       const { x_cor, y_cor } = data.coordinates;
+      // const x_cor = 21.3;
+      // const y_cor = 20.7;
       console.log(x_cor, y_cor);
       // console.log(data.distance);
       const newXCor = (x_cor / length) * 256;
@@ -128,6 +137,15 @@ const TrackingTab = ({ data, roomNum, roomNumToType, length, width }) => {
       // const newYCor = y_cor/width * 64;
       setXPos(newXCor);
       setYPos(newYCor);
+
+      const xIndex = Math.floor((x_cor / length) * 64);
+      const yIndex = Math.floor(((width - y_cor) / width) * 64);
+      //note or 64 - yIndex
+      const curRoom = room_fill[xIndex][yIndex];
+
+      console.log('cur_room ', curRoom);
+      console.log(newXCor);
+      console.log(newYCor);
     }
   };
 
@@ -182,7 +200,7 @@ const TrackingTab = ({ data, roomNum, roomNumToType, length, width }) => {
               // this.ws.send('Hello');
             }}
             onMessage={e => updateLocation(e)}
-            onError={e => console.log('error ', e)}
+            // onError={e => console.log('error ', e)}
             onClose={e => console.log('onClose ', e)}
             reconnect // Will try to reconnect onClose
           />

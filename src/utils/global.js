@@ -84,8 +84,8 @@ export const colorMapperList = roomNumColorMapperArray.map((color, id) => {
 });
 
 export const MACAdd = [
-  '8C:AA:B5:83:FE:8C',
-  'B4:E6:2D:FA:51:69',
-  '8C:AA:B5:84:02:08',
-  '8C:AA:B5:84:05:78',
+  '8C:AA:B5:83:FE:8C', //A
+  'B4:E6:2D:FA:51:69', //B
+  '8C:AA:B5:84:02:08', //C
+  '8C:AA:B5:84:05:78', //D
 ];
