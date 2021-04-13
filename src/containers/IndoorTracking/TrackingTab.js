@@ -26,15 +26,24 @@ const initialData = [
   // },
 ];
 
-const TrackingTab = ({ data, roomNum, roomNumToType, length, width }) => {
+const TrackingTab = ({
+  data,
+  roomNum,
+  roomNumToType,
+  length,
+  width,
+  roomIdToNumMapper,
+  roomList,
+}) => {
   const room_fill = room_fill_data.roomnums;
-  // console.log('room_fill ', room_fill);
   const [colorMapper, setColorMapper] = useState(roomNumColorMapper);
   const [xPos, setXPos] = useState(0);
   const [yPos, setYPos] = useState(0);
   const [devices, setDevices] = useState(initialData);
   const [roomNumToColor, setRoomNumToColor] = useState({});
   const [changeRoomMapper, setChangeRoomMapper] = useState({});
+  const [roomNumToName, setRoomNumToName] = useState({});
+  const [roomLocName, setRoomLocName] = useState('');
 
   const roomArr = Object.values(roomNumToType);
   const uniqueRoomArr = [...new Set(roomArr)];
@@ -54,42 +63,18 @@ const TrackingTab = ({ data, roomNum, roomNumToType, length, width }) => {
 
     setRoomNumToColor(roomNumToColorTemp);
     setChangeRoomMapper(roomNumToColorTemp);
+
+    const obj = {};
+
+    roomList.forEach(room => {
+      const roomname = room.name;
+      const id = room._id;
+      const num = roomIdToNumMapper[id];
+      obj[num] = roomname;
+    });
+
+    setRoomNumToName(obj);
   }, []);
-
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     const dummyColor = [
-  //       '#FFA500',
-  //       '#0000FF',
-  //       '#800080',
-  //       '#808080',
-  //       '#00FFFF',
-  //     ];
-  //     const newColorMapper = { ...colorMapper };
-
-  //     for (let i = 1; i < 8; i++) {
-  //       const color = dummyColor[getRandomInt(0, 4)];
-  //       newColorMapper[i] = color;
-  //     }
-
-  //     setColorMapper(newColorMapper);
-  //   }, 200000);
-
-  //   setInterval(() => {
-  //     setXPos(prevXPos => {
-  //       if (prevXPos + 5 <= 256) {
-  //         return prevXPos + 3;
-  //       }
-  //       return prevXPos;
-  //     });
-  //     setYPos(prevYPos => {
-  //       if (prevYPos + 5 <= 256) {
-  //         return prevYPos + 3;
-  //       }
-  //       return prevYPos;
-  //     });
-  //   }, 1000);
-  // }, []);
 
   function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -118,34 +103,49 @@ const TrackingTab = ({ data, roomNum, roomNumToType, length, width }) => {
     );
   };
 
-  console.log(changeRoomMapper);
-
   const updateLocation = e => {
     const data = JSON.parse(e.data);
-    // console.log('getting data');
-    // console.log(data);
-
+    // const data = {
+    //   distance: 'dummy',
+    // };
     if (data.distance) {
       const { x_cor, y_cor } = data.coordinates;
       // const x_cor = 21.3;
       // const y_cor = 20.7;
-      console.log(x_cor, y_cor);
-      // console.log(data.distance);
+
       const newXCor = (x_cor / length) * 256;
       const newYCor = (y_cor / width) * 256;
 
       // const newYCor = y_cor/width * 64;
-      setXPos(newXCor);
-      setYPos(newYCor);
+      if (newXCor < 0) {
+        setXPos(0);
+      } else if (newXCor > 256) {
+        setXPos(256);
+      } else {
+        setXPos(newXCor);
+      }
+
+      if (newYCor < 0) {
+        setYPos(0);
+      } else if (newYCor > 256) {
+        setYPos(256);
+      } else {
+        setYPos(newYCor);
+      }
 
       const xIndex = Math.floor((x_cor / length) * 64);
       const yIndex = Math.floor(((width - y_cor) / width) * 64);
       //note or 64 - yIndex
       const curRoom = room_fill[xIndex][yIndex];
 
-      console.log('cur_room ', curRoom);
-      console.log(newXCor);
-      console.log(newYCor);
+      //change name room according to position
+      const targetRoomName = roomNumToName[curRoom];
+      setRoomLocName(targetRoomName);
+
+      //change color of room
+      const temp = { ...roomNumToColor };
+      temp[curRoom] = 'indigo';
+      setChangeRoomMapper(temp);
     }
   };
 
@@ -156,7 +156,7 @@ const TrackingTab = ({ data, roomNum, roomNumToType, length, width }) => {
         <View>
           <View style={styles.topSection}>
             <Text style={styles.topSectionFont}>
-              User Position: Living Room 1
+              {`User Position: ${roomLocName}`}
             </Text>
           </View>
           <View style={styles.mapContainer}>
@@ -164,7 +164,7 @@ const TrackingTab = ({ data, roomNum, roomNumToType, length, width }) => {
               {data.roomnums.map(roomCol => (
                 <View>
                   {roomCol.map(roomNum => (
-                    <View style={styles.room(roomNum, roomNumToColor)}></View>
+                    <View style={styles.room(roomNum, changeRoomMapper)}></View>
                   ))}
                 </View>
               ))}
@@ -197,6 +197,7 @@ const TrackingTab = ({ data, roomNum, roomNumToType, length, width }) => {
             url="wss://aqueous-depths-15794.herokuapp.com/ws/polData/"
             onOpen={() => {
               console.log('Open!');
+              // updateLocation();
               // this.ws.send('Hello');
             }}
             onMessage={e => updateLocation(e)}
@@ -330,6 +331,8 @@ const mapStateToProps = ({ tracking, room }) => ({
   roomNumToType: tracking.roomNumToType,
   length: tracking.length,
   width: tracking.width,
+  roomIdToNumMapper: tracking.roomIdToNumMapper,
+  roomList: room.roomList,
 });
 
 export default connect(mapStateToProps, {})(TrackingTab);

@@ -6,7 +6,7 @@ import {
   roomTypeImageMapper,
 } from 'HomeAutomation/src/utils/global';
 
-import { Button, Icon } from 'native-base';
+import { Button, Icon, useToast } from 'native-base';
 
 import {
   StyleSheet,
@@ -59,6 +59,7 @@ const RoomScreen = ({
   setTranscription,
   transcription,
 }) => {
+  const toast = useToast();
   const room = Number.isInteger(activeRoomId) ? roomList[activeRoomId] : null;
   const temp = 24;
   const humidity = 8;
@@ -81,6 +82,9 @@ const RoomScreen = ({
   useEffect(() => {
     if (!isFetching) {
       if (transcription !== '') {
+        toast({
+          title: 'Wrong password',
+        });
         console.log('transcription ', transcription);
         Speech.speak(transcription);
         setTranscription('');
@@ -212,17 +216,19 @@ const RoomScreen = ({
       </TouchableOpacity> */}
 
       <View style={styles.alignMic}>
-        <TouchableWithoutFeedback
-          onPressIn={startRecording}
-          onPressOut={stopRecording}
-        >
-          <LottieView
-            ref={micRef}
-            source={require('../assets/35468-mic-animation.json')}
-            style={styles.micStyle}
-            autoPlay={false}
-          />
-        </TouchableWithoutFeedback>
+        <Content>
+          <TouchableWithoutFeedback
+            onPressIn={startRecording}
+            onPressOut={stopRecording}
+          >
+            <LottieView
+              ref={micRef}
+              source={require('../assets/35468-mic-animation.json')}
+              style={styles.micStyle}
+              autoPlay={false}
+            />
+          </TouchableWithoutFeedback>
+        </Content>
       </View>
     </View>
   );

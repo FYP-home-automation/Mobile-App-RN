@@ -6,6 +6,7 @@ import {
   SET_ROOM_NUM,
   SET_FLOORPLAN_ID,
   SET_ROOMNUM_TO_TYPE,
+  SET_ROOM_ID_TO_NUM_MAPPER,
 } from '../types';
 
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
   loading: false,
   roomNum: 0,
   roomNumToType: {},
+  roomIdToNumMapper: {},
 };
 
 const trackingReducer = (state = initialState, action) => {
@@ -57,6 +59,12 @@ const trackingReducer = (state = initialState, action) => {
       return {
         ...state,
         roomNumToType: action.payload,
+      };
+
+    case SET_ROOM_ID_TO_NUM_MAPPER:
+      return {
+        ...state,
+        roomIdToNumMapper: action.payload,
       };
     default:
       return state;

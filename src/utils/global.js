@@ -60,6 +60,7 @@ export const roomNumColorMapper = {
   5: 'gray',
   6: 'pink',
   7: 'yellow',
+  100: 'indigo',
 };
 
 export const roomNumColorMapperArray = Object.values(roomNumColorMapper).slice(

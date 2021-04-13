@@ -25,6 +25,7 @@ import {
   setRoomNum,
   setFloorPlanId,
   setRoomNumToType,
+  setRoomIdToNumMapperChange,
 } from 'HomeAutomation/src/redux/actions';
 import axios from 'axios';
 
@@ -48,6 +49,7 @@ const SetupTab = ({
   roomNum,
   floorplanId,
   roomNumToType,
+  setRoomIdToNumMapperChange,
 }) => {
   const [colorMapper, setColorMapper] = useState(roomNumColorMapper);
   const [locA, setLocA] = useState({ x: 0, y: 0 });
@@ -116,6 +118,7 @@ const SetupTab = ({
       const roomId = room._id;
       const roomNum = item.value;
       setRoomIdToNumMapper({ ...roomIdToNumMapper, [roomId]: roomNum });
+      setRoomIdToNumMapperChange({ ...roomIdToNumMapper, [roomId]: roomNum });
       setRoomNumToType({ ...roomNumToType, [item.value]: room.room_type });
     };
 
@@ -567,6 +570,7 @@ const mapDispatchToProps = {
   setRoomNum,
   setFloorPlanId,
   setRoomNumToType,
+  setRoomIdToNumMapperChange,
 };
 
 const mapStateToProps = ({ tracking, room }) => ({

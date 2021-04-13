@@ -28,7 +28,13 @@ const RoomLegends = ({ roomNumToType }) => {
       <View style={styles.container}>
         <View>
           <Text style={styles.title}>Legend</Text>
-          <View style={styles.legends}>{legends}</View>
+          <View style={styles.legends}>
+            {legends}
+            <View style={styles.boxContainer}>
+              <View style={styles.box(100)}></View>
+              <Text>User Location</Text>
+            </View>
+          </View>
         </View>
       </View>
       <View style={{ flex: 1 }}></View>

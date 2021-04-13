@@ -13,6 +13,7 @@ import {
   setRoomNum,
   setFloorPlanId,
   setRoomNumToType,
+  setRoomIdToNumMapperChange,
 } from './TrackingAction';
 
 export {
@@ -28,4 +29,5 @@ export {
   setFloorPlanId,
   setRoomNumToType,
   setTranscription,
+  setRoomIdToNumMapperChange,
 };

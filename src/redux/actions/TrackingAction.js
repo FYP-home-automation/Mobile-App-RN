@@ -1,3 +1,4 @@
+import { ActionSheet } from 'native-base';
 import {
   SET_WIDTH,
   SET_LENGTH,
@@ -6,6 +7,7 @@ import {
   SET_ROOM_NUM,
   SET_FLOORPLAN_ID,
   SET_ROOMNUM_TO_TYPE,
+  SET_ROOM_ID_TO_NUM_MAPPER,
 } from '../types';
 
 export const setLength = num => ({
@@ -40,5 +42,10 @@ export const setFloorPlanId = floorplanId => ({
 
 export const setRoomNumToType = mapping => ({
   type: SET_ROOMNUM_TO_TYPE,
+  payload: mapping,
+});
+
+export const setRoomIdToNumMapperChange = mapping => ({
+  type: SET_ROOM_ID_TO_NUM_MAPPER,
   payload: mapping,
 });

@@ -18,7 +18,7 @@ const RoomActiveDevices = ({ room, activeRoomId }) => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 650);
+    }, 2000);
   }, []);
 
   const dummyDevice = [null, null, null, null, null, null];
